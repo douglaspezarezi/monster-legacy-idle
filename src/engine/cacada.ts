@@ -8,7 +8,10 @@ import { aplicarDerrota, multiplicadorDeFadiga } from './derrota.ts'
 import type { TabelaDeTipos } from './multiplicador-de-tipo.ts'
 
 export type DadosDeRota = {
+  readonly faixaDeNivel: readonly [minimo: number, maximo: number]
   readonly xpBase: number
+  // Multiplica a Vida máxima dos selvagens e do chefe.
+  readonly multiplicadorDeVida: number
   readonly quedaDeMatriz: { readonly chance: number; readonly raridade: Raridade }
 }
 
