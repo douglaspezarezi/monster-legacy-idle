@@ -44,3 +44,10 @@ export function formatarTempo(ms: number): string {
   const segundos = Math.max(0, Math.ceil(ms / 1000))
   return `${Math.floor(segundos / 60)}:${String(segundos % 60).padStart(2, '0')}`
 }
+
+export function formatarDuracao(ms: number): string {
+  const minutos = Math.floor(ms / 60_000)
+  const horas = Math.floor(minutos / 60)
+  if (horas === 0) return `${minutos} min`
+  return `${horas} h ${String(minutos % 60).padStart(2, '0')} min`
+}
