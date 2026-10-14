@@ -3,20 +3,33 @@ import type { Gerador } from './aleatorio.ts'
 import type { Combatente } from './combate.ts'
 import { lutar } from './combate.ts'
 import type { EstadoDaCacada } from './derrota.ts'
+import type { Raridade } from './genes.ts'
 import { aplicarDerrota, multiplicadorDeFadiga } from './derrota.ts'
 import type { TabelaDeTipos } from './multiplicador-de-tipo.ts'
+
+export type DadosDeRota = {
+  readonly xpBase: number
+  readonly quedaDeMatriz: { readonly chance: number; readonly raridade: Raridade }
+}
+
+// Gera uma criatura nova da espécie e raridade indicadas.
+export type Matriz = {
+  readonly especie: string
+  readonly raridade: Raridade
+}
 
 export type ConfiguracaoDaCacada<Tipo extends string> = {
   readonly tabela: TabelaDeTipos<Tipo>
   readonly gerarSelvagem: (rota: number, gerador: Gerador) => Combatente<Tipo>
-  // XP base por abate, índice 0 para a rota 1.
-  readonly xpBasePorRota: readonly number[]
+  // Índice 0 para a rota 1.
+  readonly rotas: readonly DadosDeRota[]
   readonly intervaloEntreSelvagensMs: number
 }
 
 export type Cacador<Tipo extends string> = {
   readonly cacada: EstadoDaCacada
   readonly criatura: Combatente<Tipo>
+  readonly matrizes: readonly Matriz[]
 }
 
 export type ResultadoDaCacada<Tipo extends string> = {
@@ -33,7 +46,7 @@ export function simularCacada<Tipo extends string>(
   fim: number,
   gerador: Gerador,
 ): ResultadoDaCacada<Tipo> {
-  let { cacada, criatura } = inicial
+  let { cacada, criatura, matrizes } = inicial
   let abates = 0
   let derrotas = 0
   let agora = inicio
@@ -46,9 +59,13 @@ export function simularCacada<Tipo extends string>(
 
     if (luta.vencedor === 'jogador') {
       abates++
-      const xpBase = configuracao.xpBasePorRota[cacada.rota - 1]
-      const xp = Math.floor(xpBase * multiplicadorDeFadiga(cacada, agora))
+      const rota = configuracao.rotas[cacada.rota - 1]
+      const xp = Math.floor(rota.xpBase * multiplicadorDeFadiga(cacada, agora))
       cacada = { ...cacada, xpNoNivel: cacada.xpNoNivel + xp }
+      // A matriz é da espécie do selvagem abatido; a Fadiga não muda a queda.
+      if (gerador() < rota.quedaDeMatriz.chance) {
+        matrizes = [...matrizes, { especie: selvagem.especie, raridade: rota.quedaDeMatriz.raridade }]
+      }
     } else if (luta.vencedor === 'selvagem') {
       derrotas++
       cacada = aplicarDerrota(cacada, agora)
@@ -58,5 +75,5 @@ export function simularCacada<Tipo extends string>(
     agora += configuracao.intervaloEntreSelvagensMs
   }
 
-  return { cacador: { cacada, criatura }, abates, derrotas }
+  return { cacador: { cacada, criatura, matrizes }, abates, derrotas }
 }

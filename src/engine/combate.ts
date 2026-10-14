@@ -7,6 +7,7 @@ import { multiplicadorDeTipo } from './multiplicador-de-tipo.ts'
 import { escolherTecnica } from './tecnicas.ts'
 
 export type Combatente<Tipo extends string> = {
+  readonly especie: string
   readonly tipos: readonly Tipo[]
   readonly atributos: Atributos
   // Em ordem de prioridade, no máximo 4.

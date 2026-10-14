@@ -11,7 +11,8 @@ export function combatente(
   tipos: readonly Tipo[],
   valor: number,
   tecnicas: readonly Tecnica<Tipo>[] = [],
+  especie = 'teste',
 ): Combatente<Tipo> {
   const atributos = { vida: valor * 5, ataque: valor, defesa: valor, foco: valor, velocidade: valor }
-  return { tipos, atributos, tecnicas, vida: atributos.vida }
+  return { especie, tipos, atributos, tecnicas, vida: atributos.vida }
 }

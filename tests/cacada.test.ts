@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { XP_BASE_POR_ROTA } from '../src/conteudo/rotas.ts'
+import { ROTAS } from '../src/conteudo/rotas.ts'
 import type { Tipo } from '../src/conteudo/tipos.ts'
 import { DADOS_DOS_TIPOS } from '../src/conteudo/tipos.ts'
 import { criarGerador, inteiroEntre } from '../src/engine/aleatorio.ts'
@@ -20,18 +20,18 @@ const BASES = { vida: 60, ataque: 12, defesa: 12, foco: 12, velocidade: 12 }
 function gerarSelvagem(rota: number, gerador: () => number): Combatente<Tipo> {
   const [minimo, maximo] = FAIXA_DE_NIVEL_POR_ROTA[rota - 1]
   const atributos = calcularAtributos(BASES, sortearGenes(gerador, 'comum'), inteiroEntre(gerador, minimo, maximo), false)
-  return { tipos: ['Brota'], atributos, tecnicas: [ESPINHO], vida: atributos.vida }
+  return { especie: 'selvagem de teste', tipos: ['Brota'], atributos, tecnicas: [ESPINHO], vida: atributos.vida }
 }
 
 const configuracao: ConfiguracaoDaCacada<Tipo> = {
   tabela: criarTabelaDeTipos(DADOS_DOS_TIPOS),
   gerarSelvagem,
-  xpBasePorRota: XP_BASE_POR_ROTA,
+  rotas: ROTAS,
   intervaloEntreSelvagensMs: 1000,
 }
 
 function cacador(criatura: Combatente<Tipo>, rota: number, tonicosDeRetorno: number, fadigaAte = 0): Cacador<Tipo> {
-  return { cacada: { rota, xpNoNivel: 0, tonicosDeRetorno, fadigaAte, pausada: false }, criatura }
+  return { cacada: { rota, xpNoNivel: 0, tonicosDeRetorno, fadigaAte, pausada: false }, criatura, matrizes: [] }
 }
 
 const forte = combatente(['Chama'], 5000, [LABAREDA, BRASA])
@@ -55,13 +55,13 @@ describe('caçada', () => {
   it('cada abate rende o XP base da rota', () => {
     const r = simularCacada(configuracao, cacador(forte, 3, 0), 0, UMA_HORA, criarGerador(2))
     expect(r.derrotas).toBe(0)
-    expect(r.cacador.cacada.xpNoNivel).toBe(r.abates * XP_BASE_POR_ROTA[2])
+    expect(r.cacador.cacada.xpNoNivel).toBe(r.abates * ROTAS[2].xpBase)
   })
 
   it('com Fadiga o XP cai pela metade, arredondado para baixo', () => {
     const r = simularCacada(configuracao, cacador(forte, 2, 0, UMA_HORA), 0, DURACAO_DA_FADIGA_MS, criarGerador(3))
     expect(r.abates).toBeGreaterThan(0)
-    expect(r.cacador.cacada.xpNoNivel).toBe(r.abates * Math.floor(XP_BASE_POR_ROTA[1] / 2))
+    expect(r.cacador.cacada.xpNoNivel).toBe(r.abates * Math.floor(ROTAS[1].xpBase / 2))
   })
 
   it('cada derrota gasta um Tônico e recua a rota até os Tônicos acabarem', () => {
@@ -93,5 +93,19 @@ describe('caçada', () => {
     const pausado = cacador(forte, 1, 0)
     const r = simularCacada(configuracao, { ...pausado, cacada: { ...pausado.cacada, pausada: true } }, 0, UMA_HORA, criarGerador(7))
     expect(r.abates).toBe(0)
+  })
+
+  it('matrizes caem na taxa da rota, da espécie abatida e na raridade da rota', () => {
+    const r = simularCacada(configuracao, cacador(forte, 1, 0), 0, 10 * UMA_HORA, criarGerador(8))
+    const { matrizes } = r.cacador
+    // 1% de queda na rota 1: a contagem fica perto de 1% dos abates.
+    expect(matrizes.length).toBeGreaterThan(r.abates * 0.007)
+    expect(matrizes.length).toBeLessThan(r.abates * 0.013)
+    expect(new Set(matrizes.map((m) => `${m.especie}/${m.raridade}`))).toEqual(new Set(['selvagem de teste/comum']))
+  })
+
+  it('sem chance de queda não cai matriz', () => {
+    const semQueda = { ...configuracao, rotas: ROTAS.map((rota) => ({ ...rota, quedaDeMatriz: { ...rota.quedaDeMatriz, chance: 0 } })) }
+    expect(simularCacada(semQueda, cacador(forte, 1, 0), 0, UMA_HORA, criarGerador(8)).cacador.matrizes).toEqual([])
   })
 })
