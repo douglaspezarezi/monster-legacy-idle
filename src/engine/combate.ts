@@ -15,8 +15,38 @@ export type Combatente<Tipo extends string> = {
   readonly vida: number
 }
 
+// Instante da próxima ação e, por técnica, o instante em que a recarga termina.
+export type Ritmo = {
+  readonly proximaAcao: number
+  readonly prontaEm: readonly number[]
+}
+
+// Luta em andamento; fica guardada no estado da caçada entre um período e outro.
+export type Luta<Tipo extends string> = {
+  readonly jogador: Combatente<Tipo>
+  readonly selvagem: Combatente<Tipo>
+  readonly ritmoDoJogador: Ritmo
+  readonly ritmoDoSelvagem: Ritmo
+}
+
+// Gatilho como fração da Vida máxima.
+export type Cura = {
+  readonly gatilho: number
+  readonly tonicos: number
+}
+
+export const CURA_DO_TONICO = 0.5
+const SEM_CURA: Cura = { gatilho: 0, tonicos: 0 }
+
+export type AvancoDaLuta<Tipo extends string> = {
+  readonly luta: Luta<Tipo>
+  // null quando o limite chega antes de alguém cair; a luta continua depois.
+  readonly vencedor: 'jogador' | 'selvagem' | null
+  readonly instante: number
+  readonly tonicosDeCuraUsados: number
+}
+
 export type ResultadoDaLuta = {
-  // null quando o tempo limite chega antes de alguém cair.
   readonly vencedor: 'jogador' | 'selvagem' | null
   readonly fim: number
   readonly vidaDoJogador: number
@@ -51,18 +81,71 @@ function agir<Tipo extends string>(tabela: TabelaDeTipos<Tipo>, atacante: Lado<T
   defensor.vida = Math.max(0, defensor.vida - calcularDano(ataque, defesa, tecnica.poder, tipo))
 }
 
-function criarLado<Tipo extends string>(combatente: Combatente<Tipo>, oponente: Combatente<Tipo>, inicio: number): Lado<Tipo> {
+function ritmoInicial<Tipo extends string>(combatente: Combatente<Tipo>, oponente: Combatente<Tipo>, inicio: number): Ritmo {
   const intervalo = intervaloDeAcao(combatente.atributos.velocidade, oponente.atributos.velocidade)
+  return { proximaAcao: inicio + intervalo, prontaEm: combatente.tecnicas.map(() => inicio) }
+}
+
+export function iniciarLuta<Tipo extends string>(jogador: Combatente<Tipo>, selvagem: Combatente<Tipo>, inicio: number): Luta<Tipo> {
+  return {
+    jogador,
+    selvagem,
+    ritmoDoJogador: ritmoInicial(jogador, selvagem, inicio),
+    ritmoDoSelvagem: ritmoInicial(selvagem, jogador, inicio),
+  }
+}
+
+function lado<Tipo extends string>(combatente: Combatente<Tipo>, oponente: Combatente<Tipo>, ritmo: Ritmo): Lado<Tipo> {
   return {
     combatente,
-    intervalo,
-    prontaEm: combatente.tecnicas.map(() => inicio),
-    proximaAcao: inicio + intervalo,
+    intervalo: intervaloDeAcao(combatente.atributos.velocidade, oponente.atributos.velocidade),
+    prontaEm: [...ritmo.prontaEm],
+    proximaAcao: ritmo.proximaAcao,
     vida: combatente.vida,
   }
 }
 
 // Cada lado age a cada intervalo; quando os dois agem no mesmo instante, o jogador vem primeiro.
+// O Tônico de Cura entra logo depois do golpe que deixa o jogador abaixo do gatilho, sem gastar a vez dele.
+export function avancarLuta<Tipo extends string>(
+  tabela: TabelaDeTipos<Tipo>,
+  luta: Luta<Tipo>,
+  limite: number,
+  cura: Cura = SEM_CURA,
+): AvancoDaLuta<Tipo> {
+  const j = lado(luta.jogador, luta.selvagem, luta.ritmoDoJogador)
+  const s = lado(luta.selvagem, luta.jogador, luta.ritmoDoSelvagem)
+  const vidaMaxima = luta.jogador.atributos.vida
+  let tonicosDeCuraUsados = 0
+  const avanco = (vencedor: AvancoDaLuta<Tipo>['vencedor'], instante: number): AvancoDaLuta<Tipo> => ({
+    luta: {
+      jogador: { ...luta.jogador, vida: j.vida },
+      selvagem: { ...luta.selvagem, vida: s.vida },
+      ritmoDoJogador: { proximaAcao: j.proximaAcao, prontaEm: j.prontaEm },
+      ritmoDoSelvagem: { proximaAcao: s.proximaAcao, prontaEm: s.prontaEm },
+    },
+    vencedor,
+    instante,
+    tonicosDeCuraUsados,
+  })
+
+  for (;;) {
+    const vezDoJogador = j.proximaAcao <= s.proximaAcao
+    const [atacante, defensor] = vezDoJogador ? [j, s] : [s, j]
+    const agora = atacante.proximaAcao
+    if (agora > limite) return avanco(null, limite)
+
+    agir(tabela, atacante, defensor, agora)
+    atacante.proximaAcao += atacante.intervalo
+    if (defensor.vida === 0) return avanco(vezDoJogador ? 'jogador' : 'selvagem', agora)
+    if (!vezDoJogador && j.vida < vidaMaxima * cura.gatilho && tonicosDeCuraUsados < cura.tonicos) {
+      j.vida = Math.min(vidaMaxima, j.vida + vidaMaxima * CURA_DO_TONICO)
+      tonicosDeCuraUsados++
+    }
+  }
+}
+
+// Luta inteira de uma vez, sem cura.
 export function lutar<Tipo extends string>(
   tabela: TabelaDeTipos<Tipo>,
   jogador: Combatente<Tipo>,
@@ -70,23 +153,6 @@ export function lutar<Tipo extends string>(
   inicio: number,
   limite: number,
 ): ResultadoDaLuta {
-  const j = criarLado(jogador, selvagem, inicio)
-  const s = criarLado(selvagem, jogador, inicio)
-  const resultado = (vencedor: ResultadoDaLuta['vencedor'], fim: number): ResultadoDaLuta => ({
-    vencedor,
-    fim,
-    vidaDoJogador: j.vida,
-    vidaDoSelvagem: s.vida,
-  })
-
-  for (;;) {
-    const vezDoJogador = j.proximaAcao <= s.proximaAcao
-    const [atacante, defensor] = vezDoJogador ? [j, s] : [s, j]
-    const agora = atacante.proximaAcao
-    if (agora > limite) return resultado(null, limite)
-
-    agir(tabela, atacante, defensor, agora)
-    if (defensor.vida === 0) return resultado(vezDoJogador ? 'jogador' : 'selvagem', agora)
-    atacante.proximaAcao += atacante.intervalo
-  }
+  const { luta, vencedor, instante } = avancarLuta(tabela, iniciarLuta(jogador, selvagem, inicio), limite)
+  return { vencedor, fim: instante, vidaDoJogador: luta.jogador.vida, vidaDoSelvagem: luta.selvagem.vida }
 }
