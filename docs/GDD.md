@@ -63,9 +63,11 @@ Cada criatura tem um ou dois tipos, e cada técnica tem um tipo. O multiplicador
 | Resistência dos dois tipos | 0,25× |
 | Imunidade | 0× |
 
+Quando um tipo do defensor dá vantagem e o outro resiste, os fatores se multiplicam (2 × 0,5 = 1×).
+
 A tabela de vantagens é própria do jogo (seção 6).
 
-### Dano e ritmo **[proposta]**
+### Dano e ritmo
 
 Cada técnica tem tipo, categoria (física ou especial), poder e recarga em segundos, cadastrados no conteúdo. O ataque básico é físico, sem tipo (multiplicador 1×), com poder 40 e sem recarga.
 
@@ -88,7 +90,9 @@ Criaturas selvagens das rotas altas podem derrotar a criatura do jogador, inclus
 3. A criatura perde 5% da experiência acumulada no nível atual.
 4. A criatura fica com **Fadiga**: 50% menos XP e ouro por 10 minutos reais.
 
-O jogador compra tônicos de cura com ouro e configura gatilhos, como "usar tônico de cura quando a vida cair abaixo de 30%". Sem Tônico de Retorno no inventário, a caçada pausa até o jogador voltar.
+A perda de XP é arredondada para baixo.
+
+O jogador compra tônicos de cura com ouro e configura gatilhos, como "usar tônico de cura quando a vida cair abaixo de 30%". Sem Tônico de Retorno no inventário, a caçada pausa até o jogador voltar, sem perda de XP, recuo de rota ou Fadiga.
 
 ## 6. Tipos
 
@@ -102,7 +106,7 @@ Regras para desenhar a tabela:
 - No máximo 4 imunidades no jogo inteiro, todas explicadas pela ficção do tipo.
 - Nenhum tipo pode ser estritamente melhor que outro em ataque e defesa ao mesmo tempo.
 
-### Tabela de vantagens **[proposta]**
+### Tabela de vantagens
 
 Lida por linha: técnicas do tipo da esquerda causam 2× nos tipos de "Vence", e criaturas do tipo da esquerda recebem 0,5× de "Resiste" e 0× de "Imune a". A coluna "Fraco contra" é consequência das outras duas.
 
@@ -164,7 +168,7 @@ A soma dos genes define a faixa de raridade ao nascer ou cair como matriz. Com c
 
 **Variação prismática:** cor alternativa e +10% em todos os atributos, possível a partir da raridade épica.
 
-### Sorteio de genes e raridade **[proposta]**
+### Sorteio de genes e raridade
 
 - **Raridade primeiro:** selvagens e matrizes decidem a raridade antes (pela rota ou pela matriz) e sorteiam os genes de 1 a 20, um a um com chance igual, repetindo o sorteio até a soma cair na faixa daquela raridade.
 - **Multiplicador dentro da faixa:** cresce em linha reta com a soma dos genes, do mínimo da faixa na menor soma ao máximo na maior, arredondado para duas casas. Exemplo: Comum com soma 29 fica em 1,03.
@@ -303,7 +307,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 1. 18 biomas para 16 tipos (seção 4): biomas mistos ou mudança na lista de tipos.
 2. Quantos biomas e espécies entram na Era 1 do lançamento solo.
 3. Nome das criaturas no jogo.
-4. Valores base das espécies e curvas de ouro, XP e preços. Tabela de tipos, dano e sorteio de genes têm proposta nas seções 5, 6 e 7.
+4. Valores base das espécies e curvas de ouro, XP e preços.
 7. Diferença entre os níveis 150 e 200 no limite suave (seção 7).
 5. Nível máximo de cada Era e quantas Eras existem.
 6. Cápsulas: como a captura ociosa funciona junto com as matrizes.
