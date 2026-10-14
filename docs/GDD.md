@@ -199,6 +199,14 @@ O jogador compra tônicos de cura com ouro e configura gatilhos, como "usar tôn
 - Ao voltar, um resumo mostra o tempo creditado, abates, XP, níveis ganhos, ouro, capturas, matrizes e derrotas.
 - O save fica no navegador, com o número da versão do formato, e é gravado a cada poucos segundos e quando a aba é fechada ou escondida.
 
+### Save na nuvem
+
+- O login é opcional e é feito por e-mail, com um link enviado à caixa de entrada, sem senha. Sem login, o save fica só no navegador, como antes.
+- A nuvem guarda o mesmo texto do save local, um por jogador. Cada jogador só lê e grava o próprio save.
+- Ao entrar, se a nuvem e o navegador têm saves diferentes, o jogo mostra os dois (Era, nível da criatura ativa, ouro e data em que foi salvo) e o jogador escolhe qual fica. Se só um lado tem save, ele vale para os dois.
+- Depois disso, o jogo grava na nuvem a cada minuto e quando a aba é escondida.
+- O tempo fora é creditado a partir do instante salvo no save escolhido, com as regras de sempre.
+
 ## 6. Tipos
 
 São 16 tipos com nomes e tabela próprios; a tabela de vantagens deve ser desenhada do zero, sem reproduzir a de nenhuma franquia.
