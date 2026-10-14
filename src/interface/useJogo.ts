@@ -4,7 +4,7 @@ import { CONFIGURACAO } from '../conteudo/jogo.ts'
 import type { Tipo } from '../conteudo/tipos.ts'
 import type { Gerador } from '../engine/aleatorio.ts'
 import { criarGerador } from '../engine/aleatorio.ts'
-import { simularCacada } from '../engine/cacada.ts'
+import { avancarJogo } from '../engine/avanco.ts'
 import type { EstadoDoJogo } from '../engine/jogo.ts'
 import { novoJogo } from '../engine/jogo.ts'
 import type { Resumo } from '../engine/offline.ts'
@@ -34,6 +34,7 @@ export type Volta = {
   readonly foraMs: number
   readonly creditadoMs: number
   readonly resumo: Resumo
+  readonly ouroDaForja: number
 }
 
 // O comando recebe o estado, o instante simulado e o gerador da sessão.
@@ -69,7 +70,7 @@ function abrir(): Abertura {
     const fora = creditarTempoFora(CONFIGURACAO, save.estado, save.salvoEm, agora, gerador)
     const volta =
       fora.creditadoMs >= MINIMO_PARA_RESUMO_MS
-        ? { foraMs: agora - save.salvoEm, creditadoMs: fora.creditadoMs, resumo: resumir(fora.eventos) }
+        ? { foraMs: agora - save.salvoEm, creditadoMs: fora.creditadoMs, resumo: resumir(fora.eventos), ouroDaForja: fora.ouroDaForja }
         : null
     return { sessao: { estado: fora.estado, agora, registros: [] }, volta, gerador }
   } catch {
@@ -120,7 +121,7 @@ export function useJogo() {
       const s = atual.current
       if (!s) return
       const agora = Date.now()
-      const { estado, eventos } = simularCacada(CONFIGURACAO, s.estado, s.agora, agora, gerador.current)
+      const { estado, eventos } = avancarJogo(CONFIGURACAO, s.estado, s.agora, agora, gerador.current)
       const novos = eventos.map((evento) => ({ id: proximoRegistro.current++, instante: evento.instante, texto: descreverEvento(evento) }))
       const registros = novos.length ? [...novos.reverse(), ...s.registros].slice(0, REGISTROS_GUARDADOS) : s.registros
       aplicar({ estado, agora, registros })

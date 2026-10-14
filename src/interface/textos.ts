@@ -1,6 +1,7 @@
 // Textos da interface a partir dos dados do motor.
 import type { Evento } from '../engine/cacada.ts'
-import type { Raridade } from '../engine/genes.ts'
+import type { Atributo, Genes, Raridade } from '../engine/genes.ts'
+import { ATRIBUTOS } from '../engine/genes.ts'
 import type { ItemDaLoja } from '../engine/jogo.ts'
 
 export const NOME_DA_RARIDADE: Readonly<Record<Raridade, string>> = {
@@ -50,4 +51,25 @@ export function formatarDuracao(ms: number): string {
   const horas = Math.floor(minutos / 60)
   if (horas === 0) return `${minutos} min`
   return `${horas} h ${String(minutos % 60).padStart(2, '0')} min`
+}
+
+export const SIGLA_DO_ATRIBUTO: Readonly<Record<Atributo, string>> = {
+  vida: 'Vi',
+  ataque: 'At',
+  defesa: 'De',
+  foco: 'Fo',
+  velocidade: 'Ve',
+}
+
+export const NOME_DO_ATRIBUTO: Readonly<Record<Atributo, string>> = {
+  vida: 'Vida',
+  ataque: 'Ataque',
+  defesa: 'Defesa',
+  foco: 'Foco',
+  velocidade: 'Velocidade',
+}
+
+export function descreverGenes(genes: Genes): string {
+  const soma = ATRIBUTOS.reduce((total, a) => total + genes[a], 0)
+  return `${ATRIBUTOS.map((a) => `${SIGLA_DO_ATRIBUTO[a]} ${genes[a]}`).join(' · ')} · soma ${soma}`
 }

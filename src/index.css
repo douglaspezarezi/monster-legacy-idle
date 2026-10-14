@@ -242,3 +242,33 @@ dd {
 .volta dl {
   max-width: 20rem;
 }
+
+@media (min-width: 760px) {
+  .reserva {
+    grid-column: span 2;
+  }
+}
+
+.lista li.selecionado {
+  background: rgb(127 209 163 / 0.1);
+}
+
+.membro {
+  display: flex;
+  flex-direction: column;
+}
+
+.membro small {
+  opacity: 0.7;
+}
+
+.acoes {
+  display: flex;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.cruzamento .opcao label {
+  display: flex;
+  gap: 0.3rem;
+}

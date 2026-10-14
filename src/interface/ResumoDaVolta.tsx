@@ -20,8 +20,10 @@ export function ResumoDaVolta({ volta, aoFechar }: Props) {
         <dd>{resumo.xp}</dd>
         <dt>Níveis ganhos</dt>
         <dd>{resumo.niveis}</dd>
-        <dt>Ouro</dt>
+        <dt>Ouro da caçada</dt>
         <dd>{resumo.ouro}</dd>
+        <dt>Ouro da Forja</dt>
+        <dd>{volta.ouroDaForja}</dd>
         <dt>Capturas</dt>
         <dd>{resumo.capturas}</dd>
         <dt>Matrizes</dt>

@@ -1,6 +1,8 @@
 // Tela da caçada: desenha o estado e envia comandos ao motor.
+import { useState } from 'react'
 import { CATALOGO, CONFIGURACAO } from '../conteudo/jogo.ts'
 import { MATA_FUNDA } from '../conteudo/biomas.ts'
+import { colocarNaForja, ouroPorHoraDaForja, tirarDaForja } from '../engine/base.ts'
 import { ABATES_PARA_O_CHEFE } from '../engine/cacada.ts'
 import { ESPACOS_NA_RESERVA } from '../engine/captura.ts'
 import type { Combatente } from '../engine/combate.ts'
@@ -8,7 +10,7 @@ import type { Criatura } from '../engine/criatura.ts'
 import { especieDo } from '../engine/especie.ts'
 import type { Raridade } from '../engine/genes.ts'
 import { FAIXAS_DE_RARIDADE, raridadeDosGenes } from '../engine/genes.ts'
-import type { ItemDaLoja } from '../engine/jogo.ts'
+import type { ItemDaLoja, Membro } from '../engine/jogo.ts'
 import {
   PRECOS,
   abrirMatrizDoInventario,
@@ -24,7 +26,8 @@ import {
 } from '../engine/jogo.ts'
 import { xpParaSubir } from '../engine/nivel.ts'
 import type { Tipo } from '../conteudo/tipos.ts'
-import { NOME_DA_RARIDADE, NOME_DO_ITEM, formatarTempo } from './textos.ts'
+import { PainelDeCruzamento } from './PainelDeCruzamento.tsx'
+import { NOME_DA_RARIDADE, NOME_DO_ITEM, descreverGenes, formatarTempo } from './textos.ts'
 import type { Comando, Sessao } from './useJogo.ts'
 
 type Props = { readonly sessao: Sessao; readonly executar: (comando: Comando) => void }
@@ -68,6 +71,15 @@ export function Cacada({ sessao, executar }: Props) {
   const maximaDaAtiva = vidaMaxima(CATALOGO, ativa)
   const abates = estado.abatesPorRota[estado.rota - 1]
   const fadigaRestante = estado.fadigaAte - agora
+  const [selecionados, setSelecionados] = useState<readonly number[]>([])
+  const naForja = (id: number) => estado.forja.trabalhadores.includes(id)
+  // Some da seleção quem saiu da reserva ou foi trabalhar.
+  const pais = selecionados.flatMap((id) => estado.reserva.filter((m) => m.id === id && !naForja(id)))
+  const forjaCheia = estado.forja.trabalhadores.length >= CONFIGURACAO.forja.vagas
+
+  function alternarPai(membro: Membro) {
+    setSelecionados(pais.some((p) => p.id === membro.id) ? pais.filter((p) => p.id !== membro.id).map((p) => p.id) : [...pais.map((p) => p.id), membro.id].slice(-2))
+  }
 
   return (
     <div className="cacada">
@@ -253,14 +265,54 @@ export function Cacada({ sessao, executar }: Props) {
         ) : (
           <ul className="lista">
             {estado.reserva.map((membro) => (
-              <li key={membro.id}>
-                <span>
-                  {rotuloDaCriatura(membro)} · nível {membro.nivel}
-                </span>
-                <button onClick={() => executar((e, t) => trocarAtiva(e, CATALOGO, membro.id, t))}>Ativar</button>
+              <li key={membro.id} className={pais.some((p) => p.id === membro.id) ? 'selecionado' : ''}>
+                <div className="membro">
+                  <span>
+                    {rotuloDaCriatura(membro)} · nível {membro.nivel}
+                    {naForja(membro.id) && ' · na Forja'}
+                  </span>
+                  <small>{descreverGenes(membro.genes)}</small>
+                </div>
+                <div className="acoes">
+                  <button disabled={naForja(membro.id)} onClick={() => executar((e, t) => trocarAtiva(e, CATALOGO, membro.id, t))}>
+                    Ativar
+                  </button>
+                  {naForja(membro.id) ? (
+                    <button onClick={() => executar((e) => tirarDaForja(e, membro.id))}>Sair da Forja</button>
+                  ) : (
+                    <button disabled={forjaCheia} onClick={() => executar((e) => colocarNaForja(CONFIGURACAO, e, membro.id))}>
+                      Forja
+                    </button>
+                  )}
+                  <button disabled={naForja(membro.id)} onClick={() => alternarPai(membro)}>
+                    {pais.some((p) => p.id === membro.id) ? 'Desmarcar' : 'Cruzar'}
+                  </button>
+                </div>
               </li>
             ))}
           </ul>
+        )}
+      </section>
+
+      <section className="painel base">
+        <h3>
+          Forja ({estado.forja.trabalhadores.length}/{CONFIGURACAO.forja.vagas})
+        </h3>
+        <p>
+          Produz {Math.floor(ouroPorHoraDaForja(CONFIGURACAO, estado))} de ouro por hora, também com o jogo fechado. Tipos Chama e Faísca
+          rendem +25%; Maré, Rocha e Bruma, −50%.
+        </p>
+        <h3>Cruzamento</h3>
+        {pais.length === 2 ? (
+          <PainelDeCruzamento
+            key={pais.map((p) => p.id).join('-')}
+            estado={estado}
+            pais={[pais[0], pais[1]]}
+            executar={executar}
+            aoCruzar={() => setSelecionados([])}
+          />
+        ) : (
+          <p>Marque dois pais da mesma linhagem na reserva ({pais.length}/2).</p>
         )}
       </section>
 
