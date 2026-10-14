@@ -23,9 +23,9 @@ export function combatente(
 }
 
 // Membro do time com todos os genes iguais.
-export function membro(especie: string, nivel: number, gene: number, id = 1): Membro {
+export function membro(especie: string, nivel: number, gene: number, id = 1, era = 1): Membro {
   const genes = { vida: gene, ataque: gene, defesa: gene, foco: gene, velocidade: gene }
-  return { id, especie, genes, prismatica: false, nivel, xpNoNivel: 0 }
+  return { id, era, especie, genes, prismatica: false, nivel, xpNoNivel: 0 }
 }
 
 // Jogo novo com a criatura indicada ativa e vida cheia, mais os campos trocados.

@@ -72,7 +72,7 @@ export function cruzar<Tipo extends string>(
   if (estado.inventario.ouro < TAXA_DE_CRUZAMENTO) throw new RangeError(`ouro insuficiente: ${estado.inventario.ouro}`)
 
   const especie = especieDe === paiA ? a.especie : b.especie
-  const filhote = { ...nascerDoCruzamento(a, b, especie, herdados, gerador), id: estado.proximoId }
+  const filhote = { ...nascerDoCruzamento(a, b, especie, herdados, gerador), id: estado.proximoId, era: estado.era }
   return {
     ...estado,
     reserva: [...estado.reserva.filter((m) => m.id !== paiA && m.id !== paiB), filhote],

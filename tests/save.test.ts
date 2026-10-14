@@ -4,7 +4,13 @@ import type { Tipo } from '../src/conteudo/tipos.ts'
 import { criarGerador } from '../src/engine/aleatorio.ts'
 import { simularCacada } from '../src/engine/cacada.ts'
 import { VERSAO_DO_SAVE, desserializar, serializar } from '../src/engine/save.ts'
+import type { Membro } from '../src/engine/jogo.ts'
 import { jogoCom, membro } from './apoio.ts'
+
+function semCampoEra(m: Membro) {
+  const { era: _, ...resto } = m
+  return resto
+}
 
 describe('save', () => {
   it('o estado volta igual, com luta em andamento e reserva', () => {
@@ -35,11 +41,13 @@ describe('save', () => {
     expect(() => desserializar('null')).toThrow(SyntaxError)
   })
 
-  it('migra o save da versão 1, de antes da Forja', () => {
-    const { forja: _, ...semForja } = jogoCom(membro('Gelusco', 3, 5))
-    const save = desserializar<Tipo>(JSON.stringify({ versao: 1, salvoEm: 10, estado: semForja }))
+  it('migra o save da versão 1, de antes da Forja e das Eras', () => {
+    const atual = jogoCom(membro('Gelusco', 3, 5), { reserva: [membro('Brotelho', 2, 5, 2)] })
+    const { forja: _, era: __, ...antigo } = atual
+    const semEra = { ...antigo, ativa: semCampoEra(atual.ativa), reserva: atual.reserva.map(semCampoEra) }
+    const save = desserializar<Tipo>(JSON.stringify({ versao: 1, salvoEm: 10, estado: semEra }))
     expect(save.versao).toBe(VERSAO_DO_SAVE)
-    expect(save.estado).toEqual(jogoCom(membro('Gelusco', 3, 5)))
+    expect(save.estado).toEqual(atual)
   })
 
   it('recusa versão desconhecida', () => {

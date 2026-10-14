@@ -5,6 +5,7 @@ import { criarGerador } from '../src/engine/aleatorio.ts'
 import type { Evento, ResultadoDaCacada } from '../src/engine/cacada.ts'
 import { ABATES_PARA_O_CHEFE, simularCacada } from '../src/engine/cacada.ts'
 import type { Tipo } from '../src/conteudo/tipos.ts'
+import { NIVEL_MAXIMO } from '../src/engine/atributos.ts'
 import { ESPACOS_NA_RESERVA } from '../src/engine/captura.ts'
 import { DURACAO_DA_FADIGA_MS } from '../src/engine/derrota.ts'
 import type { EstadoDoJogo } from '../src/engine/jogo.ts'
@@ -16,6 +17,8 @@ const UMA_HORA = 60 * MINUTO
 const TODAS_AS_ROTAS = { rotasLiberadas: ROTAS.length }
 // Um selvagem só: o próximo viria depois do fim do período.
 const UM_SELVAGEM = { ...CONFIGURACAO, intervaloEntreSelvagensMs: 10 * UMA_HORA }
+// Sem teto de Era, para criaturas acima do nível 50.
+const SEM_TETO = { ...CONFIGURACAO, eras: [{ teto: NIVEL_MAXIMO, rotas: ROTAS.length }] }
 
 // Nível 200 e genes míticos: vence qualquer selvagem da Mata Funda.
 const forte = membro('Gelusco', 200, 20)
@@ -77,7 +80,7 @@ describe('caçada', () => {
 
   it('cada abate rende o XP base da rota e metade dele em ouro', () => {
     // No nível 199 não sobe de nível em 30 minutos; sem avanço, fica na rota 3.
-    const r = cacar(jogoCom(membro('Gelusco', 199, 20), { rota: 3, ...TODAS_AS_ROTAS, avancoAutomatico: false }), 30 * MINUTO, 2)
+    const r = cacar(jogoCom(membro('Gelusco', 199, 20), { rota: 3, ...TODAS_AS_ROTAS, avancoAutomatico: false }), 30 * MINUTO, 2, SEM_TETO)
     expect(contar(r.eventos, 'derrota')).toBe(0)
     expect(r.estado.ativa.xpNoNivel).toBe(abates(r) * 100)
     expect(r.estado.inventario.ouro).toBe(200 + abates(r) * 50)
@@ -85,7 +88,7 @@ describe('caçada', () => {
 
   it('com Fadiga XP e ouro caem pela metade, arredondados para baixo', () => {
     const inicial = jogoCom(membro('Gelusco', 199, 20), { rota: 2, ...TODAS_AS_ROTAS, avancoAutomatico: false, fadigaAte: UMA_HORA })
-    const r = cacar(inicial, DURACAO_DA_FADIGA_MS, 3)
+    const r = cacar(inicial, DURACAO_DA_FADIGA_MS, 3, SEM_TETO)
     expect(abates(r)).toBeGreaterThan(0)
     expect(r.estado.ativa.xpNoNivel).toBe(abates(r) * 17)
     expect(r.estado.inventario.ouro).toBe(200 + abates(r) * 8)

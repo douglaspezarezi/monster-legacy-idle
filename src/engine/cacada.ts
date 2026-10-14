@@ -13,6 +13,8 @@ import type { Matriz } from './nascimento.ts'
 import { faixaDoSelvagem, gerarChefe, gerarSelvagem } from './nascimento.ts'
 import type { TabelaDeTipos } from './multiplicador-de-tipo.ts'
 import { ganharXp } from './nivel.ts'
+import type { DadosDeEra } from './era.ts'
+import { dadosDaEra } from './era.ts'
 
 export type DadosDeRota = {
   readonly faixaDeNivel: readonly [minimo: number, maximo: number]
@@ -31,6 +33,7 @@ export type ConfiguracaoDaCacada<Tipo extends string> = {
   readonly rotas: readonly DadosDeRota[]
   readonly especiesPorRota: readonly (readonly string[])[]
   readonly intervaloEntreSelvagensMs: number
+  readonly eras: readonly DadosDeEra[]
 }
 
 export type Evento =
@@ -81,7 +84,8 @@ function vencer<Tipo extends string>(
   const ouro = Math.floor(Math.floor(rota.xpBase / 2) * fadiga)
   eventos.push({ tipo: 'abate', instante: agora, especie: encontro.selvagem.especie, chefe: encontro.chefe, xp, ouro })
 
-  const ativa = { ...estado.ativa, ...ganharXp(estado.ativa, xp) }
+  const era = dadosDaEra(configuracao.eras, estado.era)
+  const ativa = { ...estado.ativa, ...ganharXp(estado.ativa, xp, era.teto) }
   if (ativa.nivel !== estado.ativa.nivel) eventos.push({ tipo: 'nivel', instante: agora, nivel: ativa.nivel })
   // Depois da vitória a vida volta cheia, já com a Vida máxima do nível novo.
   const vidaDaAtiva = vidaMaxima(configuracao.catalogo, ativa)
@@ -107,7 +111,7 @@ function vencer<Tipo extends string>(
     const sucesso = gerador() < CHANCE_DE_CAPTURA[raridade]
     inventario = { ...inventario, capsulas: inventario.capsulas - 1 }
     if (sucesso) {
-      reserva = [...reserva, { ...encontro.selvagem, id: proximoId }]
+      reserva = [...reserva, { ...encontro.selvagem, id: proximoId, era: estado.era }]
       proximoId++
     }
     eventos.push({ tipo: 'captura', instante: agora, especie: encontro.selvagem.especie, raridade, sucesso })
@@ -117,7 +121,7 @@ function vencer<Tipo extends string>(
   let abatesPorRota: readonly number[]
   if (encontro.chefe) {
     abatesPorRota = comAbates(estado.abatesPorRota, numeroDaRota, 0)
-    if (numeroDaRota === rotasLiberadas && rotasLiberadas < configuracao.rotas.length) {
+    if (numeroDaRota === rotasLiberadas && rotasLiberadas < Math.min(era.rotas, configuracao.rotas.length)) {
       rotasLiberadas++
       eventos.push({ tipo: 'rota-liberada', instante: agora, rota: rotasLiberadas })
     }

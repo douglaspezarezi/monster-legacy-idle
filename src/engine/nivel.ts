@@ -6,14 +6,14 @@ export function xpParaSubir(nivel: number): number {
   return 6 * nivel * nivel
 }
 
-// O que sobra passa para o nível seguinte; no nível máximo o XP para de contar.
-export function ganharXp(criatura: Criatura, xp: number): Criatura {
+// O que sobra passa para o nível seguinte; no teto o XP para de contar.
+export function ganharXp(criatura: Criatura, xp: number, teto = NIVEL_MAXIMO): Criatura {
   let { nivel, xpNoNivel } = criatura
   xpNoNivel += xp
-  while (nivel < NIVEL_MAXIMO && xpNoNivel >= xpParaSubir(nivel)) {
+  while (nivel < teto && xpNoNivel >= xpParaSubir(nivel)) {
     xpNoNivel -= xpParaSubir(nivel)
     nivel++
   }
-  if (nivel === NIVEL_MAXIMO) xpNoNivel = 0
+  if (nivel >= teto) xpNoNivel = 0
   return { ...criatura, nivel, xpNoNivel }
 }

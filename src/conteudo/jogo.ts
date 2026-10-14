@@ -4,6 +4,7 @@ import type { Catalogo } from '../engine/especie.ts'
 import { porNome } from '../engine/especie.ts'
 import { criarTabelaDeTipos } from '../engine/multiplicador-de-tipo.ts'
 import { MATA_FUNDA } from './biomas.ts'
+import { ERAS } from './eras.ts'
 import { ESPECIES } from './especies.ts'
 import { LINHAGENS } from './linhagens.ts'
 import { FORJA } from './postos.ts'
@@ -22,6 +23,7 @@ export const CONFIGURACAO: ConfiguracaoDoJogo<Tipo> = {
   rotas: ROTAS,
   especiesPorRota: MATA_FUNDA.especiesPorRota,
   intervaloEntreSelvagensMs: INTERVALO_ENTRE_SELVAGENS_MS,
+  eras: ERAS,
   forja: FORJA,
   linhagens: LINHAGENS,
 }

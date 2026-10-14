@@ -291,18 +291,12 @@ O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% d
 
 ### Eras (prestígio)
 
-**[proposta para o F5]**
-
 - **Tetos:** a Era 1 vai até o nível 50 e usa as rotas 1 a 3 de cada bioma. A Era 2 vai até o 100 e libera as rotas 4 e 5. As Eras 3 (150) e 4 (200) entram quando houver biomas para elas. Assim o teto de cada Era coincide com o topo de uma rota.
 - **Sem nível próprio do Treinador:** a Era fecha quando a criatura ativa chega ao teto. Nenhuma criatura passa do teto da Era atual.
 - **Reset:** a criatura ativa volta ao nível 1 com os mesmos genes; as rotas liberadas voltam à rota 1 e os contadores de chefe zeram. Ficam ouro, itens, matrizes, equipamentos e a Forja. O Treinador ganha a marca da Era.
 - **Reserva:** mantém o nível. Uma criatura que ainda não passou pelo reset da Era atual, ao ser ativada, volta ao nível 1. As que nascem ou são capturadas na Era atual já contam como passadas.
 - Na simulação com reposição de tônicos, o nível 50 chega em cerca de 24 horas.
-
-- **Reset de Era:** ao chegar ao nível máximo da Era atual (por exemplo, 50 na Era 1), o Treinador pode reiniciar a Era.
-  - O nível do Treinador volta a 1, ele ganha uma marca de Era visível e libera os biomas e espécies da Era seguinte.
-- **Time ativo:** as criaturas do time ativo no momento do reset acompanham o Treinador e voltam ao nível 1.
-- **Reserva:** criaturas da reserva mantêm o nível. Para entrar no time, precisam passar pelo reset na Cidade Principal.
+- Eras seguintes também liberam os biomas e espécies delas, quando existirem.
 - **Iniciais:** as criaturas iniciais de qualquer Era podem ser usadas por qualquer jogador, sem exigência de Era.
 
 ## 8. Equipamentos do Treinador
@@ -325,7 +319,7 @@ Nenhum equipamento aumenta força, vida ou ataque das criaturas. Eles só aceler
 | Companheiro de ombro | Coleta os itens com o jogo em segundo plano |
 
 
-### Equipamentos no F5 **[proposta]**
+### Equipamentos no F5
 
 - Entram 6 espaços, os que têm sistema pronto: Cabeça (+% de XP), Peito (+% de ouro das rotas), Pernas (−% de tempo entre selvagens), Arma principal (+% na chance de captura, multiplicando a chance da raridade), Arma secundária (−% na taxa de cruzamento) e Cinto (+% na produção da Forja). Os demais ficam para quando os sistemas deles existirem.
 - **Fonte:** cada vitória sobre um chefe de rota tem 10% de chance de dar uma peça, de espaço sorteado com chance igual e raridade pela rota: comum na rota 1, incomum na 2, rara na 3, épica na 4 e lendária na 5.
@@ -453,5 +447,5 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 2. Quantos biomas e espécies entram na Era 1 do lançamento solo.
 3. Nome das criaturas no jogo.
 4. Valores base das espécies dos demais biomas.
-5. Nível máximo de cada Era e quantas Eras existem.
+5. Biomas das Eras 3 e 4 (tetos 150 e 200) e se há mais Eras depois delas.
 6. Diferença entre os níveis 150 e 200 no limite suave (seção 7).

@@ -11,7 +11,8 @@ import type { Catalogo } from './especie.ts'
 import type { Matriz } from './nascimento.ts'
 import { abrirMatriz, criarInicial } from './nascimento.ts'
 
-export type Membro = Criatura & { readonly id: number }
+// Era em que a criatura passou pelo reset; abaixo da Era atual, ela volta ao nível 1 ao ser ativada.
+export type Membro = Criatura & { readonly id: number; readonly era: number }
 
 export type Inventario = {
   readonly ouro: number
@@ -28,6 +29,7 @@ export type Encontro<Tipo extends string> = {
 }
 
 export type EstadoDoJogo<Tipo extends string> = {
+  readonly era: number
   readonly ativa: Membro
   // Vida da criatura ativa fora de luta; durante a luta vale a da luta.
   readonly vidaDaAtiva: number
@@ -84,8 +86,9 @@ export function novoJogo<Tipo extends string>(
   agora: number,
   gerador: Gerador,
 ): EstadoDoJogo<Tipo> {
-  const ativa: Membro = { ...criarInicial(gerador, especieInicial), id: 1 }
+  const ativa: Membro = { ...criarInicial(gerador, especieInicial), id: 1, era: 1 }
   return {
+    era: 1,
     ativa,
     vidaDaAtiva: vidaMaxima(catalogo, ativa),
     reserva: [],
@@ -133,8 +136,9 @@ export function trocarAtiva<Tipo extends string>(
   id: number,
   agora: number,
 ): EstadoDoJogo<Tipo> {
-  const entra = estado.reserva.find((m) => m.id === id)
-  if (!entra) throw new RangeError(`criatura fora da reserva: ${id}`)
+  const naReserva = estado.reserva.find((m) => m.id === id)
+  if (!naReserva) throw new RangeError(`criatura fora da reserva: ${id}`)
+  const entra = naReserva.era < estado.era ? { ...naReserva, nivel: 1, xpNoNivel: 0, era: estado.era } : naReserva
   if (estado.forja.trabalhadores.includes(id)) throw new RangeError(`criatura trabalhando na Forja: ${id}`)
   const reserva = estado.reserva.map((m) => (m.id === id ? estado.ativa : m))
   return { ...semEncontro(estado, agora), ativa: entra, reserva, vidaDaAtiva: vidaMaxima(catalogo, entra) }
@@ -157,7 +161,7 @@ export function abrirMatrizDoInventario<Tipo extends string>(
   const matrizes = estado.inventario.matrizes.filter((_, i) => i !== indice)
   return {
     ...estado,
-    reserva: [...estado.reserva, { ...abrirMatriz(gerador, matriz), id: estado.proximoId }],
+    reserva: [...estado.reserva, { ...abrirMatriz(gerador, matriz), id: estado.proximoId, era: estado.era }],
     proximoId: estado.proximoId + 1,
     inventario: { ...estado.inventario, matrizes },
   }

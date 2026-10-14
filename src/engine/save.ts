@@ -2,12 +2,23 @@
 import { FORJA_VAZIA } from './base.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 
-export const VERSAO_DO_SAVE = 2
+export const VERSAO_DO_SAVE = 3
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
   // A versão 2 trouxe a Forja.
   1: (estado) => ({ ...estado, forja: FORJA_VAZIA }),
+  // A versão 3 trouxe as Eras: tudo o que existia é da Era 1.
+  2: (estado) => ({
+    ...estado,
+    era: 1,
+    ativa: naEra1(estado.ativa),
+    reserva: Array.isArray(estado.reserva) ? estado.reserva.map(naEra1) : estado.reserva,
+  }),
+}
+
+function naEra1(membro: unknown): unknown {
+  return typeof membro === 'object' && membro !== null ? { ...membro, era: 1 } : membro
 }
 
 export type Save<Tipo extends string> = {
