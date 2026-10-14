@@ -1,5 +1,7 @@
 // Estado do jogo no F2 e comandos do jogador (GDD, seções 4, 5, 7 e 13).
 import type { Gerador } from './aleatorio.ts'
+import type { Forja } from './base.ts'
+import { FORJA_VAZIA } from './base.ts'
 import type { FiltroDeCaptura } from './captura.ts'
 import { ESPACOS_NA_RESERVA, FILTRO_VAZIO } from './captura.ts'
 import type { Luta } from './combate.ts'
@@ -44,6 +46,7 @@ export type EstadoDoJogo<Tipo extends string> = {
   readonly pausada: boolean
   readonly encontro: Encontro<Tipo> | null
   readonly proximoSelvagemEm: number
+  readonly forja: Forja
 }
 
 export const INVENTARIO_INICIAL: Inventario = {
@@ -98,6 +101,7 @@ export function novoJogo<Tipo extends string>(
     pausada: false,
     encontro: null,
     proximoSelvagemEm: agora,
+    forja: FORJA_VAZIA,
   }
 }
 
@@ -131,6 +135,7 @@ export function trocarAtiva<Tipo extends string>(
 ): EstadoDoJogo<Tipo> {
   const entra = estado.reserva.find((m) => m.id === id)
   if (!entra) throw new RangeError(`criatura fora da reserva: ${id}`)
+  if (estado.forja.trabalhadores.includes(id)) throw new RangeError(`criatura trabalhando na Forja: ${id}`)
   const reserva = estado.reserva.map((m) => (m.id === id ? estado.ativa : m))
   return { ...semEncontro(estado, agora), ativa: entra, reserva, vidaDaAtiva: vidaMaxima(catalogo, entra) }
 }

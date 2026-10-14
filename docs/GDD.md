@@ -329,7 +329,7 @@ As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a 
 - **Base especial:** opera com Diamantes; é o único lugar com fragmentos de fim de jogo.
 - **Santuário prismático:** custo alto; único lugar que aumenta a chance de chocar ovos prismáticos.
 
-### Base no F4 **[proposta]**
+### Base no F4
 
 - Só a Forja entra no F4. Pesca e Mina entram quando os materiais tiverem uso (equipamentos e Despertar).
 - A Forja tem 3 vagas. Cada criatura produz 100 de ouro por hora × o multiplicador da raridade dela × a afinidade, também com o jogo fechado, dentro do limite de 24 horas.
@@ -346,7 +346,7 @@ As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a 
 5. **Técnicas herdadas:** algumas técnicas só passam por cruzamento, quando um dos pais as tem equipadas.
 6. **Pergaminhos Técnicos:** consumíveis de uso único que ensinam uma técnica, com lista de espécies compatíveis no conteúdo.
 
-### Cruzamento no F4 **[proposta]**
+### Cruzamento no F4
 
 - **Linhagens:** Raiz (Brotelho, Sapolho, Raizudo), Enxame (Formigaço, Ferroa) e Asa (Penugem, Zumbilo). Gelusco e Rebitim formam cada um a sua linhagem e só cruzam com a mesma espécie até chegarem espécies afins de outros biomas.
 - **Pais:** duas criaturas da reserva, fora de posto de trabalho. A ativa não cruza. A taxa é de 300 de ouro.

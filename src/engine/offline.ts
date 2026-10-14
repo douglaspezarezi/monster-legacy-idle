@@ -1,7 +1,8 @@
 // Crédito do tempo fora do jogo (GDD, seção 5).
 import type { Gerador } from './aleatorio.ts'
-import type { ConfiguracaoDaCacada, Evento } from './cacada.ts'
-import { simularCacada } from './cacada.ts'
+import type { ConfiguracaoDoJogo } from './avanco.ts'
+import { avancarJogo } from './avanco.ts'
+import type { Evento } from './cacada.ts'
 import type { Ritmo } from './combate.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 
@@ -31,22 +32,23 @@ export function deslocarTempo<Tipo extends string>(estado: EstadoDoJogo<Tipo>, d
 export type TempoFora<Tipo extends string> = {
   readonly estado: EstadoDoJogo<Tipo>
   readonly eventos: readonly Evento[]
+  readonly ouroDaForja: number
   readonly creditadoMs: number
 }
 
 // Acima do limite, só as últimas 24 horas contam.
 export function creditarTempoFora<Tipo extends string>(
-  configuracao: ConfiguracaoDaCacada<Tipo>,
+  configuracao: ConfiguracaoDoJogo<Tipo>,
   estado: EstadoDoJogo<Tipo>,
   salvoEm: number,
   agora: number,
   gerador: Gerador,
 ): TempoFora<Tipo> {
   const fora = agora - salvoEm
-  if (fora <= 0) return { estado, eventos: [], creditadoMs: 0 }
+  if (fora <= 0) return { estado, eventos: [], ouroDaForja: 0, creditadoMs: 0 }
   const creditadoMs = Math.min(fora, LIMITE_DO_TEMPO_FORA_MS)
   const deslocado = deslocarTempo(estado, fora - creditadoMs)
-  const resultado = simularCacada(configuracao, deslocado, agora - creditadoMs, agora, gerador)
+  const resultado = avancarJogo(configuracao, deslocado, agora - creditadoMs, agora, gerador)
   return { ...resultado, creditadoMs }
 }
 

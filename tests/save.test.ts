@@ -35,6 +35,13 @@ describe('save', () => {
     expect(() => desserializar('null')).toThrow(SyntaxError)
   })
 
+  it('migra o save da versão 1, de antes da Forja', () => {
+    const { forja: _, ...semForja } = jogoCom(membro('Gelusco', 3, 5))
+    const save = desserializar<Tipo>(JSON.stringify({ versao: 1, salvoEm: 10, estado: semForja }))
+    expect(save.versao).toBe(VERSAO_DO_SAVE)
+    expect(save.estado).toEqual(jogoCom(membro('Gelusco', 3, 5)))
+  })
+
   it('recusa versão desconhecida', () => {
     const texto = serializar(jogoCom(membro('Gelusco', 1, 5)), 0).replace(`"versao":${VERSAO_DO_SAVE}`, '"versao":99')
     expect(() => desserializar(texto)).toThrow(RangeError)

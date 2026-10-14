@@ -1,7 +1,14 @@
 // Save versionado do estado do jogo (GDD, seção 5). Onde guardar o texto fica com a tela.
+import { FORJA_VAZIA } from './base.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 
-export const VERSAO_DO_SAVE = 1
+export const VERSAO_DO_SAVE = 2
+
+// Cada migração leva o estado salvo da versão do índice para a seguinte.
+const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
+  // A versão 2 trouxe a Forja.
+  1: (estado) => ({ ...estado, forja: FORJA_VAZIA }),
+}
 
 export type Save<Tipo extends string> = {
   readonly versao: number
@@ -28,6 +35,13 @@ export function desserializar<Tipo extends string>(texto: string): Save<Tipo> {
     throw new SyntaxError('save ilegível')
   }
   if (!ehObjeto(dados) || typeof dados.salvoEm !== 'number' || !ehObjeto(dados.estado)) throw new SyntaxError('save ilegível')
-  if (dados.versao !== VERSAO_DO_SAVE) throw new RangeError(`versão de save desconhecida: ${String(dados.versao)}`)
-  return dados as Save<Tipo>
+  let { versao, estado } = dados
+  if (typeof versao !== 'number' || !Number.isInteger(versao) || versao < 1 || versao > VERSAO_DO_SAVE) {
+    throw new RangeError(`versão de save desconhecida: ${String(versao)}`)
+  }
+  while (versao < VERSAO_DO_SAVE) {
+    estado = MIGRACOES[versao](estado)
+    versao++
+  }
+  return { versao, salvoEm: dados.salvoEm, estado: estado as EstadoDoJogo<Tipo> }
 }
