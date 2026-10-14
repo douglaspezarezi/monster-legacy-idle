@@ -45,7 +45,7 @@ describe('save', () => {
 
   it('migra o save da versão 1, de antes da Forja e das Eras', () => {
     const atual = jogoCom(membro('Gelusco', 3, 5), { reserva: [membro('Brotelho', 2, 5, 2)] })
-    const { forja: _, era: __, equipamentos: ___, ...antigo } = atual
+    const { forja: _, era: __, equipamentos: ___, bioma: ____, outrosBiomas: _____, reposicao: ______, ...antigo } = atual
     const semEra = { ...antigo, ativa: semCampoEra(atual.ativa), reserva: atual.reserva.map(semCampoEra) }
     const save = desserializar<Tipo>(JSON.stringify({ versao: 1, salvoEm: 10, estado: semEra }), MODELO)
     expect(save.versao).toBe(VERSAO_DO_SAVE)

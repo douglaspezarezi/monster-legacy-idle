@@ -63,6 +63,8 @@ export type EstadoDoJogo<Tipo extends string> = {
   readonly proximoSelvagemEm: number
   readonly forja: Forja
   readonly equipamentos: Equipamentos
+  // Estoque mínimo de cada item que a Loja repõe sozinha; 0 desliga.
+  readonly reposicao: Readonly<Record<ItemDaLoja, number>>
 }
 
 export const INVENTARIO_INICIAL: Inventario = {
@@ -82,6 +84,11 @@ export const PRECOS: Readonly<Record<ItemDaLoja, number>> = {
   tonicoDeCura: 25,
   tonicoDeRetorno: 150,
 }
+
+export const SEM_REPOSICAO: Readonly<Record<ItemDaLoja, number>> = { capsula: 0, tonicoDeCura: 0, tonicoDeRetorno: 0 }
+
+// O Tônico de Retorno vem primeiro: sem ele a caçada pausa.
+const ORDEM_DA_REPOSICAO: readonly ItemDaLoja[] = ['tonicoDeRetorno', 'tonicoDeCura', 'capsula']
 
 const CAMPO_DO_ITEM = {
   capsula: 'capsulas',
@@ -122,6 +129,7 @@ export function novoJogo<Tipo extends string>(
     proximoSelvagemEm: agora,
     forja: FORJA_VAZIA,
     equipamentos: SEM_EQUIPAMENTOS,
+    reposicao: SEM_REPOSICAO,
   }
 }
 
@@ -144,6 +152,24 @@ export function comprar<Tipo extends string>(estado: EstadoDoJogo<Tipo>, item: I
     ...estado,
     inventario: { ...estado.inventario, ouro: estado.inventario.ouro - custo, [campo]: estado.inventario[campo] + quantidade },
   }
+}
+
+// Compra o que falta para cada mínimo, até onde o ouro der.
+export function repor<Tipo extends string>(estado: EstadoDoJogo<Tipo>): EstadoDoJogo<Tipo> {
+  let inventario = estado.inventario
+  for (const item of ORDEM_DA_REPOSICAO) {
+    const campo = CAMPO_DO_ITEM[item]
+    const quantidade = Math.min(estado.reposicao[item] - inventario[campo], Math.floor(inventario.ouro / PRECOS[item]))
+    if (quantidade > 0) {
+      inventario = { ...inventario, ouro: inventario.ouro - quantidade * PRECOS[item], [campo]: inventario[campo] + quantidade }
+    }
+  }
+  return inventario === estado.inventario ? estado : { ...estado, inventario }
+}
+
+export function definirReposicao<Tipo extends string>(estado: EstadoDoJogo<Tipo>, item: ItemDaLoja, minimo: number): EstadoDoJogo<Tipo> {
+  if (!Number.isInteger(minimo) || minimo < 0) throw new RangeError(`mínimo inválido: ${minimo}`)
+  return repor({ ...estado, reposicao: { ...estado.reposicao, [item]: minimo } })
 }
 
 // A criatura que entra vem com a vida cheia; a que sai vai para a reserva.

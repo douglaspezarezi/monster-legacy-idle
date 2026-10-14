@@ -16,6 +16,7 @@ import {
   PRECOS,
   abrirMatrizDoInventario,
   comprar,
+  definirReposicao,
   definirAvancoAutomatico,
   definirFiltroDeCaptura,
   definirGatilhoDeCura,
@@ -193,6 +194,7 @@ export function Cacada({ sessao, executar }: Props) {
           <dd>{inventario.tonicosDeRetorno}</dd>
         </dl>
         <h4>Loja da Cidade</h4>
+        <p className="dica">Em “mín.”, a Loja repõe sozinha até esse estoque, também com o jogo fechado.</p>
         {ITENS.map((item) => (
           <div key={item} className="item-da-loja">
             <span>
@@ -207,6 +209,19 @@ export function Cacada({ sessao, executar }: Props) {
                 +{quantidade}
               </button>
             ))}
+            <label className="minimo" title="A Loja repõe sozinha até este estoque, também com o jogo fechado. 0 desliga.">
+              mín.
+              <input
+                type="number"
+                min={0}
+                max={999}
+                value={estado.reposicao[item]}
+                onChange={(ev) => {
+                  const minimo = Math.max(0, Math.min(999, Math.floor(Number(ev.target.value) || 0)))
+                  executar((e) => definirReposicao(e, item, minimo))
+                }}
+              />
+            </label>
           </div>
         ))}
         <label className="opcao">

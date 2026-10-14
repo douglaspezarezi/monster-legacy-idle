@@ -464,8 +464,8 @@ Ficam para a fase 2, com servidor e regras próprias:
 
 - Cada abate rende metade do XP base da rota em ouro, arredondado para baixo (5, 17, 50, 125 e 325). A Fadiga corta pela metade.
 - **Loja da Cidade:** Cápsula por 50 de ouro, Tônico de Cura por 25 e Tônico de Retorno por 150, sem limite de estoque.
-- **Reposição automática [proposta]:** o jogador define um estoque mínimo de cada item da Loja. Quando o estoque cai abaixo dele e há ouro, a Loja compra na hora, também com o jogo fechado. Começa desligada (mínimo 0).
-- **Por que [proposta]:** na simulação de 40 horas na Era 1, o jogador que repõe só a cada 10 minutos fica sem Tônicos de Cura entre as visitas e não chega ao nível 50. Com reposição a cada minuto, chega em cerca de 34 horas. Quem também captura raros e troca a criatura ativa chega em cerca de 11 horas, com cerca de 4 derrotas por hora. Mudar as regras de derrota (não recuar de rota, Fadiga só por chefe) ou fazer os raros nascerem mais abaixo não mudou o resultado além do ruído da simulação.
+- **Reposição automática:** o jogador define um estoque mínimo de cada item da Loja. Quando o estoque cai abaixo dele e há ouro, a Loja compra na hora, também com o jogo fechado. Começa desligada (mínimo 0).
+- **Por que a reposição:** na simulação de 40 horas na Era 1, o jogador que repõe só a cada 10 minutos fica sem Tônicos de Cura entre as visitas e não chega ao nível 50. Com reposição a cada minuto, chega em cerca de 34 horas. Quem também captura raros e troca a criatura ativa chega em cerca de 11 horas, com cerca de 4 derrotas por hora. Mudar as regras de derrota (não recuar de rota, Fadiga só por chefe) ou fazer os raros nascerem mais abaixo não mudou o resultado além do ruído da simulação.
 
 ### Consumo de ouro no fim de jogo
 

@@ -2,8 +2,9 @@
 import { FORJA_VAZIA } from './base.ts'
 import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
 import type { EstadoDoJogo } from './jogo.ts'
+import { SEM_REPOSICAO } from './jogo.ts'
 
-export const VERSAO_DO_SAVE = 5
+export const VERSAO_DO_SAVE = 6
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
@@ -20,6 +21,8 @@ const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Re
   3: (estado) => ({ ...estado, equipamentos: SEM_EQUIPAMENTOS }),
   // A versão 5 trouxe os biomas: o progresso que existia é da Mata Funda.
   4: (estado) => ({ ...estado, bioma: 0, outrosBiomas: {} }),
+  // A versão 6 trouxe a reposição automática, desligada.
+  5: (estado) => ({ ...estado, reposicao: SEM_REPOSICAO }),
 }
 
 function naEra1(membro: unknown): unknown {

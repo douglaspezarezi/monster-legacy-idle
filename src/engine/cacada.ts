@@ -8,7 +8,7 @@ import type { Catalogo } from './especie.ts'
 import type { Raridade } from './genes.ts'
 import { raridadeDosGenes } from './genes.ts'
 import type { Encontro, EstadoDoJogo } from './jogo.ts'
-import { vidaMaxima } from './jogo.ts'
+import { repor, vidaMaxima } from './jogo.ts'
 import type { Matriz } from './nascimento.ts'
 import { faixaDoSelvagem, gerarChefe, gerarSelvagem } from './nascimento.ts'
 import type { TabelaDeTipos } from './multiplicador-de-tipo.ts'
@@ -216,6 +216,8 @@ export function simularCacada<Tipo extends string>(
       avanco.vencedor === 'jogador'
         ? vencer(configuracao, estado, encontro, agora, gerador, eventos)
         : perder(configuracao, estado, encontro, agora, eventos)
+    // A Loja repõe depois de cada luta, também com o jogo fechado.
+    estado = repor(estado)
   }
 
   return { estado, eventos }
