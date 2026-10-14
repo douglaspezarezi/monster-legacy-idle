@@ -44,6 +44,12 @@ export function criarCriatura(gerador: Gerador, especie: string, raridade: Rarid
   return { especie, genes, prismatica, nivel, xpNoNivel: 0 }
 }
 
+// O nível do selvagem não passa do nível da criatura ativa nem do teto da rota; abaixo do piso da rota, fica no piso.
+export function faixaDoSelvagem(faixaDaRota: readonly [number, number], nivelDaAtiva: number): readonly [number, number] {
+  const [minimo, maximo] = faixaDaRota
+  return [minimo, Math.max(minimo, Math.min(maximo, nivelDaAtiva))]
+}
+
 export function gerarSelvagem(
   gerador: Gerador,
   especies: readonly string[],

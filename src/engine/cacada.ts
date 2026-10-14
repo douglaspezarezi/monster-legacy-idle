@@ -10,7 +10,7 @@ import { raridadeDosGenes } from './genes.ts'
 import type { Encontro, EstadoDoJogo } from './jogo.ts'
 import { vidaMaxima } from './jogo.ts'
 import type { Matriz } from './nascimento.ts'
-import { gerarChefe, gerarSelvagem } from './nascimento.ts'
+import { faixaDoSelvagem, gerarChefe, gerarSelvagem } from './nascimento.ts'
 import type { TabelaDeTipos } from './multiplicador-de-tipo.ts'
 import { ganharXp } from './nivel.ts'
 
@@ -57,7 +57,7 @@ function encontrar<Tipo extends string>(
   const chefe = estado.abatesPorRota[estado.rota - 1] >= ABATES_PARA_O_CHEFE
   const selvagem = chefe
     ? gerarChefe(configuracao.catalogo, gerador, especies, rota.faixaDeNivel)
-    : gerarSelvagem(gerador, especies, rota.faixaDeNivel)
+    : gerarSelvagem(gerador, especies, faixaDoSelvagem(rota.faixaDeNivel, estado.ativa.nivel))
   const jogador = { ...combatenteDe(configuracao.catalogo, estado.ativa), vida: estado.vidaDaAtiva }
   const luta = iniciarLuta(jogador, combatenteDe(configuracao.catalogo, selvagem, rota.multiplicadorDeVida), inicio)
   return { selvagem, chefe, luta }

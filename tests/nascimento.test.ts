@@ -12,6 +12,7 @@ import {
   criarCriatura,
   criarInicial,
   especieDoChefe,
+  faixaDoSelvagem,
   gerarChefe,
   gerarSelvagem,
   sortearRaridadeDoSelvagem,
@@ -47,6 +48,13 @@ describe('nascimento de criaturas', () => {
       expect(selvagem.nivel).toBeLessThanOrEqual(25)
       expect(selvagem.xpNoNivel).toBe(0)
     }
+  })
+
+  it('o nível do selvagem não passa do nível da criatura ativa nem sai da faixa da rota', () => {
+    expect(faixaDoSelvagem([1, 10], 1)).toEqual([1, 1])
+    expect(faixaDoSelvagem([1, 10], 6)).toEqual([1, 6])
+    expect(faixaDoSelvagem([1, 10], 40)).toEqual([1, 10])
+    expect(faixaDoSelvagem([11, 25], 4)).toEqual([11, 11])
   })
 
   it('variação prismática só a partir da épica, com 2% de chance', () => {
