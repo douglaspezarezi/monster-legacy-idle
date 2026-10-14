@@ -29,6 +29,6 @@ export function aplicarDerrota(estado: EstadoDaCacada, agora: number): EstadoDaC
 }
 
 // Vale para XP e ouro.
-export function multiplicadorDeFadiga(estado: EstadoDaCacada, agora: number): number {
+export function multiplicadorDeFadiga(estado: { readonly fadigaAte: number }, agora: number): number {
   return agora < estado.fadigaAte ? MULTIPLICADOR_DA_FADIGA : 1
 }
