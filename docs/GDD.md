@@ -1,6 +1,6 @@
 # Monster Legacy Idle · Documento de design
 
-Versão de trabalho, reescrita a partir de "GDD_Monster_Legacy_Idle", em versão original. As propostas criadas nesta reescrita para preencher ou substituir o que precisou sair foram aprovadas em 14/10/2026. Itens marcados com **[proposta]** são novos e esperam aprovação; itens marcados com **[a definir]** são escolhas em aberto. A seção 14 lista o que foi removido e por quê.
+Versão de trabalho, reescrita a partir de "GDD_Monster_Legacy_Idle", em versão original. As propostas criadas nesta reescrita para preencher ou substituir o que precisou sair foram aprovadas em 14/10/2026, assim como o conteúdo e as regras do F2. Itens marcados com **[proposta]** são novos e esperam aprovação; itens marcados com **[a definir]** são escolhas em aberto. A seção 14 lista o que foi removido e por quê.
 
 ## 1. Visão geral
 
@@ -45,6 +45,30 @@ Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem 
 - **Mapa-múndi de caçadas:** mostra os biomas, trancados por Era (seção 7). Um indicador acende a rota com maior XP por hora para a criatura ativa, lendo nível, tipos e técnicas.
 - **Avanço de rota:** chave na interface entre avanço automático (vence o chefe e passa à rota seguinte) e farm travado na rota.
 
+### Primeiro bioma: Mata Funda (Brota)
+
+| Rota | Espécies (chance igual) |
+| --- | --- |
+| 1 | Brotelho, Formigaço |
+| 2 | Brotelho, Formigaço, Sapolho |
+| 3 | Formigaço, Sapolho, Ferroa |
+| 4 | Sapolho, Ferroa, Raizudo |
+| 5 | Ferroa, Raizudo, Penugem |
+
+### Selvagens
+
+- O selvagem nasce num nível sorteado com chance igual dentro da faixa da rota.
+- Raridade ao nascer: fraca 25%, comum 55%, incomum 15%, rara 4%, épica 0,9%, lendária 0,09%, mítica 0,01%.
+- Selvagens de raridade épica ou maior têm 2% de chance de serem prismáticos.
+- **Vida por rota:** a Vida máxima do selvagem é multiplicada por 1× na rota 1, 1,5× na rota 2, 2× na rota 3, 3× na rota 4 e 4× na rota 5, para que os abates fiquem perto da coluna "Abate médio". Sem isso, Vida e Ataque crescem no mesmo ritmo e os abates durariam de 2,5 a 4,5 s em todas as rotas.
+- O próximo selvagem aparece 1 s depois do anterior cair.
+
+### Chefe de rota
+
+- A cada 100 abates numa rota aparece o chefe dela: a espécie da rota com maior soma de valores base, no nível máximo da faixa, com raridade rara. A Vida por rota vale também para ele.
+- Vencer o chefe pela primeira vez libera a rota seguinte. Com o avanço automático ligado, a caçada passa para ela.
+- Perder para o chefe segue as regras de derrota da seção 5.
+
 ## 5. Combate
 
 ### Fila de técnicas
@@ -85,10 +109,32 @@ dano  = ⌊ A × (poder ÷ 100) × A ÷ (A + D) × multiplicador de tipo ⌋, no
 
 - Quando as duas criaturas agem no mesmo instante, a do jogador age primeiro.
 - O Tônico de Retorno traz a criatura de volta com a vida cheia.
-- Fora do Tônico, a vida não se recupera entre um selvagem e o próximo; a cura fica para os tônicos de cura com gatilho, ainda sem valores.
+- Fora do Tônico, a vida não se recupera entre um selvagem e o próximo; a cura fica para os Tônicos de Cura.
+- **Tônico de Cura:** recupera 50% da Vida máxima. O jogador define o gatilho, que começa em 30%. O tônico é usado logo depois do golpe que deixa a vida abaixo do gatilho e não gasta a vez da criatura.
 - O XP com Fadiga é arredondado para baixo (35 vira 17).
-- Uma luta que não termina até o fim do período simulado é descartada, sem XP.
-- O tempo entre um selvagem e o próximo é um parâmetro, ainda sem valor definido.
+- Uma luta que não termina até o fim do período simulado fica guardada no estado da caçada e continua no período seguinte. A tela avança a simulação em passos curtos, de cerca de 250 ms.
+- O tempo entre um selvagem e o próximo é 1 s (seção 4).
+
+### Técnicas
+
+| Técnica | Tipo | Categoria | Poder | Recarga |
+| --- | --- | --- | --- | --- |
+| Golpe de Galho | Brota | física | 55 | 3 s |
+| Esporos | Brota | especial | 80 | 6 s |
+| Mordida | Fera | física | 60 | 3 s |
+| Investida | Fera | física | 90 | 8 s |
+| Ferrão | Peçonha | física | 55 | 3 s |
+| Névoa Tóxica | Peçonha | especial | 85 | 7 s |
+| Rajada | Brisa | especial | 55 | 3 s |
+| Pio Sombrio | Penumbra | especial | 70 | 5 s |
+| Jato de Lodo | Maré | especial | 60 | 4 s |
+| Pedrisco | Rocha | física | 60 | 4 s |
+| Lasca Gélida | Geada | física | 55 | 3 s |
+| Sopro Frio | Geada | especial | 85 | 7 s |
+| Martelada | Liga | física | 60 | 3 s |
+| Limalha | Liga | especial | 80 | 6 s |
+| Estalo | Eco | especial | 55 | 3 s |
+| Ressonância | Eco | especial | 90 | 8 s |
 
 ### Derrota durante a caçada
 
@@ -182,6 +228,49 @@ A soma dos genes define a faixa de raridade ao nascer ou cair como matriz. Com c
 - **Raridade primeiro:** selvagens e matrizes decidem a raridade antes (pela rota ou pela matriz) e sorteiam os genes de 1 a 20, um a um com chance igual, repetindo o sorteio até a soma cair na faixa daquela raridade.
 - **Multiplicador dentro da faixa:** cresce em linha reta com a soma dos genes, do mínimo da faixa na menor soma ao máximo na maior, arredondado para duas casas. Exemplo: Comum com soma 29 fica em 1,03.
 
+### Espécies
+
+Valores base no nível 1, na ordem Vida, Ataque, Defesa, Foco e Velocidade. Técnicas em ordem de prioridade.
+
+| Espécie | Tipos | Base | Técnicas |
+| --- | --- | --- | --- |
+| Gelusco (inicial) | Geada | 50, 13, 11, 13, 12 | Sopro Frio, Lasca Gélida, Mordida, Rajada |
+| Rebitim (inicial) | Liga | 55, 13, 15, 9, 9 | Limalha, Martelada, Investida, Pedrisco |
+| Zumbilo (inicial) | Eco | 45, 9, 10, 15, 14 | Ressonância, Estalo, Pio Sombrio, Rajada |
+| Brotelho | Brota | 45, 10, 12, 10, 10 | Esporos, Golpe de Galho, Mordida |
+| Formigaço | Fera, Peçonha | 40, 13, 10, 8, 12 | Investida, Mordida, Ferrão |
+| Sapolho | Maré, Brota | 55, 9, 11, 13, 8 | Esporos, Jato de Lodo, Golpe de Galho |
+| Ferroa | Peçonha, Brisa | 40, 12, 9, 12, 15 | Névoa Tóxica, Ferrão, Rajada |
+| Raizudo | Brota, Rocha | 60, 13, 15, 8, 6 | Esporos, Pedrisco, Golpe de Galho |
+| Penugem | Penumbra, Brisa | 45, 10, 10, 14, 13 | Pio Sombrio, Rajada, Mordida |
+
+Os três iniciais têm tipos com relações diferentes com a Mata Funda: Geada vence Brota, Liga é neutro e Eco perde para Brota. Assim a escolha de tipo pesa desde o começo.
+
+### Início do jogo
+
+- O jogador escolhe um dos três iniciais. Ele começa no nível 1, com raridade comum e genes sorteados nessa faixa.
+- Inventário inicial: 200 de ouro, 5 Tônicos de Retorno, 5 Tônicos de Cura e 10 Cápsulas.
+- Só a rota 1 começa liberada.
+
+### XP e nível
+
+- Para subir do nível n para o n + 1 são precisos 6 × n² de XP. Ao subir, o XP do nível volta a 0 e o que sobrou passa para o nível seguinte.
+- Com cerca de 4 s por abate na rota 1 (luta mais 1 s de espera), isso dá o nível 10 em cerca de 11 minutos. Com a Vida por rota da seção 4, o nível 100 fica em torno de 20 horas de caçada, estimativa a conferir no F2.
+
+### Captura e matrizes
+
+- O jogador define um filtro de captura com as espécies desejadas e a raridade mínima.
+- Quando um selvagem que passa no filtro cai, o jogo gasta 1 Cápsula e tenta capturar. A chance depende da raridade: fraca 60%, comum 50%, incomum 30%, rara 15%, épica 6%, lendária 2%, mítica 1%.
+- A criatura capturada vai para a reserva com os genes, a raridade, o nível e as técnicas que tinha.
+- Sem Cápsula, nada é tentado.
+- **Matriz e Cápsula se completam:** a matriz garante a raridade, mas sorteia os genes; a Cápsula guarda exatamente o selvagem que caiu.
+- **Abrir uma matriz:** gera a criatura no nível 1, com genes sorteados na faixa da raridade da matriz. Se a raridade permitir variação prismática, a chance é de 2%.
+
+### Time e reserva
+
+- No F2, uma criatura caça por vez. As demais ficam na reserva, com no máximo 50 espaços.
+- Trocar a criatura ativa encerra a luta em andamento, sem XP e sem derrota.
+
 ### Limite suave
 
 O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% do normal. **[a definir: o texto original dizia que o nível 200 fica cerca de 12% acima do 150, mas pela fórmula a diferença é de no máximo 8,4% (12,5 níveis de ganho sobre 149), menos ainda com base alta. Ou o texto vira "cerca de 8%", ou o ganho depois do 150 sobe para cerca de 36%.]** A diferença no topo vem de genes, raridade e escolha de tipos.
@@ -270,6 +359,11 @@ Ficam para a fase 2, com servidor e regras próprias:
 | Matrizes | Quedas nas rotas, Ilhas | Gerar criaturas |
 | Fragmentos e materiais | Postos, rotas | Despertar, equipamentos |
 
+### Ouro nas rotas e Loja da Cidade
+
+- Cada abate rende metade do XP base da rota em ouro, arredondado para baixo (5, 17, 50, 125 e 325). A Fadiga corta pela metade.
+- **Loja da Cidade:** Cápsula por 50 de ouro, Tônico de Cura por 25 e Tônico de Retorno por 150, sem limite de estoque.
+
 ### Consumo de ouro no fim de jogo
 
 Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cidade** vende matrizes específicas por preço fixo e alto, com estoque que gira a cada dia. O jogador vê exatamente o que compra, sem sorteio.
@@ -311,121 +405,11 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F5 · Eras e equipamentos | Reset de Era e espaços de equipamento | Uma Era completa jogável |
 | F6 · Lançamento solo | Biomas da Era 1, arte, balanceamento e save na nuvem | Versão de navegador publicada |
 
-## 17. Propostas para o F2 **[proposta]**
-
-Tudo nesta seção espera aprovação. Depois de aprovado, cada item vai para a seção correspondente.
-
-### Primeiro bioma: Mata Funda (Brota)
-
-| Rota | Espécies (chance igual) |
-| --- | --- |
-| 1 | Brotelho, Formigaço |
-| 2 | Brotelho, Formigaço, Sapolho |
-| 3 | Formigaço, Sapolho, Ferroa |
-| 4 | Sapolho, Ferroa, Raizudo |
-| 5 | Ferroa, Raizudo, Penugem |
-
-O selvagem nasce num nível sorteado com chance igual dentro da faixa da rota.
-
-### Espécies
-
-Valores base no nível 1, na ordem Vida, Ataque, Defesa, Foco e Velocidade. Técnicas em ordem de prioridade.
-
-| Espécie | Tipos | Base | Técnicas |
-| --- | --- | --- | --- |
-| Gelusco (inicial) | Geada | 50, 13, 11, 13, 12 | Sopro Frio, Lasca Gélida, Mordida, Rajada |
-| Rebitim (inicial) | Liga | 55, 13, 15, 9, 9 | Limalha, Martelada, Investida, Pedrisco |
-| Zumbilo (inicial) | Eco | 45, 9, 10, 15, 14 | Ressonância, Estalo, Pio Sombrio, Rajada |
-| Brotelho | Brota | 45, 10, 12, 10, 10 | Esporos, Golpe de Galho, Mordida |
-| Formigaço | Fera, Peçonha | 40, 13, 10, 8, 12 | Investida, Mordida, Ferrão |
-| Sapolho | Maré, Brota | 55, 9, 11, 13, 8 | Esporos, Jato de Lodo, Golpe de Galho |
-| Ferroa | Peçonha, Brisa | 40, 12, 9, 12, 15 | Névoa Tóxica, Ferrão, Rajada |
-| Raizudo | Brota, Rocha | 60, 13, 15, 8, 6 | Esporos, Pedrisco, Golpe de Galho |
-| Penugem | Penumbra, Brisa | 45, 10, 10, 14, 13 | Pio Sombrio, Rajada, Mordida |
-
-Os três iniciais têm tipos com relações diferentes com a Mata Funda: Geada vence Brota, Liga é neutro e Eco perde para Brota. Assim a escolha de tipo pesa desde o começo.
-
-### Técnicas
-
-| Técnica | Tipo | Categoria | Poder | Recarga |
-| --- | --- | --- | --- | --- |
-| Golpe de Galho | Brota | física | 55 | 3 s |
-| Esporos | Brota | especial | 80 | 6 s |
-| Mordida | Fera | física | 60 | 3 s |
-| Investida | Fera | física | 90 | 8 s |
-| Ferrão | Peçonha | física | 55 | 3 s |
-| Névoa Tóxica | Peçonha | especial | 85 | 7 s |
-| Rajada | Brisa | especial | 55 | 3 s |
-| Pio Sombrio | Penumbra | especial | 70 | 5 s |
-| Jato de Lodo | Maré | especial | 60 | 4 s |
-| Pedrisco | Rocha | física | 60 | 4 s |
-| Lasca Gélida | Geada | física | 55 | 3 s |
-| Sopro Frio | Geada | especial | 85 | 7 s |
-| Martelada | Liga | física | 60 | 3 s |
-| Limalha | Liga | especial | 80 | 6 s |
-| Estalo | Eco | especial | 55 | 3 s |
-| Ressonância | Eco | especial | 90 | 8 s |
-
-### Início do jogo
-
-- O jogador escolhe um dos três iniciais. Ele começa no nível 1, com raridade comum e genes sorteados nessa faixa.
-- Inventário inicial: 200 de ouro, 5 Tônicos de Retorno, 5 Tônicos de Cura e 10 Cápsulas.
-- Só a rota 1 começa liberada.
-
-### Selvagens
-
-- Raridade ao nascer: fraca 25%, comum 55%, incomum 15%, rara 4%, épica 0,9%, lendária 0,09%, mítica 0,01%.
-- Selvagens de raridade épica ou maior têm 2% de chance de serem prismáticos.
-- O próximo selvagem aparece 1 s depois do anterior cair.
-
-### Chefe de rota e avanço
-
-- A cada 100 abates numa rota aparece o chefe dela: a espécie da rota com maior soma de valores base, no nível máximo da faixa, com raridade rara.
-- Vencer o chefe pela primeira vez libera a rota seguinte. Com o avanço automático ligado, a caçada passa para ela.
-- Perder para o chefe segue as regras de derrota da seção 5.
-
-### XP e nível
-
-- Para subir do nível n para o n + 1 são precisos 6 × n² de XP. Ao subir, o XP do nível volta a 0 e o que sobrou passa para o nível seguinte.
-- Com cerca de 4 s por abate (luta mais 1 s de espera), isso dá o nível 10 em cerca de 11 minutos na rota 1 e o nível 100 em cerca de 9 horas de caçada.
-
-### Ouro e loja
-
-- Cada abate rende metade do XP base da rota em ouro, arredondado para baixo (5, 17, 50, 125 e 325). A Fadiga corta pela metade.
-- **Loja da Cidade:** Cápsula por 50 de ouro, Tônico de Cura por 25 e Tônico de Retorno por 150, sem limite de estoque.
-- **Tônico de Cura:** recupera 50% da Vida máxima. O jogador define o gatilho, que começa em 30%. O tônico é usado logo depois do golpe que deixa a vida abaixo do gatilho e não gasta a vez da criatura.
-
-### Cápsulas e captura ociosa (pendência 6)
-
-- O jogador define um filtro de captura com as espécies desejadas e a raridade mínima.
-- Quando um selvagem que passa no filtro cai, o jogo gasta 1 Cápsula e tenta capturar. A chance depende da raridade: fraca 60%, comum 50%, incomum 30%, rara 15%, épica 6%, lendária 2%, mítica 1%.
-- A criatura capturada vai para a reserva com os genes, a raridade, o nível e as técnicas que tinha.
-- Sem Cápsula, nada é tentado.
-- **Matriz e Cápsula se completam:** a matriz garante a raridade, mas sorteia os genes; a Cápsula guarda exatamente o selvagem que caiu.
-- **Abrir uma matriz:** gera a criatura no nível 1, com genes sorteados na faixa da raridade da matriz. Se a raridade permitir variação prismática, a chance é de 2%.
-
-### Time e reserva
-
-- No F2, uma criatura caça por vez. As demais ficam na reserva, com no máximo 50 espaços.
-- Trocar a criatura ativa encerra a luta em andamento, sem XP e sem derrota.
-
-### Luta entre períodos de simulação
-
-Muda a regra aprovada na seção 5, que descarta a luta que não termina até o fim do período. A tela avança a simulação em passos curtos, de cerca de 250 ms, e com a regra atual quase toda luta seria descartada. Proposta: a luta em andamento fica guardada no estado da caçada e continua no período seguinte.
-
-### Duração dos abates **[a definir]**
-
-A tabela da seção 4 prevê abates de 2 s na rota 1 até 12 s na rota 5. Pela fórmula aprovada, porém, Vida e Ataque crescem no mesmo ritmo. Por isso a duração quase não muda com o nível: simulações com os valores acima dão entre 2,5 e 4,5 s em todas as rotas. Opções:
-
-1. Tratar a coluna "Abate médio" como referência e deixar o XP por hora sair do jogo. Na rota 5, isso dá até 4 vezes mais XP por hora que a tabela.
-2. Multiplicar a Vida dos selvagens pela rota (por exemplo 1×, 1,5×, 2×, 3× e 4×) para chegar perto da tabela. As lutas ficam mais longas, e o jogador gasta mais Tônicos de Cura.
-
-## 18. Pendências
+## 17. Pendências
 
 1. 18 biomas para 16 tipos (seção 4): biomas mistos ou mudança na lista de tipos.
 2. Quantos biomas e espécies entram na Era 1 do lançamento solo.
 3. Nome das criaturas no jogo.
-4. Valores base das espécies e curvas de ouro, XP e preços.
-7. Diferença entre os níveis 150 e 200 no limite suave (seção 7).
+4. Valores base das espécies dos demais biomas.
 5. Nível máximo de cada Era e quantas Eras existem.
-6. Cápsulas: como a captura ociosa funciona junto com as matrizes.
+6. Diferença entre os níveis 150 e 200 no limite suave (seção 7).
