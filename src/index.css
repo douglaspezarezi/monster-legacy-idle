@@ -317,3 +317,30 @@ dd {
   opacity: 0.75;
   margin: 0 0 0.5rem;
 }
+
+.nuvem {
+  margin-bottom: 1rem;
+  padding: 0.6rem 1rem;
+}
+
+.nuvem p,
+.nuvem form {
+  margin: 0;
+}
+
+.nuvem input[type='email'] {
+  font: inherit;
+  color: inherit;
+  background: rgb(0 0 0 / 0.3);
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  min-width: 12rem;
+}
+
+.conflito .opcoes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin-top: 0.8rem;
+}

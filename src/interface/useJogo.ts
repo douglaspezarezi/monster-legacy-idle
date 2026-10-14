@@ -10,7 +10,7 @@ import type { EstadoDoJogo } from '../engine/jogo.ts'
 import { novoJogo } from '../engine/jogo.ts'
 import type { Resumo } from '../engine/offline.ts'
 import { creditarTempoFora, resumir } from '../engine/offline.ts'
-import { desserializar, serializar } from '../engine/save.ts'
+import { VERSAO_DO_SAVE, desserializar, serializar } from '../engine/save.ts'
 import { descreverEvento } from './textos.ts'
 
 const PASSO_MS = 100
@@ -30,6 +30,8 @@ export type Sessao = {
   readonly agora: number
   readonly registros: readonly Registro[]
 }
+
+export type SaveExportado = { readonly texto: string; readonly salvoEm: number; readonly versao: number }
 
 export type Volta = {
   readonly foraMs: number
@@ -55,6 +57,37 @@ function gravarSessao(sessao: Sessao) {
   gravar(CHAVE_DO_SAVE, serializar(sessao.estado, sessao.agora))
 }
 
+// Abre um save e credita o tempo fora; lança se o save não abre.
+function carregar(texto: string, agora: number, gerador: Gerador): { readonly sessao: Sessao; readonly volta: Volta | null } {
+  const modelo = novoJogo(CONFIGURACAO.catalogo, CONFIGURACAO.rotas.length, INICIAIS[0], agora, criarGerador(0))
+  const save = desserializar(texto, modelo)
+  const fora = creditarTempoFora(CONFIGURACAO, save.estado, save.salvoEm, agora, gerador)
+  const volta =
+    fora.creditadoMs >= MINIMO_PARA_RESUMO_MS
+      ? { foraMs: agora - save.salvoEm, creditadoMs: fora.creditadoMs, resumo: resumir(fora.eventos), ouroDaForja: fora.ouroDaForja }
+      : null
+  return { sessao: { estado: fora.estado, agora, registros: [] }, volta }
+}
+
+export type ResumoDoSave = {
+  readonly era: number
+  readonly especie: string
+  readonly nivel: number
+  readonly ouro: number
+  readonly salvoEm: number
+}
+
+// O que o jogador precisa ver para escolher entre dois saves; null se o save não abre.
+export function resumoDoSave(texto: string): ResumoDoSave | null {
+  try {
+    const modelo = novoJogo(CONFIGURACAO.catalogo, CONFIGURACAO.rotas.length, INICIAIS[0], 0, criarGerador(0))
+    const { estado, salvoEm } = desserializar(texto, modelo)
+    return { era: estado.era, especie: estado.ativa.especie, nivel: estado.ativa.nivel, ouro: estado.inventario.ouro, salvoEm }
+  } catch {
+    return null
+  }
+}
+
 function abrir(): Abertura {
   const agora = Date.now()
   const gerador = criarGerador(agora)
@@ -67,14 +100,7 @@ function abrir(): Abertura {
   if (texto === null) return { sessao: null, volta: null, gerador }
 
   try {
-    const modelo = novoJogo(CONFIGURACAO.catalogo, CONFIGURACAO.rotas.length, INICIAIS[0], agora, criarGerador(0))
-    const save = desserializar(texto, modelo)
-    const fora = creditarTempoFora(CONFIGURACAO, save.estado, save.salvoEm, agora, gerador)
-    const volta =
-      fora.creditadoMs >= MINIMO_PARA_RESUMO_MS
-        ? { foraMs: agora - save.salvoEm, creditadoMs: fora.creditadoMs, resumo: resumir(fora.eventos), ouroDaForja: fora.ouroDaForja }
-        : null
-    return { sessao: { estado: fora.estado, agora, registros: [] }, volta, gerador }
+    return { ...carregar(texto, agora, gerador), gerador }
   } catch {
     gravar(CHAVE_DO_SAVE_RECUSADO, texto)
     return { sessao: null, volta: null, gerador }
@@ -116,6 +142,23 @@ export function useJogo() {
 
   const fecharVolta = useCallback(() => setVolta(null), [])
 
+  // O save atual como texto, para a nuvem.
+  const exportar = useCallback((): SaveExportado | null => {
+    const s = atual.current
+    return s ? { texto: serializar(s.estado, s.agora), salvoEm: s.agora, versao: VERSAO_DO_SAVE } : null
+  }, [])
+
+  // Troca o jogo por um save vindo da nuvem; lança se ele não abre.
+  const importar = useCallback(
+    (texto: string) => {
+      const carregado = carregar(texto, Date.now(), gerador.current)
+      aplicar(carregado.sessao)
+      setVolta(carregado.volta)
+      gravarSessao(carregado.sessao)
+    },
+    [aplicar],
+  )
+
   const iniciada = sessao !== null
   useEffect(() => {
     if (!iniciada) return
@@ -146,5 +189,5 @@ export function useJogo() {
     }
   }, [iniciada, aplicar])
 
-  return { sessao, volta, comecar, executar, fecharVolta }
+  return { sessao, volta, comecar, executar, fecharVolta, exportar, importar }
 }
