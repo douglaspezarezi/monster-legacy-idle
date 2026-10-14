@@ -1,6 +1,7 @@
 import { CATALOGO } from '../conteudo/jogo.ts'
 import { INICIAIS } from '../conteudo/especies.ts'
 import { especieDo } from '../engine/especie.ts'
+import { Retrato } from './Retrato.tsx'
 
 type Props = { readonly aoEscolher: (especie: string) => void }
 
@@ -14,6 +15,7 @@ export function EscolhaDoInicial({ aoEscolher }: Props) {
           const especie = especieDo(CATALOGO, nome)
           return (
             <button key={nome} className="inicial" onClick={() => aoEscolher(nome)}>
+              <Retrato especie={nome} tipos={especie.tipos} tamanho={80} />
               <strong>{nome}</strong>
               <span>{especie.tipos.join(' / ')}</span>
               <small>{especie.tecnicas.join(', ')}</small>

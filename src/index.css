@@ -280,3 +280,16 @@ dd {
 .botoes.biomas button {
   min-width: 7rem;
 }
+
+.retrato {
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.retrato.prismatico {
+  filter: hue-rotate(160deg) saturate(1.4);
+}
+
+.membro {
+  flex: 1;
+}

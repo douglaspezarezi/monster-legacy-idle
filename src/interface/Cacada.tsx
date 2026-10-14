@@ -30,6 +30,7 @@ import { xpParaSubir } from '../engine/nivel.ts'
 import type { Tipo } from '../conteudo/tipos.ts'
 import { PainelDeCruzamento } from './PainelDeCruzamento.tsx'
 import { PainelDeEquipamentos } from './PainelDeEquipamentos.tsx'
+import { Retrato } from './Retrato.tsx'
 import { NOME_DA_RARIDADE, NOME_DO_ITEM, descreverGenes, formatarTempo } from './textos.ts'
 import type { Comando, Sessao } from './useJogo.ts'
 
@@ -57,6 +58,7 @@ function Barra({ valor, maximo, classe }: { readonly valor: number; readonly max
 function Lutador({ titulo, criatura, combatente }: { readonly titulo: string; readonly criatura: Criatura; readonly combatente: Combatente<Tipo> }) {
   return (
     <div className="lutador">
+      <Retrato especie={criatura.especie} tipos={combatente.tipos} prismatica={criatura.prismatica} />
       <small>{titulo}</small>
       <strong>
         {rotuloDaCriatura(criatura)} · nível {criatura.nivel}
@@ -114,6 +116,7 @@ export function Cacada({ sessao, executar }: Props) {
         )}
         <div className="lutadores">
           <div className="lutador">
+            <Retrato especie={ativa.especie} tipos={especieDo(CATALOGO, ativa.especie).tipos} prismatica={ativa.prismatica} />
             <small>Sua criatura</small>
             <strong>
               {rotuloDaCriatura(ativa)} · nível {ativa.nivel} de {era.teto}
@@ -292,6 +295,7 @@ export function Cacada({ sessao, executar }: Props) {
           <ul className="lista">
             {estado.reserva.map((membro) => (
               <li key={membro.id} className={pais.some((p) => p.id === membro.id) ? 'selecionado' : ''}>
+                <Retrato especie={membro.especie} tipos={especieDo(CATALOGO, membro.especie).tipos} prismatica={membro.prismatica} tamanho={32} />
                 <div className="membro">
                   <span>
                     {rotuloDaCriatura(membro)} · nível {membro.nivel}
