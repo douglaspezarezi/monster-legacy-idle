@@ -4,6 +4,7 @@ import { CATALOGO, CONFIGURACAO } from '../conteudo/jogo.ts'
 import { MATA_FUNDA } from '../conteudo/biomas.ts'
 import { colocarNaForja, ouroPorHoraDaForja, tirarDaForja } from '../engine/base.ts'
 import { ABATES_PARA_O_CHEFE } from '../engine/cacada.ts'
+import { dadosDaEra, podeReiniciarEra, reiniciarEra } from '../engine/era.ts'
 import { ESPACOS_NA_RESERVA } from '../engine/captura.ts'
 import type { Combatente } from '../engine/combate.ts'
 import type { Criatura } from '../engine/criatura.ts'
@@ -27,6 +28,7 @@ import {
 import { xpParaSubir } from '../engine/nivel.ts'
 import type { Tipo } from '../conteudo/tipos.ts'
 import { PainelDeCruzamento } from './PainelDeCruzamento.tsx'
+import { PainelDeEquipamentos } from './PainelDeEquipamentos.tsx'
 import { NOME_DA_RARIDADE, NOME_DO_ITEM, descreverGenes, formatarTempo } from './textos.ts'
 import type { Comando, Sessao } from './useJogo.ts'
 
@@ -71,6 +73,7 @@ export function Cacada({ sessao, executar }: Props) {
   const maximaDaAtiva = vidaMaxima(CATALOGO, ativa)
   const abates = estado.abatesPorRota[estado.rota - 1]
   const fadigaRestante = estado.fadigaAte - agora
+  const era = dadosDaEra(CONFIGURACAO.eras, estado.era)
   const [selecionados, setSelecionados] = useState<readonly number[]>([])
   const naForja = (id: number) => estado.forja.trabalhadores.includes(id)
   // Some da seleção quem saiu da reserva ou foi trabalhar.
@@ -86,12 +89,19 @@ export function Cacada({ sessao, executar }: Props) {
       <section className="painel luta">
         <header>
           <h2>
-            {MATA_FUNDA.nome} · Rota {estado.rota}
+            Era {estado.era} · {MATA_FUNDA.nome} · Rota {estado.rota}
           </h2>
           <span>
             {encontro?.chefe ? 'Chefe da rota!' : `Chefe em ${ABATES_PARA_O_CHEFE - abates} abates`}
           </span>
         </header>
+        {podeReiniciarEra(CONFIGURACAO.eras, estado) && (
+          <p className="aviso">
+            {ativa.especie} chegou ao nível {era.teto}, o teto da Era {estado.era}. Reiniciar a Era leva a criatura ativa ao nível 1, com os
+            mesmos genes, e libera a Era {estado.era + 1}. Ouro, itens, reserva, equipamentos e Forja ficam.{' '}
+            <button onClick={() => executar((e, t) => reiniciarEra(CONFIGURACAO, e, t))}>Reiniciar a Era</button>
+          </p>
+        )}
         {fadigaRestante > 0 && <p className="aviso">Fadiga: metade de XP e ouro por mais {formatarTempo(fadigaRestante)}</p>}
         {estado.pausada && (
           <p className="aviso">
@@ -103,7 +113,7 @@ export function Cacada({ sessao, executar }: Props) {
           <div className="lutador">
             <small>Sua criatura</small>
             <strong>
-              {rotuloDaCriatura(ativa)} · nível {ativa.nivel}
+              {rotuloDaCriatura(ativa)} · nível {ativa.nivel} de {era.teto}
             </strong>
             <span className="tipos">{especieDo(CATALOGO, ativa.especie).tipos.join(' / ')}</span>
             <Barra valor={vidaAtual(estado)} maximo={maximaDaAtiva} classe="vida" />
@@ -128,7 +138,7 @@ export function Cacada({ sessao, executar }: Props) {
                 className={numero === estado.rota ? 'escolhida' : ''}
                 disabled={numero > estado.rotasLiberadas}
                 onClick={() => executar((e, t) => escolherRota(e, numero, t))}
-                title={`Níveis ${rota.faixaDeNivel[0]} a ${rota.faixaDeNivel[1]}: ${MATA_FUNDA.especiesPorRota[i].join(', ')}`}
+                title={numero > era.rotas ? `Liberada numa Era seguinte` : `Níveis ${rota.faixaDeNivel[0]} a ${rota.faixaDeNivel[1]}: ${MATA_FUNDA.especiesPorRota[i].join(', ')}`}
               >
                 {numero}
                 <small>
@@ -315,6 +325,8 @@ export function Cacada({ sessao, executar }: Props) {
           <p>Marque dois pais da mesma linhagem na reserva ({pais.length}/2).</p>
         )}
       </section>
+
+      <PainelDeEquipamentos estado={estado} executar={executar} />
 
       <section className="painel registro">
         <h3>Acontecimentos</h3>

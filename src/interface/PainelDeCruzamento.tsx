@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import { LINHAGENS } from '../conteudo/linhagens.ts'
 import type { Tipo } from '../conteudo/tipos.ts'
-import { GENES_HERDADOS, TAXA_DE_CRUZAMENTO, cruzar, linhagemDe, mesmaLinhagem } from '../engine/cruzamento.ts'
+import { GENES_HERDADOS, cruzar, linhagemDe, mesmaLinhagem, taxaDeCruzamento } from '../engine/cruzamento.ts'
 import type { Atributo } from '../engine/genes.ts'
 import { ATRIBUTOS } from '../engine/genes.ts'
 import type { EstadoDoJogo, Membro } from '../engine/jogo.ts'
@@ -28,7 +28,8 @@ export function PainelDeCruzamento({ estado, pais, executar, aoCruzar }: Props) 
   const [herdados, setHerdados] = useState<readonly Atributo[]>(() => melhoresAtributos(a, b))
 
   const compativeis = mesmaLinhagem(LINHAGENS, a.especie, b.especie)
-  const semOuro = estado.inventario.ouro < TAXA_DE_CRUZAMENTO
+  const taxa = taxaDeCruzamento(estado)
+  const semOuro = estado.inventario.ouro < taxa
   const pronto = compativeis && !semOuro && herdados.length === GENES_HERDADOS
 
   function alternar(atributo: Atributo) {
@@ -78,7 +79,7 @@ export function PainelDeCruzamento({ estado, pais, executar, aoCruzar }: Props) 
           aoCruzar()
         }}
       >
-        Cruzar por {TAXA_DE_CRUZAMENTO} de ouro
+        Cruzar por {taxa} de ouro
       </button>
     </div>
   )
