@@ -65,6 +65,20 @@ Cada criatura tem um ou dois tipos, e cada técnica tem um tipo. O multiplicador
 
 A tabela de vantagens é própria do jogo (seção 6).
 
+### Dano e ritmo **[proposta]**
+
+Cada técnica tem tipo, categoria (física ou especial), poder e recarga em segundos, cadastrados no conteúdo. O ataque básico é físico, sem tipo (multiplicador 1×), com poder 40 e sem recarga.
+
+```
+A, D  = Ataque e Defesa (técnica física) ou Foco e Foco (técnica especial)
+dano  = ⌊ A × (poder ÷ 100) × A ÷ (A + D) × multiplicador de tipo ⌋, no mínimo 1
+```
+
+- Com atributos iguais, uma técnica de poder 100 tira metade do Ataque do atacante.
+- Imunidade dá 0 de dano, sem o mínimo de 1.
+- Sem variação sorteada, sem golpe crítico e sem bônus por a criatura ser do mesmo tipo da técnica: o dano é previsível e a escolha de tipo vem só da tabela.
+- **Ritmo:** cada criatura age a cada `2 s × 2 ÷ (1 + V ÷ Vo)`, onde V é a própria Velocidade e Vo a do oponente, limitado entre 0,5 s e 4 s. Velocidades iguais dão 2 s; o dobro dá cerca de 1,33 s.
+
 ### Derrota durante a caçada
 
 Criaturas selvagens das rotas altas podem derrotar a criatura do jogador, inclusive offline. Quando isso acontece:
@@ -87,6 +101,37 @@ Regras para desenhar a tabela:
 - Cada tipo tem de 2 a 3 vantagens e de 2 a 3 resistências.
 - No máximo 4 imunidades no jogo inteiro, todas explicadas pela ficção do tipo.
 - Nenhum tipo pode ser estritamente melhor que outro em ataque e defesa ao mesmo tempo.
+
+### Tabela de vantagens **[proposta]**
+
+Lida por linha: técnicas do tipo da esquerda causam 2× nos tipos de "Vence", e criaturas do tipo da esquerda recebem 0,5× de "Resiste" e 0× de "Imune a". A coluna "Fraco contra" é consequência das outras duas.
+
+| Tipo | Vence | Resiste | Imune a | Fraco contra |
+| --- | --- | --- | --- | --- |
+| Chama | Brota, Geada, Bruma | Geada, Fera, Peçonha | | Maré, Rocha |
+| Maré | Chama, Rocha | Chama, Rocha, Eco | | Brota, Geada, Peçonha |
+| Brota | Maré, Rocha, Eco | Maré, Rocha, Faísca | | Chama, Brisa, Geada, Peçonha |
+| Rocha | Brisa, Faísca, Chama | Chama, Brisa, Peçonha | | Maré, Brota, Liga, Astro |
+| Brisa | Bruma, Peçonha, Brota | Fera, Maré, Brota | | Rocha, Geada, Cristal |
+| Geada | Maré, Brota, Brisa | Maré, Geada, Brisa | | Chama, Liga, Astro |
+| Faísca | Liga, Fera | Liga, Brisa, Faísca | | Rocha, Bruma |
+| Liga | Cristal, Geada, Rocha | Brota, Brisa | Peçonha | Faísca, Eco |
+| Peçonha | Fera, Brota, Maré | Peçonha, Brota, Fera | | Brisa, Aurora, Cristal |
+| Penumbra | Eco, Aurora, Cristal | Brisa, Liga, Peçonha | | Aurora, Cristal, Fera |
+| Aurora | Penumbra, Bruma, Peçonha | Geada, Astro, Brota | | Penumbra, Bruma |
+| Eco | Cristal, Fera, Liga | Rocha, Fera, Chama | | Brota, Penumbra, Astro |
+| Cristal | Penumbra, Brisa, Peçonha | Aurora, Peçonha, Geada | | Liga, Penumbra, Eco |
+| Fera | Penumbra, Bruma, Astro | Bruma, Rocha | | Faísca, Peçonha, Eco |
+| Bruma | Faísca, Aurora, Astro | Maré, Peçonha | Rocha | Chama, Brisa, Aurora, Fera |
+| Astro | Rocha, Geada, Eco | Brisa, Geada | Eco | Fera, Bruma |
+
+Imunidades (3 no total):
+
+- **Liga é imune a Peçonha:** metal não adoece nem absorve veneno.
+- **Bruma é imune a Rocha:** pedra atravessa a névoa sem acertar nada.
+- **Astro é imune a Eco:** no vazio entre as estrelas o som não se propaga.
+
+A tabela foi conferida por script contra as três regras acima: todo tipo vence 2 ou 3 e resiste a 2 ou 3 (imunidade conta como resistência), nenhum tipo vence e resiste ao mesmo atacante, e nenhum par tem um tipo estritamente melhor que o outro.
 
 ## 7. Criaturas, genes e crescimento
 
@@ -119,9 +164,14 @@ A soma dos genes define a faixa de raridade ao nascer ou cair como matriz. Com c
 
 **Variação prismática:** cor alternativa e +10% em todos os atributos, possível a partir da raridade épica.
 
+### Sorteio de genes e raridade **[proposta]**
+
+- **Raridade primeiro:** selvagens e matrizes decidem a raridade antes (pela rota ou pela matriz) e sorteiam os genes de 1 a 20, um a um com chance igual, repetindo o sorteio até a soma cair na faixa daquela raridade.
+- **Multiplicador dentro da faixa:** cresce em linha reta com a soma dos genes, do mínimo da faixa na menor soma ao máximo na maior, arredondado para duas casas. Exemplo: Comum com soma 29 fica em 1,03.
+
 ### Limite suave
 
-O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% do normal, de modo que o nível 200 fica cerca de 12% acima do 150. A diferença no topo vem de genes, raridade e escolha de tipos.
+O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% do normal. **[a definir: o texto original dizia que o nível 200 fica cerca de 12% acima do 150, mas pela fórmula a diferença é de no máximo 8,4% (12,5 níveis de ganho sobre 149), menos ainda com base alta. Ou o texto vira "cerca de 8%", ou o ganho depois do 150 sobe para cerca de 36%.]** A diferença no topo vem de genes, raridade e escolha de tipos.
 
 ### Evolução
 
@@ -253,6 +303,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 1. 18 biomas para 16 tipos (seção 4): biomas mistos ou mudança na lista de tipos.
 2. Quantos biomas e espécies entram na Era 1 do lançamento solo.
 3. Nome das criaturas no jogo.
-4. Fórmula de dano, valores base e curvas de ouro, XP e preços.
+4. Valores base das espécies e curvas de ouro, XP e preços. Tabela de tipos, dano e sorteio de genes têm proposta nas seções 5, 6 e 7.
+7. Diferença entre os níveis 150 e 200 no limite suave (seção 7).
 5. Nível máximo de cada Era e quantas Eras existem.
 6. Cápsulas: como a captura ociosa funciona junto com as matrizes.
