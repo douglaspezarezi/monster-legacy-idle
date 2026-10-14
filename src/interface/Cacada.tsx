@@ -1,0 +1,277 @@
+// Tela da caçada: desenha o estado e envia comandos ao motor.
+import { CATALOGO, CONFIGURACAO } from '../conteudo/jogo.ts'
+import { MATA_FUNDA } from '../conteudo/biomas.ts'
+import { ABATES_PARA_O_CHEFE } from '../engine/cacada.ts'
+import { ESPACOS_NA_RESERVA } from '../engine/captura.ts'
+import type { Combatente } from '../engine/combate.ts'
+import type { Criatura } from '../engine/criatura.ts'
+import { especieDo } from '../engine/especie.ts'
+import type { Raridade } from '../engine/genes.ts'
+import { FAIXAS_DE_RARIDADE, raridadeDosGenes } from '../engine/genes.ts'
+import type { ItemDaLoja } from '../engine/jogo.ts'
+import {
+  PRECOS,
+  abrirMatrizDoInventario,
+  comprar,
+  definirAvancoAutomatico,
+  definirFiltroDeCaptura,
+  definirGatilhoDeCura,
+  escolherRota,
+  retomarCacada,
+  trocarAtiva,
+  vidaAtual,
+  vidaMaxima,
+} from '../engine/jogo.ts'
+import { xpParaSubir } from '../engine/nivel.ts'
+import type { Tipo } from '../conteudo/tipos.ts'
+import { NOME_DA_RARIDADE, NOME_DO_ITEM, formatarTempo } from './textos.ts'
+import type { Comando, Sessao } from './useJogo.ts'
+
+type Props = { readonly sessao: Sessao; readonly executar: (comando: Comando) => void }
+
+const ITENS: readonly ItemDaLoja[] = ['capsula', 'tonicoDeCura', 'tonicoDeRetorno']
+const ESPECIES_DO_BIOMA = [...new Set(MATA_FUNDA.especiesPorRota.flat())]
+
+function rotuloDaCriatura(criatura: Criatura): string {
+  const raridade = NOME_DA_RARIDADE[raridadeDosGenes(criatura.genes)]
+  return `${criatura.especie} ${raridade}${criatura.prismatica ? ' prismática' : ''}`
+}
+
+function Barra({ valor, maximo, classe }: { readonly valor: number; readonly maximo: number; readonly classe: string }) {
+  const fracao = maximo > 0 ? Math.max(0, Math.min(1, valor / maximo)) : 0
+  return (
+    <div className={`barra ${classe}`}>
+      <div className="preenchimento" style={{ width: `${fracao * 100}%` }} />
+      <span>
+        {Math.ceil(valor)} / {Math.ceil(maximo)}
+      </span>
+    </div>
+  )
+}
+
+function Lutador({ titulo, criatura, combatente }: { readonly titulo: string; readonly criatura: Criatura; readonly combatente: Combatente<Tipo> }) {
+  return (
+    <div className="lutador">
+      <small>{titulo}</small>
+      <strong>
+        {rotuloDaCriatura(criatura)} · nível {criatura.nivel}
+      </strong>
+      <span className="tipos">{combatente.tipos.join(' / ')}</span>
+      <Barra valor={combatente.vida} maximo={combatente.atributos.vida} classe="vida" />
+    </div>
+  )
+}
+
+export function Cacada({ sessao, executar }: Props) {
+  const { estado, agora, registros } = sessao
+  const { ativa, inventario, encontro } = estado
+  const maximaDaAtiva = vidaMaxima(CATALOGO, ativa)
+  const abates = estado.abatesPorRota[estado.rota - 1]
+  const fadigaRestante = estado.fadigaAte - agora
+
+  return (
+    <div className="cacada">
+      <section className="painel luta">
+        <header>
+          <h2>
+            {MATA_FUNDA.nome} · Rota {estado.rota}
+          </h2>
+          <span>
+            {encontro?.chefe ? 'Chefe da rota!' : `Chefe em ${ABATES_PARA_O_CHEFE - abates} abates`}
+          </span>
+        </header>
+        {fadigaRestante > 0 && <p className="aviso">Fadiga: metade de XP e ouro por mais {formatarTempo(fadigaRestante)}</p>}
+        {estado.pausada && (
+          <p className="aviso">
+            Caçada pausada sem Tônico de Retorno.{' '}
+            <button onClick={() => executar((e, t) => retomarCacada(e, CATALOGO, t))}>Retomar</button>
+          </p>
+        )}
+        <div className="lutadores">
+          <div className="lutador">
+            <small>Sua criatura</small>
+            <strong>
+              {rotuloDaCriatura(ativa)} · nível {ativa.nivel}
+            </strong>
+            <span className="tipos">{especieDo(CATALOGO, ativa.especie).tipos.join(' / ')}</span>
+            <Barra valor={vidaAtual(estado)} maximo={maximaDaAtiva} classe="vida" />
+            <Barra valor={ativa.xpNoNivel} maximo={xpParaSubir(ativa.nivel)} classe="xp" />
+          </div>
+          {encontro ? (
+            <Lutador titulo={encontro.chefe ? 'Chefe' : 'Selvagem'} criatura={encontro.selvagem} combatente={encontro.luta.selvagem} />
+          ) : (
+            <div className="lutador vazio">{estado.pausada ? '' : 'Procurando…'}</div>
+          )}
+        </div>
+      </section>
+
+      <section className="painel rotas">
+        <h3>Rotas</h3>
+        <div className="botoes">
+          {CONFIGURACAO.rotas.map((rota, i) => {
+            const numero = i + 1
+            return (
+              <button
+                key={numero}
+                className={numero === estado.rota ? 'escolhida' : ''}
+                disabled={numero > estado.rotasLiberadas}
+                onClick={() => executar((e, t) => escolherRota(e, numero, t))}
+                title={`Níveis ${rota.faixaDeNivel[0]} a ${rota.faixaDeNivel[1]}: ${MATA_FUNDA.especiesPorRota[i].join(', ')}`}
+              >
+                {numero}
+                <small>
+                  {rota.faixaDeNivel[0]}–{rota.faixaDeNivel[1]}
+                </small>
+              </button>
+            )
+          })}
+        </div>
+        <label className="opcao">
+          <input
+            type="checkbox"
+            checked={estado.avancoAutomatico}
+            onChange={(ev) => {
+              const ligado = ev.target.checked
+              executar((e) => definirAvancoAutomatico(e, ligado))
+            }}
+          />
+          Avanço automático depois do chefe
+        </label>
+      </section>
+
+      <section className="painel inventario">
+        <h3>Inventário</h3>
+        <dl>
+          <dt>Ouro</dt>
+          <dd>{inventario.ouro}</dd>
+          <dt>Cápsulas</dt>
+          <dd>{inventario.capsulas}</dd>
+          <dt>Tônicos de Cura</dt>
+          <dd>{inventario.tonicosDeCura}</dd>
+          <dt>Tônicos de Retorno</dt>
+          <dd>{inventario.tonicosDeRetorno}</dd>
+        </dl>
+        <h4>Loja da Cidade</h4>
+        {ITENS.map((item) => (
+          <div key={item} className="item-da-loja">
+            <span>
+              {NOME_DO_ITEM[item]} · {PRECOS[item]}
+            </span>
+            {[1, 10].map((quantidade) => (
+              <button
+                key={quantidade}
+                disabled={PRECOS[item] * quantidade > inventario.ouro}
+                onClick={() => executar((e) => comprar(e, item, quantidade))}
+              >
+                +{quantidade}
+              </button>
+            ))}
+          </div>
+        ))}
+        <label className="opcao">
+          Usar Tônico de Cura abaixo de {Math.round(estado.gatilhoDeCura * 100)}% da vida
+          <input
+            type="range"
+            min={0}
+            max={100}
+            step={5}
+            value={Math.round(estado.gatilhoDeCura * 100)}
+            onChange={(ev) => {
+              const gatilho = Number(ev.target.value) / 100
+              executar((e) => definirGatilhoDeCura(e, gatilho))
+            }}
+          />
+        </label>
+      </section>
+
+      <section className="painel captura">
+        <h3>Captura</h3>
+        <p>Uma Cápsula é usada em cada selvagem vencido que passa no filtro.</p>
+        <div className="especies">
+          {ESPECIES_DO_BIOMA.map((nome) => {
+            const marcada = estado.filtroDeCaptura.especies.includes(nome)
+            return (
+              <label key={nome} className="opcao">
+                <input
+                  type="checkbox"
+                  checked={marcada}
+                  onChange={() =>
+                    executar((e) => {
+                      const especies = marcada
+                        ? e.filtroDeCaptura.especies.filter((n) => n !== nome)
+                        : [...e.filtroDeCaptura.especies, nome]
+                      return definirFiltroDeCaptura(e, { ...e.filtroDeCaptura, especies })
+                    })
+                  }
+                />
+                {nome}
+              </label>
+            )
+          })}
+        </div>
+        <label className="opcao">
+          Raridade mínima
+          <select
+            value={estado.filtroDeCaptura.raridadeMinima}
+            onChange={(ev) => {
+              const raridadeMinima = ev.target.value as Raridade
+              executar((e) => definirFiltroDeCaptura(e, { ...e.filtroDeCaptura, raridadeMinima }))
+            }}
+          >
+            {FAIXAS_DE_RARIDADE.map(({ raridade }) => (
+              <option key={raridade} value={raridade}>
+                {NOME_DA_RARIDADE[raridade]}
+              </option>
+            ))}
+          </select>
+        </label>
+      </section>
+
+      <section className="painel reserva">
+        <h3>
+          Reserva ({estado.reserva.length}/{ESPACOS_NA_RESERVA})
+        </h3>
+        {inventario.matrizes.length > 0 && (
+          <ul className="lista">
+            {inventario.matrizes.map((matriz, i) => (
+              <li key={i}>
+                <span>
+                  Matriz: {matriz.especie} {NOME_DA_RARIDADE[matriz.raridade]}
+                </span>
+                <button
+                  disabled={estado.reserva.length >= ESPACOS_NA_RESERVA}
+                  onClick={() => executar((e, _t, g) => abrirMatrizDoInventario(e, i, g))}
+                >
+                  Abrir
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        {estado.reserva.length === 0 ? (
+          <p>Nenhuma criatura na reserva.</p>
+        ) : (
+          <ul className="lista">
+            {estado.reserva.map((membro) => (
+              <li key={membro.id}>
+                <span>
+                  {rotuloDaCriatura(membro)} · nível {membro.nivel}
+                </span>
+                <button onClick={() => executar((e, t) => trocarAtiva(e, CATALOGO, membro.id, t))}>Ativar</button>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      <section className="painel registro">
+        <h3>Acontecimentos</h3>
+        <ul>
+          {registros.map((r) => (
+            <li key={r.id}>{r.texto}</li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  )
+}
