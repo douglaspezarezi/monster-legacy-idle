@@ -1,5 +1,6 @@
 // Liga o relógio da tela ao motor: a cada passo a caçada avança até agora.
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { INICIAIS } from '../conteudo/especies.ts'
 import { CONFIGURACAO } from '../conteudo/jogo.ts'
 import type { Tipo } from '../conteudo/tipos.ts'
 import type { Gerador } from '../engine/aleatorio.ts'
@@ -66,7 +67,8 @@ function abrir(): Abertura {
   if (texto === null) return { sessao: null, volta: null, gerador }
 
   try {
-    const save = desserializar<Tipo>(texto)
+    const modelo = novoJogo(CONFIGURACAO.catalogo, CONFIGURACAO.rotas.length, INICIAIS[0], agora, criarGerador(0))
+    const save = desserializar(texto, modelo)
     const fora = creditarTempoFora(CONFIGURACAO, save.estado, save.salvoEm, agora, gerador)
     const volta =
       fora.creditadoMs >= MINIMO_PARA_RESUMO_MS

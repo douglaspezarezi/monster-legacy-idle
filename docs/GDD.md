@@ -55,7 +55,7 @@ Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem 
 | 4 | Sapolho, Ferroa, Raizudo |
 | 5 | Ferroa, Raizudo, Penugem |
 
-### Biomas da Era 1 **[proposta]**
+### Biomas da Era 1
 
 Quatro biomas, todos abertos desde o começo. Cada um favorece um inicial, para que a escolha de tipo e as capturas de um bioma ajudem no outro.
 
@@ -169,7 +169,7 @@ dano  = ⌊ A × (poder ÷ 100) × A ÷ (A + D) × multiplicador de tipo ⌋, no
 | Estalo | Eco | especial | 55 | 3 s |
 | Ressonância | Eco | especial | 90 | 8 s |
 
-Técnicas novas dos biomas da Era 1 **[proposta]**:
+Técnicas novas dos biomas da Era 1:
 
 | Técnica | Tipo | Categoria | Poder | Recarga |
 | --- | --- | --- | --- | --- |
@@ -296,7 +296,7 @@ Valores base no nível 1, na ordem Vida, Ataque, Defesa, Foco e Velocidade. Téc
 
 Os três iniciais têm tipos com relações diferentes com a Mata Funda: Geada vence Brota, Liga é neutro e Eco perde para Brota. Assim a escolha de tipo pesa desde o começo.
 
-Espécies dos biomas novos da Era 1 **[proposta]**. As somas das bases seguem a Mata Funda: perto de 87 nas espécies da rota 1 e perto de 102 no chefe da rota 5.
+Espécies dos biomas novos da Era 1. As somas das bases seguem a Mata Funda: perto de 87 nas espécies da rota 1 e perto de 102 no chefe da rota 5.
 
 | Espécie | Tipos | Base | Técnicas |
 | --- | --- | --- | --- |
@@ -424,7 +424,7 @@ As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a 
 ### Cruzamento no F4
 
 - **Linhagens:** Raiz (Brotelho, Sapolho, Raizudo), Enxame (Formigaço, Ferroa) e Asa (Penugem, Zumbilo). Gelusco e Rebitim formam cada um a sua linhagem e só cruzam com a mesma espécie até chegarem espécies afins de outros biomas.
-- **Linhagens com os biomas novos [proposta]:** Raiz (Brotelho, Sapolho, Raizudo); Enxame (Formigaço, Ferroa, Medusela); Asa (Penugem, Zumbilo, Zoadeiro, Saltico); Gelo (Gelusco, Geleiro); Metal (Rebitim, Cravelho); Pedra (Seixote, Drusito, Muralhão); Gruta (Grutilo, Abissão); Faísca (Fagulhito, Enguiço); Manada (Trotelo, Chifrudo, Lobruma, Tourado); Concha (Bolhim, Siriço). Assim os três iniciais passam a ter com quem cruzar.
+- **Linhagens com os biomas novos:** Raiz (Brotelho, Sapolho, Raizudo); Enxame (Formigaço, Ferroa, Medusela); Asa (Penugem, Zumbilo, Zoadeiro, Saltico); Gelo (Gelusco, Geleiro); Metal (Rebitim, Cravelho); Pedra (Seixote, Drusito, Muralhão); Gruta (Grutilo, Abissão); Faísca (Fagulhito, Enguiço); Manada (Trotelo, Chifrudo, Lobruma, Tourado); Concha (Bolhim, Siriço). Assim os três iniciais passam a ter com quem cruzar.
 - **Pais:** duas criaturas da reserva, fora de posto de trabalho. A ativa não cruza. A taxa é de 300 de ouro.
 - **Herança:** o jogador escolhe 3 atributos; cada um recebe o maior gene entre os dois pais. Os outros 2 são sorteados de 1 a 20, com chance igual.
 - A raridade do filhote sai da soma dos genes (seção 7). Se a raridade permitir, a chance de ser prismático é de 2%.
@@ -509,7 +509,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 ## 17. Pendências
 
 1. 18 biomas para 16 tipos (seção 4): biomas mistos ou mudança na lista de tipos.
-2. Quantos biomas e espécies entram na Era 1 do lançamento solo.
+2. Biomas e espécies da Era 2 em diante (a Era 1 tem os 4 biomas da seção 4).
 3. Nome das criaturas no jogo.
 4. Valores base das espécies dos demais biomas.
 5. Biomas das Eras 3 e 4 (tetos 150 e 200) e se há mais Eras depois delas.

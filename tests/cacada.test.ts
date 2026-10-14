@@ -174,7 +174,7 @@ describe('matrizes', () => {
     expect(matrizes.length).toBeGreaterThan(abates(r) * 0.007)
     expect(matrizes.length).toBeLessThan(abates(r) * 0.013)
     expect(new Set(matrizes.map((m) => m.raridade))).toEqual(new Set(['comum']))
-    for (const m of matrizes) expect(CONFIGURACAO.especiesPorRota[0]).toContain(m.especie)
+    for (const m of matrizes) expect(CONFIGURACAO.biomas[0].especiesPorRota[0]).toContain(m.especie)
   })
 })
 

@@ -30,8 +30,19 @@ export type Encontro<Tipo extends string> = {
   readonly luta: Luta<Tipo>
 }
 
+// Rota em que a caçada estava, rotas liberadas e contadores de chefe de um bioma.
+export type ProgressoDoBioma = {
+  readonly rota: number
+  readonly rotasLiberadas: number
+  readonly abatesPorRota: readonly number[]
+}
+
 export type EstadoDoJogo<Tipo extends string> = {
   readonly era: number
+  // Índice do bioma da caçada. As rotas e contadores dele ficam nos campos rota, rotasLiberadas e abatesPorRota.
+  readonly bioma: number
+  // Progresso dos demais biomas, por índice; o bioma que falta começa do zero.
+  readonly outrosBiomas: Readonly<Record<number, ProgressoDoBioma>>
   readonly ativa: Membro
   // Vida da criatura ativa fora de luta; durante a luta vale a da luta.
   readonly vidaDaAtiva: number
@@ -92,6 +103,8 @@ export function novoJogo<Tipo extends string>(
   const ativa: Membro = { ...criarInicial(gerador, especieInicial), id: 1, era: 1 }
   return {
     era: 1,
+    bioma: 0,
+    outrosBiomas: {},
     ativa,
     vidaDaAtiva: vidaMaxima(catalogo, ativa),
     reserva: [],
@@ -152,6 +165,25 @@ export function escolherRota<Tipo extends string>(estado: EstadoDoJogo<Tipo>, ro
   if (!Number.isInteger(rota) || rota < 1 || rota > estado.rotasLiberadas) throw new RangeError(`rota trancada: ${rota}`)
   if (rota === estado.rota) return estado
   return { ...semEncontro(estado, agora), rota }
+}
+
+export function progressoNovo(numeroDeRotas: number): ProgressoDoBioma {
+  return { rota: 1, rotasLiberadas: 1, abatesPorRota: Array.from({ length: numeroDeRotas }, () => 0) }
+}
+
+// O progresso do bioma atual vai para a guarda e o do bioma escolhido volta dela.
+export function escolherBioma<Tipo extends string>(
+  estado: EstadoDoJogo<Tipo>,
+  numeroDeBiomas: number,
+  bioma: number,
+  agora: number,
+): EstadoDoJogo<Tipo> {
+  if (!Number.isInteger(bioma) || bioma < 0 || bioma >= numeroDeBiomas) throw new RangeError(`bioma inexistente: ${bioma}`)
+  if (bioma === estado.bioma) return estado
+  const { [bioma]: guardado, ...demais } = estado.outrosBiomas
+  const destino = guardado ?? progressoNovo(estado.abatesPorRota.length)
+  const atual: ProgressoDoBioma = { rota: estado.rota, rotasLiberadas: estado.rotasLiberadas, abatesPorRota: estado.abatesPorRota }
+  return { ...semEncontro(estado, agora), bioma, outrosBiomas: { ...demais, [estado.bioma]: atual }, ...destino }
 }
 
 export function abrirMatrizDoInventario<Tipo extends string>(

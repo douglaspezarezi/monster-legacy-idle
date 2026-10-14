@@ -3,7 +3,7 @@ import { FORJA_VAZIA } from './base.ts'
 import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 
-export const VERSAO_DO_SAVE = 4
+export const VERSAO_DO_SAVE = 5
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
@@ -18,6 +18,8 @@ const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Re
   }),
   // A versão 4 trouxe os equipamentos.
   3: (estado) => ({ ...estado, equipamentos: SEM_EQUIPAMENTOS }),
+  // A versão 5 trouxe os biomas: o progresso que existia é da Mata Funda.
+  4: (estado) => ({ ...estado, bioma: 0, outrosBiomas: {} }),
 }
 
 function naEra1(membro: unknown): unknown {
@@ -40,8 +42,9 @@ function ehObjeto(valor: unknown): valor is Record<string, unknown> {
   return typeof valor === 'object' && valor !== null
 }
 
-// Recusa texto que não é save e versões que o jogo não conhece.
-export function desserializar<Tipo extends string>(texto: string): Save<Tipo> {
+// Recusa texto que não é save, versões que o jogo não conhece e estados sem algum campo do modelo,
+// que é um jogo novo: um save gravado com a versão certa e campos faltando não pode abrir.
+export function desserializar<Tipo extends string>(texto: string, modelo: EstadoDoJogo<Tipo>): Save<Tipo> {
   let dados: unknown
   try {
     dados = JSON.parse(texto)
@@ -57,5 +60,7 @@ export function desserializar<Tipo extends string>(texto: string): Save<Tipo> {
     estado = MIGRACOES[versao](estado)
     versao++
   }
+  const faltando = Object.keys(modelo).filter((campo) => !(campo in estado))
+  if (faltando.length > 0) throw new SyntaxError(`save incompleto: falta ${faltando.join(', ')}`)
   return { versao, salvoEm: dados.salvoEm, estado: estado as EstadoDoJogo<Tipo> }
 }

@@ -56,7 +56,7 @@ export function descreverEvento(evento: Evento): string {
         ? `Capturou ${evento.especie} ${NOME_DA_RARIDADE[evento.raridade]}`
         : `${evento.especie} ${NOME_DA_RARIDADE[evento.raridade]} escapou da Cápsula`
     case 'rota-liberada':
-      return `Rota ${evento.rota} liberada`
+      return `${evento.bioma}: rota ${evento.rota} liberada`
     case 'equipamento':
       return `O chefe deixou um equipamento: ${NOME_DO_ESPACO[evento.equipamento.espaco]} ${NOME_DA_RARIDADE[evento.equipamento.raridade]}`
   }

@@ -21,7 +21,7 @@ export function podeReiniciarEra<Tipo extends string>(eras: readonly DadosDeEra[
   return estado.era < eras.length && estado.ativa.nivel >= dadosDaEra(eras, estado.era).teto
 }
 
-// A ativa volta ao nível 1 com os mesmos genes; rotas e chefes voltam ao começo. O resto fica.
+// A ativa volta ao nível 1 com os mesmos genes; rotas e chefes de todos os biomas voltam ao começo. O resto fica.
 export function reiniciarEra<Tipo extends string>(
   configuracao: { readonly eras: readonly DadosDeEra[]; readonly catalogo: Catalogo<Tipo> },
   estado: EstadoDoJogo<Tipo>,
@@ -38,6 +38,8 @@ export function reiniciarEra<Tipo extends string>(
     rota: 1,
     rotasLiberadas: 1,
     abatesPorRota: estado.abatesPorRota.map(() => 0),
+    // Os demais biomas também voltam à rota 1.
+    outrosBiomas: {},
     encontro: null,
     pausada: false,
     proximoSelvagemEm: agora,

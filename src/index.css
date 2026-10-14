@@ -272,3 +272,11 @@ dd {
   display: flex;
   gap: 0.3rem;
 }
+
+.botoes.biomas {
+  flex-wrap: wrap;
+}
+
+.botoes.biomas button {
+  min-width: 7rem;
+}

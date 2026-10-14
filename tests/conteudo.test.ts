@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { MATA_FUNDA } from '../src/conteudo/biomas.ts'
+import { BIOMAS } from '../src/conteudo/biomas.ts'
 import { ESPECIES, INICIAIS } from '../src/conteudo/especies.ts'
 import { ROTAS } from '../src/conteudo/rotas.ts'
 import { TECNICAS } from '../src/conteudo/tecnicas.ts'
@@ -25,13 +25,28 @@ describe('conteúdo', () => {
     for (const tecnica of especie.tecnicas) expect(nomesDeTecnicas).toContain(tecnica)
   })
 
-  it('iniciais e espécies do bioma existem', () => {
+  it('iniciais e espécies dos biomas existem', () => {
     for (const nome of INICIAIS) expect(nomesDeEspecies).toContain(nome)
-    expect(MATA_FUNDA.especiesPorRota).toHaveLength(ROTAS.length)
-    for (const especies of MATA_FUNDA.especiesPorRota) {
-      expect(especies.length).toBeGreaterThan(0)
-      for (const nome of especies) expect(nomesDeEspecies).toContain(nome)
+    for (const bioma of BIOMAS) {
+      expect(bioma.especiesPorRota).toHaveLength(ROTAS.length)
+      for (const especies of bioma.especiesPorRota) {
+        expect(especies.length).toBeGreaterThan(0)
+        for (const nome of especies) expect(nomesDeEspecies).toContain(nome)
+      }
     }
+  })
+
+  it('nomes únicos e toda espécie que não é inicial aparece em algum bioma', () => {
+    expect(nomesDeEspecies.size).toBe(ESPECIES.length)
+    expect(nomesDeTecnicas.size).toBe(TECNICAS.length)
+    const nosBiomas = new Set(BIOMAS.flatMap((b) => b.especiesPorRota.flat()))
+    for (const nome of nomesDeEspecies) {
+      if (!(INICIAIS as readonly string[]).includes(nome)) expect(nosBiomas).toContain(nome)
+    }
+  })
+
+  it('a Era 1 tem quatro biomas de tipos diferentes', () => {
+    expect(BIOMAS.map((b) => b.tipo)).toEqual(['Brota', 'Rocha', 'Fera', 'Maré'])
   })
 
   it('as faixas de nível das rotas são contíguas', () => {

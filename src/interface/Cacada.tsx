@@ -1,7 +1,7 @@
 // Tela da caçada: desenha o estado e envia comandos ao motor.
 import { useState } from 'react'
 import { CATALOGO, CONFIGURACAO } from '../conteudo/jogo.ts'
-import { MATA_FUNDA } from '../conteudo/biomas.ts'
+import { BIOMAS } from '../conteudo/biomas.ts'
 import { colocarNaForja, ouroPorHoraDaForja, tirarDaForja } from '../engine/base.ts'
 import { ABATES_PARA_O_CHEFE } from '../engine/cacada.ts'
 import { dadosDaEra, podeReiniciarEra, reiniciarEra } from '../engine/era.ts'
@@ -19,6 +19,7 @@ import {
   definirAvancoAutomatico,
   definirFiltroDeCaptura,
   definirGatilhoDeCura,
+  escolherBioma,
   escolherRota,
   retomarCacada,
   trocarAtiva,
@@ -35,7 +36,6 @@ import type { Comando, Sessao } from './useJogo.ts'
 type Props = { readonly sessao: Sessao; readonly executar: (comando: Comando) => void }
 
 const ITENS: readonly ItemDaLoja[] = ['capsula', 'tonicoDeCura', 'tonicoDeRetorno']
-const ESPECIES_DO_BIOMA = [...new Set(MATA_FUNDA.especiesPorRota.flat())]
 
 function rotuloDaCriatura(criatura: Criatura): string {
   const raridade = NOME_DA_RARIDADE[raridadeDosGenes(criatura.genes)]
@@ -74,6 +74,9 @@ export function Cacada({ sessao, executar }: Props) {
   const abates = estado.abatesPorRota[estado.rota - 1]
   const fadigaRestante = estado.fadigaAte - agora
   const era = dadosDaEra(CONFIGURACAO.eras, estado.era)
+  const bioma = BIOMAS[estado.bioma]
+  // As espécies do bioma atual e as já marcadas em outros biomas.
+  const especiesDoFiltro = [...new Set([...bioma.especiesPorRota.flat(), ...estado.filtroDeCaptura.especies])]
   const [selecionados, setSelecionados] = useState<readonly number[]>([])
   const naForja = (id: number) => estado.forja.trabalhadores.includes(id)
   // Some da seleção quem saiu da reserva ou foi trabalhar.
@@ -89,7 +92,7 @@ export function Cacada({ sessao, executar }: Props) {
       <section className="painel luta">
         <header>
           <h2>
-            Era {estado.era} · {MATA_FUNDA.nome} · Rota {estado.rota}
+            Era {estado.era} · {bioma.nome} · Rota {estado.rota}
           </h2>
           <span>
             {encontro?.chefe ? 'Chefe da rota!' : `Chefe em ${ABATES_PARA_O_CHEFE - abates} abates`}
@@ -128,6 +131,19 @@ export function Cacada({ sessao, executar }: Props) {
       </section>
 
       <section className="painel rotas">
+        <h3>Biomas</h3>
+        <div className="botoes biomas">
+          {BIOMAS.map((b, i) => (
+            <button
+              key={b.nome}
+              className={i === estado.bioma ? 'escolhida' : ''}
+              onClick={() => executar((e, t) => escolherBioma(e, BIOMAS.length, i, t))}
+            >
+              {b.nome}
+              <small>{b.tipo}</small>
+            </button>
+          ))}
+        </div>
         <h3>Rotas</h3>
         <div className="botoes">
           {CONFIGURACAO.rotas.map((rota, i) => {
@@ -138,7 +154,7 @@ export function Cacada({ sessao, executar }: Props) {
                 className={numero === estado.rota ? 'escolhida' : ''}
                 disabled={numero > estado.rotasLiberadas}
                 onClick={() => executar((e, t) => escolherRota(e, numero, t))}
-                title={numero > era.rotas ? `Liberada numa Era seguinte` : `Níveis ${rota.faixaDeNivel[0]} a ${rota.faixaDeNivel[1]}: ${MATA_FUNDA.especiesPorRota[i].join(', ')}`}
+                title={numero > era.rotas ? `Liberada numa Era seguinte` : `Níveis ${rota.faixaDeNivel[0]} a ${rota.faixaDeNivel[1]}: ${bioma.especiesPorRota[i].join(', ')}`}
               >
                 {numero}
                 <small>
@@ -210,7 +226,7 @@ export function Cacada({ sessao, executar }: Props) {
         <h3>Captura</h3>
         <p>Uma Cápsula é usada em cada selvagem vencido que passa no filtro.</p>
         <div className="especies">
-          {ESPECIES_DO_BIOMA.map((nome) => {
+          {especiesDoFiltro.map((nome) => {
             const marcada = estado.filtroDeCaptura.especies.includes(nome)
             return (
               <label key={nome} className="opcao">

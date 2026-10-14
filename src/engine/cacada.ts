@@ -30,12 +30,19 @@ export type DadosDeRota = {
 
 export const ABATES_PARA_O_CHEFE = 100
 
+export type DadosDeBioma<Tipo extends string> = {
+  readonly nome: string
+  readonly tipo: Tipo
+  // Espécies de cada rota, com chance igual; índice 0 para a rota 1.
+  readonly especiesPorRota: readonly (readonly string[])[]
+}
+
 export type ConfiguracaoDaCacada<Tipo extends string> = {
   readonly tabela: TabelaDeTipos<Tipo>
   readonly catalogo: Catalogo<Tipo>
-  // Índice 0 para a rota 1, nas duas listas.
+  // Índice 0 para a rota 1.
   readonly rotas: readonly DadosDeRota[]
-  readonly especiesPorRota: readonly (readonly string[])[]
+  readonly biomas: readonly DadosDeBioma<Tipo>[]
   readonly intervaloEntreSelvagensMs: number
   readonly eras: readonly DadosDeEra[]
 }
@@ -46,7 +53,7 @@ export type Evento =
   | { readonly tipo: 'nivel'; readonly instante: number; readonly nivel: number }
   | { readonly tipo: 'matriz'; readonly instante: number; readonly matriz: Matriz }
   | { readonly tipo: 'captura'; readonly instante: number; readonly especie: string; readonly raridade: Raridade; readonly sucesso: boolean }
-  | { readonly tipo: 'rota-liberada'; readonly instante: number; readonly rota: number }
+  | { readonly tipo: 'rota-liberada'; readonly instante: number; readonly bioma: string; readonly rota: number }
   | { readonly tipo: 'equipamento'; readonly instante: number; readonly equipamento: Equipamento }
 
 export type ResultadoDaCacada<Tipo extends string> = {
@@ -61,7 +68,7 @@ function encontrar<Tipo extends string>(
   gerador: Gerador,
 ): Encontro<Tipo> {
   const rota = configuracao.rotas[estado.rota - 1]
-  const especies = configuracao.especiesPorRota[estado.rota - 1]
+  const especies = configuracao.biomas[estado.bioma].especiesPorRota[estado.rota - 1]
   const chefe = estado.abatesPorRota[estado.rota - 1] >= ABATES_PARA_O_CHEFE
   const selvagem = chefe
     ? gerarChefe(configuracao.catalogo, gerador, especies, rota.faixaDeNivel)
@@ -134,7 +141,7 @@ function vencer<Tipo extends string>(
     abatesPorRota = comAbates(estado.abatesPorRota, numeroDaRota, 0)
     if (numeroDaRota === rotasLiberadas && rotasLiberadas < Math.min(era.rotas, configuracao.rotas.length)) {
       rotasLiberadas++
-      eventos.push({ tipo: 'rota-liberada', instante: agora, rota: rotasLiberadas })
+      eventos.push({ tipo: 'rota-liberada', instante: agora, bioma: configuracao.biomas[estado.bioma].nome, rota: rotasLiberadas })
     }
     if (estado.avancoAutomatico && numeroDaRota < rotasLiberadas) numeroDaRota++
   } else {
