@@ -20,6 +20,7 @@ Uma tarefa só está concluída quando `npm test` e `npm run build` passam.
 ```
 src/
   engine/     regras puras de jogo, sem tela
+  conteudo/   dados de jogo: tipos, espécies, técnicas, biomas
   ...         as demais pastas entram quando forem necessárias
 tests/        testes do motor
 docs/GDD.md   documento de design

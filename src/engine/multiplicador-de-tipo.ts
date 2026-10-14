@@ -22,3 +22,22 @@ export function multiplicadorDeTipo<Tipo extends string>(
   }
   return tiposDoDefensor.reduce((total, tipo) => total * FATOR[tabela(tipoDaTecnica, tipo)], 1)
 }
+
+// Linha da tabela de vantagens, como vem do conteúdo.
+export type DadosDeTipo<Tipo extends string> = {
+  readonly vence: readonly Tipo[]
+  readonly resiste: readonly Tipo[]
+  readonly imuneA: readonly Tipo[]
+}
+
+export function criarTabelaDeTipos<Tipo extends string>(
+  dados: Readonly<Record<Tipo, DadosDeTipo<Tipo>>>,
+): TabelaDeTipos<Tipo> {
+  return (tipoDaTecnica, tipoDoDefensor) => {
+    const defensor = dados[tipoDoDefensor]
+    if (defensor.imuneA.includes(tipoDaTecnica)) return 'imunidade'
+    if (dados[tipoDaTecnica].vence.includes(tipoDoDefensor)) return 'vantagem'
+    if (defensor.resiste.includes(tipoDaTecnica)) return 'resistencia'
+    return 'neutra'
+  }
+}
