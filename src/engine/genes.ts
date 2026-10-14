@@ -1,4 +1,6 @@
 // Genes e raridade (GDD, seção 7).
+import type { Gerador } from './aleatorio.ts'
+import { inteiroEntre } from './aleatorio.ts'
 
 export const ATRIBUTOS = ['vida', 'ataque', 'defesa', 'foco', 'velocidade'] as const
 export type Atributo = (typeof ATRIBUTOS)[number]
@@ -55,4 +57,37 @@ export function raridadeDosGenes(genes: Genes): Raridade {
 
 export function podeSerPrismatica(raridade: Raridade): boolean {
   return FAIXAS_DE_RARIDADE.some((f) => f.raridade === raridade && f.permitePrismatica)
+}
+
+export function faixaDaRaridade(raridade: Raridade): FaixaDeRaridade {
+  const faixa = FAIXAS_DE_RARIDADE.find((f) => f.raridade === raridade)
+  if (!faixa) throw new RangeError(`raridade desconhecida: ${raridade}`)
+  return faixa
+}
+
+// Cresce em linha reta dentro da faixa, arredondado para duas casas.
+// A conta é feita em centésimos para o arredondamento não depender de erro de ponto flutuante.
+export function multiplicadorDeRaridade(genes: Genes): number {
+  const soma = somaDosGenes(genes)
+  const faixa = faixaPelaSoma(soma)
+  const minimo = Math.round(faixa.multiplicadorMinimo * 100)
+  const maximo = Math.round(faixa.multiplicadorMaximo * 100)
+  const fracao = (soma - faixa.somaMinima) / (faixa.somaMaxima - faixa.somaMinima)
+  return Math.round(minimo + (maximo - minimo) * fracao) / 100
+}
+
+// Sorteia os cinco genes com chance igual e repete até a soma cair na faixa da raridade.
+export function sortearGenes(gerador: Gerador, raridade: Raridade): Genes {
+  const faixa = faixaDaRaridade(raridade)
+  for (;;) {
+    const genes: Genes = {
+      vida: inteiroEntre(gerador, GENE_MINIMO, GENE_MAXIMO),
+      ataque: inteiroEntre(gerador, GENE_MINIMO, GENE_MAXIMO),
+      defesa: inteiroEntre(gerador, GENE_MINIMO, GENE_MAXIMO),
+      foco: inteiroEntre(gerador, GENE_MINIMO, GENE_MAXIMO),
+      velocidade: inteiroEntre(gerador, GENE_MINIMO, GENE_MAXIMO),
+    }
+    const soma = somaDosGenes(genes)
+    if (soma >= faixa.somaMinima && soma <= faixa.somaMaxima) return genes
+  }
 }

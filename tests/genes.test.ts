@@ -1,6 +1,15 @@
 import { describe, expect, it } from 'vitest'
 import type { Genes } from '../src/engine/genes.ts'
-import { faixaPelaSoma, podeSerPrismatica, raridadeDosGenes, somaDosGenes } from '../src/engine/genes.ts'
+import { criarGerador } from '../src/engine/aleatorio.ts'
+import {
+  FAIXAS_DE_RARIDADE,
+  faixaPelaSoma,
+  multiplicadorDeRaridade,
+  podeSerPrismatica,
+  raridadeDosGenes,
+  somaDosGenes,
+  sortearGenes,
+} from '../src/engine/genes.ts'
 
 function genesIguais(valor: number): Genes {
   return { vida: valor, ataque: valor, defesa: valor, foco: valor, velocidade: valor }
@@ -40,5 +49,32 @@ describe('genes e raridade', () => {
     expect(podeSerPrismatica('rara')).toBe(false)
     expect(podeSerPrismatica('epica')).toBe(true)
     expect(podeSerPrismatica('mitica')).toBe(true)
+  })
+})
+
+describe('multiplicador de raridade', () => {
+  it('vai do mínimo ao máximo da faixa em linha reta', () => {
+    expect(multiplicadorDeRaridade({ ...genesIguais(4), vida: 5 })).toBe(1.0) // soma 21
+    expect(multiplicadorDeRaridade({ ...genesIguais(6), vida: 5 })).toBe(1.03) // soma 29, exemplo do GDD
+    expect(multiplicadorDeRaridade({ ...genesIguais(9), vida: 9 })).toBe(1.09) // soma 45
+    expect(multiplicadorDeRaridade(genesIguais(1))).toBe(0.9)
+    expect(multiplicadorDeRaridade(genesIguais(20))).toBe(1.8)
+  })
+
+  it('arredonda o meio para cima', () => {
+    expect(multiplicadorDeRaridade({ ...genesIguais(7), vida: 5 })).toBe(1.05) // soma 33 dá 1,045
+  })
+})
+
+describe('sorteio de genes', () => {
+  it.each(FAIXAS_DE_RARIDADE.map((f) => f.raridade))('sorteia genes na faixa %s', (raridade) => {
+    const gerador = criarGerador(123)
+    for (let i = 0; i < 20; i++) {
+      expect(raridadeDosGenes(sortearGenes(gerador, raridade))).toBe(raridade)
+    }
+  })
+
+  it('a mesma semente sorteia os mesmos genes', () => {
+    expect(sortearGenes(criarGerador(9), 'rara')).toEqual(sortearGenes(criarGerador(9), 'rara'))
   })
 })
