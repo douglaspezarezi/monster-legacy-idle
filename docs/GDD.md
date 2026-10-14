@@ -65,9 +65,10 @@ Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem 
 
 ### Chefe de rota
 
-- A cada 100 abates numa rota aparece o chefe dela: a espécie da rota com maior soma de valores base, no nível máximo da faixa, com raridade rara. A Vida por rota vale também para ele.
+- A cada 100 abates numa rota aparece o chefe dela. Cada rota guarda o próprio contador, que não se perde ao sair dela. O chefe é a espécie da rota com maior soma de valores base, no nível máximo da faixa, com raridade rara. A Vida por rota vale também para ele.
 - Vencer o chefe pela primeira vez libera a rota seguinte. Com o avanço automático ligado, a caçada passa para ela.
 - Perder para o chefe segue as regras de derrota da seção 5.
+- O chefe não pode ser capturado.
 
 ## 5. Combate
 
@@ -255,6 +256,7 @@ Os três iniciais têm tipos com relações diferentes com a Mata Funda: Geada v
 ### XP e nível
 
 - Para subir do nível n para o n + 1 são precisos 6 × n² de XP. Ao subir, o XP do nível volta a 0 e o que sobrou passa para o nível seguinte.
+- Ao subir de nível, a vida atual ganha o mesmo tanto que a Vida máxima ganhou.
 - Com cerca de 4 s por abate na rota 1 (luta mais 1 s de espera), isso dá o nível 10 em cerca de 11 minutos. Com a Vida por rota da seção 4, o nível 100 fica em torno de 20 horas de caçada, estimativa a conferir no F2.
 
 ### Captura e matrizes
@@ -262,7 +264,7 @@ Os três iniciais têm tipos com relações diferentes com a Mata Funda: Geada v
 - O jogador define um filtro de captura com as espécies desejadas e a raridade mínima.
 - Quando um selvagem que passa no filtro cai, o jogo gasta 1 Cápsula e tenta capturar. A chance depende da raridade: fraca 60%, comum 50%, incomum 30%, rara 15%, épica 6%, lendária 2%, mítica 1%.
 - A criatura capturada vai para a reserva com os genes, a raridade, o nível e as técnicas que tinha.
-- Sem Cápsula, nada é tentado.
+- Sem Cápsula, nada é tentado. Com a reserva cheia, também não: nenhuma Cápsula é gasta e nenhuma matriz pode ser aberta.
 - **Matriz e Cápsula se completam:** a matriz garante a raridade, mas sorteia os genes; a Cápsula guarda exatamente o selvagem que caiu.
 - **Abrir uma matriz:** gera a criatura no nível 1, com genes sorteados na faixa da raridade da matriz. Se a raridade permitir variação prismática, a chance é de 2%.
 
