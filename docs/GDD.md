@@ -1,6 +1,6 @@
 # Monster Legacy Idle · Documento de design
 
-Versão de trabalho, reescrita a partir de "GDD_Monster_Legacy_Idle", em versão original. Itens marcados com **[proposta]** foram criados nesta reescrita para preencher ou substituir o que precisou sair e esperam aprovação. A seção 14 lista o que foi removido e por quê.
+Versão de trabalho, reescrita a partir de "GDD_Monster_Legacy_Idle", em versão original. As propostas criadas nesta reescrita para preencher ou substituir o que precisou sair foram aprovadas em 14/10/2026. Itens marcados com **[proposta]** são novos e esperam aprovação; itens marcados com **[a definir]** são escolhas em aberto. A seção 14 lista o que foi removido e por quê.
 
 ## 1. Visão geral
 
@@ -9,7 +9,7 @@ Idle RPG de criaturas para navegador. O jogador forma criaturas, deixa-as caçan
 - **Plataforma:** navegador, com interface pensada também para o celular.
 - **Fase 1 (lançamento):** jogo solo, com save local e, depois, save na nuvem.
 - **Fase 2 (online):** sistemas sociais e PvP da seção 12, só depois do lançamento solo e com servidor próprio.
-- **Título provisório:** Monster Legacy Idle. As criaturas se chamam **[proposta]** "criaturas" no texto do jogo até haver um nome próprio.
+- **Título provisório:** Monster Legacy Idle. As criaturas se chamam "criaturas" no texto do jogo até haver um nome próprio.
 
 ## 2. Pilares
 
@@ -29,7 +29,7 @@ Idle RPG de criaturas para navegador. O jogador forma criaturas, deixa-as caçan
 
 ## 4. Mundo e rotas
 
-O mundo tem 18 biomas, um por tipo **[proposta: o documento original fala em 18 mapas elementares; a lista de tipos da seção 6 tem 16, então 2 biomas ficam mistos ou a lista de tipos muda]**. Cada bioma tem 5 rotas.
+O mundo tem 18 biomas, um por tipo **[a definir: o documento original fala em 18 mapas elementares; a lista de tipos da seção 6 tem 16, então 2 biomas ficam mistos ou a lista de tipos muda]**. Cada bioma tem 5 rotas.
 
 Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem de tipo e os materiais que caem ali.
 
@@ -69,14 +69,14 @@ A tabela de vantagens é própria do jogo (seção 6).
 
 Criaturas selvagens das rotas altas podem derrotar a criatura do jogador, inclusive offline. Quando isso acontece:
 
-1. O jogo consome um **Tônico de Retorno [proposta de nome]** do inventário e a criatura volta.
+1. O jogo consome um **Tônico de Retorno** do inventário e a criatura volta.
 2. A caçada recua para a rota anterior.
 3. A criatura perde 5% da experiência acumulada no nível atual.
 4. A criatura fica com **Fadiga**: 50% menos XP e ouro por 10 minutos reais.
 
-O jogador compra tônicos de cura com ouro e configura gatilhos, como "usar tônico de cura quando a vida cair abaixo de 30%". **[proposta]** Sem Tônico de Retorno no inventário, a caçada pausa até o jogador voltar.
+O jogador compra tônicos de cura com ouro e configura gatilhos, como "usar tônico de cura quando a vida cair abaixo de 30%". Sem Tônico de Retorno no inventário, a caçada pausa até o jogador voltar.
 
-## 6. Tipos **[proposta]**
+## 6. Tipos
 
 São 16 tipos com nomes e tabela próprios; a tabela de vantagens deve ser desenhada do zero, sem reproduzir a de nenhuma franquia.
 
@@ -90,13 +90,13 @@ Regras para desenhar a tabela:
 
 ## 7. Criaturas, genes e crescimento
 
-### Atributos **[proposta]**
+### Atributos
 
-Cinco atributos: Vida, Ataque, Defesa, Foco (dano e defesa de técnicas especiais) e Velocidade. O documento original usava seis atributos com nomes iguais aos de uma franquia; a proposta muda o conjunto.
+Cinco atributos: Vida, Ataque, Defesa, Foco (dano e defesa de técnicas especiais) e Velocidade. O conjunto substitui os seis atributos do documento original, que tinham nomes iguais aos de uma franquia.
 
 ### Genes
 
-Cada criatura nasce com um gene por atributo, de 1 a **[proposta]** 20. O gene não soma ao final: ele define quanto o atributo cresce por nível, multiplicado pela raridade.
+Cada criatura nasce com um gene por atributo, de 1 a 20. O gene não soma ao final: ele define quanto o atributo cresce por nível, multiplicado pela raridade.
 
 ```
 ganho por nível = gene × multiplicador da raridade
@@ -105,7 +105,7 @@ atributo        = (base no nível 1 + ganho por nível × (nível − 1)) × bô
 
 ### Raridade
 
-A soma dos genes define a faixa de raridade ao nascer ou cair como matriz. Com cinco genes de 1 a 20, a soma vai de 5 a 100 **[proposta: faixas reescalonadas para o novo intervalo]**.
+A soma dos genes define a faixa de raridade ao nascer ou cair como matriz. Com cinco genes de 1 a 20, a soma vai de 5 a 100, com as faixas abaixo.
 
 | Raridade | Multiplicador | Soma dos genes | Variação prismática |
 | --- | --- | --- | --- |
@@ -126,7 +126,7 @@ O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% d
 ### Evolução
 
 - Linhas de 2 formas evoluem no nível 75.
-- Linhas de 3 formas dividem os intervalos de forma simétrica, com a última evolução no nível 150 **[proposta: níveis 75 e 150]**.
+- Linhas de 3 formas dividem os intervalos de forma simétrica, evoluindo nos níveis 75 e 150.
 
 ### Eras (prestígio)
 
@@ -159,7 +159,7 @@ Nenhum equipamento aumenta força, vida ou ataque das criaturas. Eles só aceler
 
 As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a produção: +25% no posto certo e até −50% no posto oposto.
 
-| Posto | Produz | Tipos com afinidade **[proposta]** |
+| Posto | Produz | Tipos com afinidade |
 | --- | --- | --- |
 | Forja | Ouro | Chama, Faísca |
 | Pesca | Materiais aquáticos | Maré |
@@ -172,13 +172,13 @@ As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a 
 ## 10. Cruzamento
 
 1. Os dois pais pagam uma taxa de ouro ou Diamantes e deixam a conta para sempre (sacrifício).
-2. Os pais precisam pertencer à mesma **linhagem compatível [proposta de nome]**, cadastrada no conteúdo.
-3. O filhote nasce no nível 1, na primeira forma da linha de um dos pais **[proposta: o jogador escolhe qual pai define a espécie]**.
-4. O ovo herda 3 genes dos pais e sorteia os outros 2 **[proposta: com 5 genes, herda 3 e sorteia 2]**. A **Pedra do Destino** faz herdar 4.
+2. Os pais precisam pertencer à mesma **linhagem compatível**, cadastrada no conteúdo.
+3. O filhote nasce no nível 1, na primeira forma da linha de um dos pais; o jogador escolhe qual pai define a espécie.
+4. O ovo herda 3 genes dos pais e sorteia os outros 2. A **Pedra do Destino** faz herdar 4.
 5. **Técnicas herdadas:** algumas técnicas só passam por cruzamento, quando um dos pais as tem equipadas.
 6. **Pergaminhos Técnicos:** consumíveis de uso único que ensinam uma técnica, com lista de espécies compatíveis no conteúdo.
 
-## 11. Fim de jogo **[proposta]**
+## 11. Fim de jogo
 
 O documento original listava seis sistemas de transformação que reproduziam os de uma franquia; todos saíram (seção 14). No lugar entra um sistema próprio, a partir do nível 150:
 
@@ -207,7 +207,7 @@ Ficam para a fase 2, com servidor e regras próprias:
 | Matrizes | Quedas nas rotas, Ilhas | Gerar criaturas |
 | Fragmentos e materiais | Postos, rotas | Despertar, equipamentos |
 
-### Consumo de ouro no fim de jogo **[proposta]**
+### Consumo de ouro no fim de jogo
 
 Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cidade** vende matrizes específicas por preço fixo e alto, com estoque que gira a cada dia. O jogador vê exatamente o que compra, sem sorteio.
 
@@ -236,7 +236,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 - TypeScript, Vite e React. O motor de regras fica em `src/engine/`, puro e testado, sem tela, relógio ou sorteio próprios.
 - Bibliotecas de números grandes, de cena 2D e de estado entram quando a primeira regra pedir, com aprovação.
 
-## 16. Plano de marcos **[proposta]**
+## 16. Plano de marcos
 
 | Marco | Entrega | Critério |
 | --- | --- | --- |
@@ -250,7 +250,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 
 ## 17. Pendências
 
-1. Aprovar ou trocar os itens **[proposta]**, a começar pelos tipos (seção 6) e atributos e genes (seção 7).
+1. 18 biomas para 16 tipos (seção 4): biomas mistos ou mudança na lista de tipos.
 2. Quantos biomas e espécies entram na Era 1 do lançamento solo.
 3. Nome das criaturas no jogo.
 4. Fórmula de dano, valores base e curvas de ouro, XP e preços.
