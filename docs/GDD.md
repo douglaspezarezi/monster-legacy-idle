@@ -79,7 +79,16 @@ dano  = ⌊ A × (poder ÷ 100) × A ÷ (A + D) × multiplicador de tipo ⌋, no
 - Com atributos iguais, uma técnica de poder 100 tira metade do Ataque do atacante.
 - Imunidade dá 0 de dano, sem o mínimo de 1.
 - Sem variação sorteada, sem golpe crítico e sem bônus por a criatura ser do mesmo tipo da técnica: o dano é previsível e a escolha de tipo vem só da tabela.
-- **Ritmo:** cada criatura age a cada `2 s × 2 ÷ (1 + V ÷ Vo)`, onde V é a própria Velocidade e Vo a do oponente, limitado entre 0,5 s e 4 s. Velocidades iguais dão 2 s; o dobro dá cerca de 1,33 s.
+- **Ritmo:** cada criatura age a cada `2 s × 2 ÷ (1 + V ÷ Vo)`, onde V é a própria Velocidade e Vo a do oponente, limitado entre 0,5 s e 4 s. Velocidades iguais dão 2 s; o dobro dá cerca de 1,33 s. O teto de 4 s é o próprio limite da fórmula quando o oponente é muito mais rápido; o piso de 0,5 s vale a partir de 7 vezes a Velocidade do oponente.
+
+### Detalhes da caçada no motor **[proposta, já no código do F1]**
+
+- Quando as duas criaturas agem no mesmo instante, a do jogador age primeiro.
+- O Tônico de Retorno traz a criatura de volta com a vida cheia.
+- Fora do Tônico, a vida não se recupera entre um selvagem e o próximo; a cura fica para os tônicos de cura com gatilho, ainda sem valores.
+- O XP com Fadiga é arredondado para baixo (35 vira 17).
+- Uma luta que não termina até o fim do período simulado é descartada, sem XP.
+- O tempo entre um selvagem e o próximo é um parâmetro, ainda sem valor definido.
 
 ### Derrota durante a caçada
 
