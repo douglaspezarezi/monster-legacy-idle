@@ -329,6 +329,14 @@ As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a 
 - **Base especial:** opera com Diamantes; é o único lugar com fragmentos de fim de jogo.
 - **Santuário prismático:** custo alto; único lugar que aumenta a chance de chocar ovos prismáticos.
 
+### Base no F4 **[proposta]**
+
+- Só a Forja entra no F4. Pesca e Mina entram quando os materiais tiverem uso (equipamentos e Despertar).
+- A Forja tem 3 vagas. Cada criatura produz 100 de ouro por hora × o multiplicador da raridade dela × a afinidade, também com o jogo fechado, dentro do limite de 24 horas.
+- **Afinidade:** +25% se a criatura tem um tipo do posto; −50% se tem um tipo que vence um tipo do posto pela tabela da seção 6 (na Forja: Maré, Rocha e Bruma); 1× nos demais casos. Se as duas valerem, fica o +25%.
+- A criatura no posto continua na reserva, mas não pode ser a ativa nem cruzar enquanto trabalha. Sair do posto é livre.
+- O ouro produzido entra direto no inventário.
+
 ## 10. Cruzamento
 
 1. Os dois pais pagam uma taxa de ouro ou Diamantes e deixam a conta para sempre (sacrifício).
@@ -337,6 +345,15 @@ As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a 
 4. O ovo herda 3 genes dos pais e sorteia os outros 2. A **Pedra do Destino** faz herdar 4.
 5. **Técnicas herdadas:** algumas técnicas só passam por cruzamento, quando um dos pais as tem equipadas.
 6. **Pergaminhos Técnicos:** consumíveis de uso único que ensinam uma técnica, com lista de espécies compatíveis no conteúdo.
+
+### Cruzamento no F4 **[proposta]**
+
+- **Linhagens:** Raiz (Brotelho, Sapolho, Raizudo), Enxame (Formigaço, Ferroa) e Asa (Penugem, Zumbilo). Gelusco e Rebitim formam cada um a sua linhagem e só cruzam com a mesma espécie até chegarem espécies afins de outros biomas.
+- **Pais:** duas criaturas da reserva, fora de posto de trabalho. A ativa não cruza. A taxa é de 300 de ouro.
+- **Herança:** o jogador escolhe 3 atributos; cada um recebe o maior gene entre os dois pais. Os outros 2 são sorteados de 1 a 20, com chance igual.
+- A raridade do filhote sai da soma dos genes (seção 7). Se a raridade permitir, a chance de ser prismático é de 2%.
+- O filhote nasce na hora, no nível 1, com as técnicas da espécie. Ovos com tempo de chocar, Pedra do Destino, técnicas herdadas e Pergaminhos ficam para depois do F4.
+- Na simulação de 10 cruzamentos seguidos com os melhores pais, a melhor soma de genes sobe de cerca de 64 para 80 (de incomum para rara ou épica). Com os 3 atributos sorteados, cai para cerca de 57.
 
 ## 11. Fim de jogo
 
