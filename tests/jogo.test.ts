@@ -49,15 +49,15 @@ describe('time e reserva', () => {
   const reserva = [membro('Brotelho', 7, 5, 2)]
 
   it('trocar a criatura ativa encerra a luta, sem XP nem derrota', () => {
-    const emLuta = simularCacada(CONFIGURACAO, jogoCom(membro('Gelusco', 5, 10), { reserva }), 0, 1500, criarGerador(2)).estado
+    const emLuta = simularCacada(CONFIGURACAO, jogoCom(membro('Gelusco', 5, 10), { reserva }), 0, 300, criarGerador(2)).estado
     expect(emLuta.encontro).not.toBeNull()
-    const trocado = trocarAtiva(emLuta, CATALOGO, 2, 1500)
+    const trocado = trocarAtiva(emLuta, CATALOGO, 2, 300)
     expect(trocado.encontro).toBeNull()
     expect(trocado.ativa.especie).toBe('Brotelho')
     expect(trocado.reserva.map((m) => m.especie)).toEqual(['Gelusco'])
     expect(trocado.ativa.xpNoNivel).toBe(0)
     expect(trocado.vidaDaAtiva).toBe(vidaMaxima(CATALOGO, reserva[0]))
-    expect(trocado.proximoSelvagemEm).toBe(1500)
+    expect(trocado.proximoSelvagemEm).toBe(300)
   })
 
   it('recusa criatura que não está na reserva', () => {

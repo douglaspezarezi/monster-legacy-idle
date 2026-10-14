@@ -44,10 +44,13 @@ export function criarCriatura(gerador: Gerador, especie: string, raridade: Rarid
   return { especie, genes, prismatica, nivel, xpNoNivel: 0 }
 }
 
-// O nível do selvagem não passa do nível da criatura ativa nem do teto da rota; abaixo do piso da rota, fica no piso.
+// Quantos níveis abaixo da criatura ativa fica o teto do selvagem.
+export const MARGEM_DO_SELVAGEM = 2
+
+// O teto do selvagem fica abaixo do nível da criatura ativa e não passa do teto da rota; abaixo do piso da rota, fica no piso.
 export function faixaDoSelvagem(faixaDaRota: readonly [number, number], nivelDaAtiva: number): readonly [number, number] {
   const [minimo, maximo] = faixaDaRota
-  return [minimo, Math.max(minimo, Math.min(maximo, nivelDaAtiva))]
+  return [minimo, Math.max(minimo, Math.min(maximo, nivelDaAtiva - MARGEM_DO_SELVAGEM))]
 }
 
 export function gerarSelvagem(

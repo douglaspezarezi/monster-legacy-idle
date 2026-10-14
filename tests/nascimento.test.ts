@@ -50,9 +50,10 @@ describe('nascimento de criaturas', () => {
     }
   })
 
-  it('o nível do selvagem não passa do nível da criatura ativa nem sai da faixa da rota', () => {
+  it('o teto do selvagem fica 2 níveis abaixo da criatura ativa, dentro da faixa da rota', () => {
     expect(faixaDoSelvagem([1, 10], 1)).toEqual([1, 1])
-    expect(faixaDoSelvagem([1, 10], 6)).toEqual([1, 6])
+    expect(faixaDoSelvagem([1, 10], 3)).toEqual([1, 1])
+    expect(faixaDoSelvagem([1, 10], 8)).toEqual([1, 6])
     expect(faixaDoSelvagem([1, 10], 40)).toEqual([1, 10])
     expect(faixaDoSelvagem([11, 25], 4)).toEqual([11, 11])
   })

@@ -57,7 +57,7 @@ Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem 
 
 ### Selvagens
 
-- O selvagem nasce num nível sorteado com chance igual entre o piso da faixa da rota e o nível da criatura ativa, sem passar do teto da faixa. Se a criatura ativa estiver abaixo do piso, o selvagem nasce no piso. O chefe não segue essa regra.
+- O selvagem nasce num nível sorteado com chance igual entre o piso da faixa da rota e 2 níveis abaixo da criatura ativa, sem passar do teto da faixa. Se esse limite ficar abaixo do piso, o selvagem nasce no piso. O chefe não segue essa regra.
 - Raridade ao nascer: fraca 25%, comum 55%, incomum 15%, rara 4%, épica 0,9%, lendária 0,09%, mítica 0,01%.
 - Selvagens de raridade épica ou maior têm 2% de chance de serem prismáticos.
 - **Vida por rota:** a Vida máxima do selvagem é multiplicada por 1× na rota 1, 1,5× na rota 2, 2× na rota 3, 3× na rota 4 e 4× na rota 5, para que os abates fiquem perto da coluna "Abate médio". Sem isso, Vida e Ataque crescem no mesmo ritmo e os abates durariam de 2,5 a 4,5 s em todas as rotas.

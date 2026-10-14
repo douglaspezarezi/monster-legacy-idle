@@ -62,10 +62,10 @@ describe('caçada', () => {
     expect(estado).toEqual(deUmaVez.estado)
   })
 
-  it('o selvagem não nasce acima do nível da criatura ativa', () => {
+  it('o selvagem nasce pelo menos 2 níveis abaixo da criatura ativa', () => {
     for (let semente = 1; semente <= 50; semente++) {
-      const r = cacar(jogoCom(membro('Gelusco', 3, 10)), 100, semente)
-      expect(r.estado.encontro?.selvagem.nivel).toBeLessThanOrEqual(3)
+      const r = cacar(jogoCom(membro('Gelusco', 6, 10)), 100, semente)
+      expect(r.estado.encontro?.selvagem.nivel).toBeLessThanOrEqual(4)
     }
   })
 
