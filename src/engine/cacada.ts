@@ -4,6 +4,7 @@ import type { Combatente } from './combate.ts'
 import { lutar } from './combate.ts'
 import type { EstadoDaCacada } from './derrota.ts'
 import type { Raridade } from './genes.ts'
+import type { Matriz } from './nascimento.ts'
 import { aplicarDerrota, multiplicadorDeFadiga } from './derrota.ts'
 import type { TabelaDeTipos } from './multiplicador-de-tipo.ts'
 
@@ -13,12 +14,6 @@ export type DadosDeRota = {
   // Multiplica a Vida máxima dos selvagens e do chefe.
   readonly multiplicadorDeVida: number
   readonly quedaDeMatriz: { readonly chance: number; readonly raridade: Raridade }
-}
-
-// Gera uma criatura nova da espécie e raridade indicadas.
-export type Matriz = {
-  readonly especie: string
-  readonly raridade: Raridade
 }
 
 export type ConfiguracaoDaCacada<Tipo extends string> = {
