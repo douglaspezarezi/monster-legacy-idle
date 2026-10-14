@@ -506,7 +506,8 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F3 · Save e offline | Save versionado e ganho offline com derrotas e Fadiga | Fechar e reabrir mantém o progresso e credita o tempo fora |
 | F4 · Cruzamento e base | Cruzamento com herança de genes, postos de trabalho | Uma linhagem melhora por cruzamento numa sessão de teste |
 | F5 · Eras e equipamentos | Reset de Era e espaços de equipamento | Uma Era completa jogável |
-| F6 · Lançamento solo | Biomas da Era 1, arte, balanceamento e save na nuvem | Versão de navegador publicada |
+| F6 · Lançamento solo | Biomas da Era 1, arte provisória e balanceamento | Versão de navegador publicada |
+| F7 · Pós-lançamento | Save na nuvem e arte final | Progresso mantido entre dispositivos |
 
 ## 17. Pendências
 
