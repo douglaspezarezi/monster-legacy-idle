@@ -61,7 +61,7 @@ Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem 
 - Raridade ao nascer: fraca 25%, comum 55%, incomum 15%, rara 4%, épica 0,9%, lendária 0,09%, mítica 0,01%.
 - Selvagens de raridade épica ou maior têm 2% de chance de serem prismáticos.
 - **Vida por rota:** a Vida máxima do selvagem é multiplicada por 1× na rota 1, 1,5× na rota 2, 2× na rota 3, 3× na rota 4 e 4× na rota 5, para que os abates fiquem perto da coluna "Abate médio". Sem isso, Vida e Ataque crescem no mesmo ritmo e os abates durariam de 2,5 a 4,5 s em todas as rotas.
-- **[proposta]** O Ataque e o Foco do selvagem e do chefe são divididos pelo mesmo multiplicador da Vida. A luta continua longa, mas o dano total que a criatura recebe fica igual ao da rota 1. Sem isso, a rota 5 causa 4× mais dano total, e na simulação de 48 horas a criatura não passa da rota 2; com a divisão, chega às rotas 3 a 5.
+- O Ataque e o Foco do selvagem e do chefe são divididos pelo mesmo multiplicador da Vida. A luta continua longa, mas o dano total que a criatura recebe fica igual ao da rota 1. Sem isso, a rota 5 causa 4× mais dano total, e na simulação de 48 horas a criatura não passa da rota 2; com a divisão, chega às rotas 3 a 5.
 - O próximo selvagem aparece 1 s depois do anterior cair.
 
 ### Chefe de rota

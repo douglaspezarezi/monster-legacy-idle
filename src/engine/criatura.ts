@@ -36,6 +36,12 @@ export function combatenteDe<Tipo extends string>(
 ): Combatente<Tipo> {
   const especie = especieDo(catalogo, criatura.especie)
   const calculados = calcularAtributos(especie.bases, criatura.genes, criatura.nivel, criatura.prismatica)
-  const atributos = { ...calculados, vida: calculados.vida * multiplicadorDeVida }
+  // Mais Vida e menos Ataque e Foco na mesma proporção: a luta fica longa sem aumentar o dano total.
+  const atributos = {
+    ...calculados,
+    vida: calculados.vida * multiplicadorDeVida,
+    ataque: calculados.ataque / multiplicadorDeVida,
+    foco: calculados.foco / multiplicadorDeVida,
+  }
   return { especie: especie.nome, tipos: especie.tipos, atributos, tecnicas: tecnicasDa(catalogo, especie), vida: atributos.vida }
 }

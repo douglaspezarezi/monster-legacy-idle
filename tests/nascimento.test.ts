@@ -87,7 +87,7 @@ describe('nascimento de criaturas', () => {
     expect(raridadeDosGenes(inicial.genes)).toBe('comum')
   })
 
-  it('o combatente vem com a vida cheia e a Vida multiplicada', () => {
+  it('o combatente vem com a vida cheia, a Vida multiplicada e o Ataque e o Foco divididos', () => {
     const criatura = criarInicial(criarGerador(7), 'Brotelho')
     const normal = combatenteDe(catalogo, criatura)
     const rota5 = combatenteDe(catalogo, criatura, 4)
@@ -95,6 +95,9 @@ describe('nascimento de criaturas', () => {
     expect(normal.tecnicas.map((t) => t.nome)).toEqual(['Esporos', 'Golpe de Galho', 'Mordida'])
     expect(rota5.atributos.vida).toBeCloseTo(normal.atributos.vida * 4)
     expect(rota5.vida).toBe(rota5.atributos.vida)
-    expect(rota5.atributos.ataque).toBe(normal.atributos.ataque)
+    expect(rota5.atributos.ataque).toBeCloseTo(normal.atributos.ataque / 4)
+    expect(rota5.atributos.foco).toBeCloseTo(normal.atributos.foco / 4)
+    expect(rota5.atributos.defesa).toBe(normal.atributos.defesa)
+    expect(rota5.atributos.velocidade).toBe(normal.atributos.velocidade)
   })
 })
