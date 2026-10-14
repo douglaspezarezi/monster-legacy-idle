@@ -150,6 +150,13 @@ A perda de XP é arredondada para baixo.
 
 O jogador compra tônicos de cura com ouro e configura gatilhos, como "usar tônico de cura quando a vida cair abaixo de 30%". Sem Tônico de Retorno no inventário, a caçada pausa até o jogador voltar, sem perda de XP, recuo de rota ou Fadiga.
 
+### Tempo fora do jogo
+
+- Ao reabrir, o jogo simula o tempo fora com as mesmas regras da caçada aberta, inclusive derrotas, Fadiga e uso de tônicos.
+- O tempo fora é creditado até 24 horas. Acima disso, contam só as últimas 24 horas; a Fadiga corre em tempo real e já terá acabado.
+- Ao voltar, um resumo mostra o tempo creditado, abates, XP, níveis ganhos, ouro, capturas, matrizes e derrotas.
+- O save fica no navegador, com o número da versão do formato, e é gravado a cada poucos segundos e quando a aba é fechada ou escondida.
+
 ## 6. Tipos
 
 São 16 tipos com nomes e tabela próprios; a tabela de vantagens deve ser desenhada do zero, sem reproduzir a de nenhuma franquia.
