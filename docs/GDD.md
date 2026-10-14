@@ -61,6 +61,7 @@ Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem 
 - Raridade ao nascer: fraca 25%, comum 55%, incomum 15%, rara 4%, épica 0,9%, lendária 0,09%, mítica 0,01%.
 - Selvagens de raridade épica ou maior têm 2% de chance de serem prismáticos.
 - **Vida por rota:** a Vida máxima do selvagem é multiplicada por 1× na rota 1, 1,5× na rota 2, 2× na rota 3, 3× na rota 4 e 4× na rota 5, para que os abates fiquem perto da coluna "Abate médio". Sem isso, Vida e Ataque crescem no mesmo ritmo e os abates durariam de 2,5 a 4,5 s em todas as rotas.
+- **[proposta]** O Ataque e o Foco do selvagem e do chefe são divididos pelo mesmo multiplicador da Vida. A luta continua longa, mas o dano total que a criatura recebe fica igual ao da rota 1. Sem isso, a rota 5 causa 4× mais dano total, e na simulação de 48 horas a criatura não passa da rota 2; com a divisão, chega às rotas 3 a 5.
 - O próximo selvagem aparece 1 s depois do anterior cair.
 
 ### Chefe de rota
@@ -290,6 +291,14 @@ O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% d
 
 ### Eras (prestígio)
 
+**[proposta para o F5]**
+
+- **Tetos:** a Era 1 vai até o nível 50 e usa as rotas 1 a 3 de cada bioma. A Era 2 vai até o 100 e libera as rotas 4 e 5. As Eras 3 (150) e 4 (200) entram quando houver biomas para elas. Assim o teto de cada Era coincide com o topo de uma rota.
+- **Sem nível próprio do Treinador:** a Era fecha quando a criatura ativa chega ao teto. Nenhuma criatura passa do teto da Era atual.
+- **Reset:** a criatura ativa volta ao nível 1 com os mesmos genes; as rotas liberadas voltam à rota 1 e os contadores de chefe zeram. Ficam ouro, itens, matrizes, equipamentos e a Forja. O Treinador ganha a marca da Era.
+- **Reserva:** mantém o nível. Uma criatura que ainda não passou pelo reset da Era atual, ao ser ativada, volta ao nível 1. As que nascem ou são capturadas na Era atual já contam como passadas.
+- Na simulação com reposição de tônicos, o nível 50 chega em cerca de 24 horas.
+
 - **Reset de Era:** ao chegar ao nível máximo da Era atual (por exemplo, 50 na Era 1), o Treinador pode reiniciar a Era.
   - O nível do Treinador volta a 1, ele ganha uma marca de Era visível e libera os biomas e espécies da Era seguinte.
 - **Time ativo:** as criaturas do time ativo no momento do reset acompanham o Treinador e voltam ao nível 1.
@@ -314,6 +323,14 @@ Nenhum equipamento aumenta força, vida ou ataque das criaturas. Eles só aceler
 | Insígnia | Mais chance de aparecer chefe de rota |
 | Brasão | Mais chance de criatura prismática ao encontrar ou chocar |
 | Companheiro de ombro | Coleta os itens com o jogo em segundo plano |
+
+
+### Equipamentos no F5 **[proposta]**
+
+- Entram 6 espaços, os que têm sistema pronto: Cabeça (+% de XP), Peito (+% de ouro das rotas), Pernas (−% de tempo entre selvagens), Arma principal (+% na chance de captura, multiplicando a chance da raridade), Arma secundária (−% na taxa de cruzamento) e Cinto (+% na produção da Forja). Os demais ficam para quando os sistemas deles existirem.
+- **Fonte:** cada vitória sobre um chefe de rota tem 10% de chance de dar uma peça, de espaço sorteado com chance igual e raridade pela rota: comum na rota 1, incomum na 2, rara na 3, épica na 4 e lendária na 5.
+- **Efeito por raridade:** 5%, 10%, 15%, 20% e 25%.
+- Uma peça por espaço; as outras ficam no inventário. Trocar é livre. Os equipamentos atravessam o reset de Era.
 
 ## 9. Base e postos de trabalho
 
