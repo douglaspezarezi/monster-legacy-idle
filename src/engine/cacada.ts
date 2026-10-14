@@ -13,6 +13,9 @@ import type { Matriz } from './nascimento.ts'
 import { faixaDoSelvagem, gerarChefe, gerarSelvagem } from './nascimento.ts'
 import type { TabelaDeTipos } from './multiplicador-de-tipo.ts'
 import { ganharXp } from './nivel.ts'
+import type { Equipamento } from './equipamentos.ts'
+import { CHANCE_DE_EQUIPAMENTO_DO_CHEFE, ESPACOS, aumentar, reduzir } from './equipamentos.ts'
+import { inteiroEntre } from './aleatorio.ts'
 import type { DadosDeEra } from './era.ts'
 import { dadosDaEra } from './era.ts'
 
@@ -22,6 +25,7 @@ export type DadosDeRota = {
   // Multiplica a Vida máxima dos selvagens e do chefe.
   readonly multiplicadorDeVida: number
   readonly quedaDeMatriz: { readonly chance: number; readonly raridade: Raridade }
+  readonly raridadeDoEquipamento: Raridade
 }
 
 export const ABATES_PARA_O_CHEFE = 100
@@ -43,6 +47,7 @@ export type Evento =
   | { readonly tipo: 'matriz'; readonly instante: number; readonly matriz: Matriz }
   | { readonly tipo: 'captura'; readonly instante: number; readonly especie: string; readonly raridade: Raridade; readonly sucesso: boolean }
   | { readonly tipo: 'rota-liberada'; readonly instante: number; readonly rota: number }
+  | { readonly tipo: 'equipamento'; readonly instante: number; readonly equipamento: Equipamento }
 
 export type ResultadoDaCacada<Tipo extends string> = {
   readonly estado: EstadoDoJogo<Tipo>
@@ -80,8 +85,8 @@ function vencer<Tipo extends string>(
 ): EstadoDoJogo<Tipo> {
   const rota = configuracao.rotas[estado.rota - 1]
   const fadiga = multiplicadorDeFadiga(estado, agora)
-  const xp = Math.floor(rota.xpBase * fadiga)
-  const ouro = Math.floor(Math.floor(rota.xpBase / 2) * fadiga)
+  const xp = Math.floor(aumentar(rota.xpBase * fadiga, estado, 'cabeca'))
+  const ouro = Math.floor(aumentar(Math.floor(rota.xpBase / 2) * fadiga, estado, 'peito'))
   eventos.push({ tipo: 'abate', instante: agora, especie: encontro.selvagem.especie, chefe: encontro.chefe, xp, ouro })
 
   const era = dadosDaEra(configuracao.eras, estado.era)
@@ -108,7 +113,7 @@ function vencer<Tipo extends string>(
     passaNoFiltro(estado.filtroDeCaptura, encontro.selvagem)
   ) {
     const raridade = raridadeDosGenes(encontro.selvagem.genes)
-    const sucesso = gerador() < CHANCE_DE_CAPTURA[raridade]
+    const sucesso = gerador() < aumentar(CHANCE_DE_CAPTURA[raridade], estado, 'armaPrincipal')
     inventario = { ...inventario, capsulas: inventario.capsulas - 1 }
     if (sucesso) {
       reserva = [...reserva, { ...encontro.selvagem, id: proximoId, era: estado.era }]
@@ -119,7 +124,13 @@ function vencer<Tipo extends string>(
 
   let { rota: numeroDaRota, rotasLiberadas } = estado
   let abatesPorRota: readonly number[]
+  let { equipamentos } = estado
   if (encontro.chefe) {
+    if (gerador() < CHANCE_DE_EQUIPAMENTO_DO_CHEFE) {
+      const equipamento = { espaco: ESPACOS[inteiroEntre(gerador, 0, ESPACOS.length - 1)], raridade: rota.raridadeDoEquipamento }
+      equipamentos = { ...equipamentos, guardados: [...equipamentos.guardados, equipamento] }
+      eventos.push({ tipo: 'equipamento', instante: agora, equipamento })
+    }
     abatesPorRota = comAbates(estado.abatesPorRota, numeroDaRota, 0)
     if (numeroDaRota === rotasLiberadas && rotasLiberadas < Math.min(era.rotas, configuracao.rotas.length)) {
       rotasLiberadas++
@@ -130,7 +141,7 @@ function vencer<Tipo extends string>(
     abatesPorRota = comAbates(estado.abatesPorRota, numeroDaRota, estado.abatesPorRota[numeroDaRota - 1] + 1)
   }
 
-  return { ...estado, ativa, vidaDaAtiva, inventario, reserva, proximoId, rota: numeroDaRota, rotasLiberadas, abatesPorRota }
+  return { ...estado, ativa, vidaDaAtiva, inventario, reserva, proximoId, rota: numeroDaRota, rotasLiberadas, abatesPorRota, equipamentos }
 }
 
 function perder<Tipo extends string>(
@@ -193,7 +204,7 @@ export function simularCacada<Tipo extends string>(
     agora = avanco.instante
     if (avanco.vencedor === null) break
 
-    estado = { ...estado, encontro: null, proximoSelvagemEm: agora + configuracao.intervaloEntreSelvagensMs }
+    estado = { ...estado, encontro: null, proximoSelvagemEm: agora + reduzir(configuracao.intervaloEntreSelvagensMs, estado, 'pernas') }
     estado =
       avanco.vencedor === 'jogador'
         ? vencer(configuracao, estado, encontro, agora, gerador, eventos)

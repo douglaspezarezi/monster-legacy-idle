@@ -1,6 +1,7 @@
 // Postos de trabalho da base (GDD, seção 9). No F4 só a Forja, que produz ouro.
 import type { Catalogo } from './especie.ts'
 import { especieDo } from './especie.ts'
+import { aumentar } from './equipamentos.ts'
 import { multiplicadorDeRaridade } from './genes.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 import type { TabelaDeTipos } from './multiplicador-de-tipo.ts'
@@ -47,7 +48,7 @@ export function ouroPorHoraDaForja<Tipo extends string>(configuracao: Configurac
     const tipos = especieDo(configuracao.catalogo, membro.especie).tipos
     total += configuracao.forja.ouroPorHora * multiplicadorDeRaridade(membro.genes) * afinidade(configuracao.tabela, configuracao.forja, tipos)
   }
-  return total
+  return aumentar(total, estado, 'cinto')
 }
 
 // O ouro inteiro entra no inventário; a fração fica guardada para o próximo período.

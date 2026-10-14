@@ -2,6 +2,8 @@
 import type { Gerador } from './aleatorio.ts'
 import type { Forja } from './base.ts'
 import { FORJA_VAZIA } from './base.ts'
+import type { Equipamentos } from './equipamentos.ts'
+import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
 import type { FiltroDeCaptura } from './captura.ts'
 import { ESPACOS_NA_RESERVA, FILTRO_VAZIO } from './captura.ts'
 import type { Luta } from './combate.ts'
@@ -49,6 +51,7 @@ export type EstadoDoJogo<Tipo extends string> = {
   readonly encontro: Encontro<Tipo> | null
   readonly proximoSelvagemEm: number
   readonly forja: Forja
+  readonly equipamentos: Equipamentos
 }
 
 export const INVENTARIO_INICIAL: Inventario = {
@@ -105,6 +108,7 @@ export function novoJogo<Tipo extends string>(
     encontro: null,
     proximoSelvagemEm: agora,
     forja: FORJA_VAZIA,
+    equipamentos: SEM_EQUIPAMENTOS,
   }
 }
 

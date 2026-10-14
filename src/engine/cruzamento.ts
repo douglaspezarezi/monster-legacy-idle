@@ -6,9 +6,15 @@ import type { Atributo, Genes } from './genes.ts'
 import { ATRIBUTOS, GENE_MAXIMO, GENE_MINIMO, podeSerPrismatica, raridadeDosGenes } from './genes.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 import { CHANCE_PRISMATICA } from './nascimento.ts'
+import { reduzir } from './equipamentos.ts'
 
 export const TAXA_DE_CRUZAMENTO = 300
 export const GENES_HERDADOS = 3
+
+// A Arma secundária dá desconto na taxa.
+export function taxaDeCruzamento<Tipo extends string>(estado: EstadoDoJogo<Tipo>): number {
+  return Math.round(reduzir(TAXA_DE_CRUZAMENTO, estado, 'armaSecundaria'))
+}
 
 export type Linhagem = {
   readonly nome: string
@@ -69,7 +75,8 @@ export function cruzar<Tipo extends string>(
   if (new Set(herdados).size !== GENES_HERDADOS || herdados.some((h) => !ATRIBUTOS.includes(h))) {
     throw new RangeError(`escolha ${GENES_HERDADOS} atributos diferentes`)
   }
-  if (estado.inventario.ouro < TAXA_DE_CRUZAMENTO) throw new RangeError(`ouro insuficiente: ${estado.inventario.ouro}`)
+  const taxa = taxaDeCruzamento(estado)
+  if (estado.inventario.ouro < taxa) throw new RangeError(`ouro insuficiente: ${estado.inventario.ouro}`)
 
   const especie = especieDe === paiA ? a.especie : b.especie
   const filhote = { ...nascerDoCruzamento(a, b, especie, herdados, gerador), id: estado.proximoId, era: estado.era }
@@ -77,6 +84,6 @@ export function cruzar<Tipo extends string>(
     ...estado,
     reserva: [...estado.reserva.filter((m) => m.id !== paiA && m.id !== paiB), filhote],
     proximoId: estado.proximoId + 1,
-    inventario: { ...estado.inventario, ouro: estado.inventario.ouro - TAXA_DE_CRUZAMENTO },
+    inventario: { ...estado.inventario, ouro: estado.inventario.ouro - taxa },
   }
 }

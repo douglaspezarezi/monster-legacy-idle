@@ -2,6 +2,7 @@
 import type { Evento } from '../engine/cacada.ts'
 import type { Atributo, Genes, Raridade } from '../engine/genes.ts'
 import { ATRIBUTOS } from '../engine/genes.ts'
+import type { Espaco } from '../engine/equipamentos.ts'
 import type { ItemDaLoja } from '../engine/jogo.ts'
 
 export const NOME_DA_RARIDADE: Readonly<Record<Raridade, string>> = {
@@ -18,6 +19,24 @@ export const NOME_DO_ITEM: Readonly<Record<ItemDaLoja, string>> = {
   capsula: 'Cápsula',
   tonicoDeCura: 'Tônico de Cura',
   tonicoDeRetorno: 'Tônico de Retorno',
+}
+
+export const NOME_DO_ESPACO: Readonly<Record<Espaco, string>> = {
+  cabeca: 'Cabeça',
+  peito: 'Peito',
+  pernas: 'Pernas',
+  armaPrincipal: 'Arma principal',
+  armaSecundaria: 'Arma secundária',
+  cinto: 'Cinto',
+}
+
+export const EFEITO_DO_ESPACO: Readonly<Record<Espaco, string>> = {
+  cabeca: 'de XP',
+  peito: 'de ouro das rotas',
+  pernas: 'menos espera entre selvagens',
+  armaPrincipal: 'na chance de captura',
+  armaSecundaria: 'de desconto no cruzamento',
+  cinto: 'na produção da Forja',
 }
 
 export function descreverEvento(evento: Evento): string {
@@ -38,6 +57,8 @@ export function descreverEvento(evento: Evento): string {
         : `${evento.especie} ${NOME_DA_RARIDADE[evento.raridade]} escapou da Cápsula`
     case 'rota-liberada':
       return `Rota ${evento.rota} liberada`
+    case 'equipamento':
+      return `O chefe deixou um equipamento: ${NOME_DO_ESPACO[evento.equipamento.espaco]} ${NOME_DA_RARIDADE[evento.equipamento.raridade]}`
   }
 }
 

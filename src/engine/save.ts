@@ -1,8 +1,9 @@
 // Save versionado do estado do jogo (GDD, seção 5). Onde guardar o texto fica com a tela.
 import { FORJA_VAZIA } from './base.ts'
+import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 
-export const VERSAO_DO_SAVE = 3
+export const VERSAO_DO_SAVE = 4
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
@@ -15,6 +16,8 @@ const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Re
     ativa: naEra1(estado.ativa),
     reserva: Array.isArray(estado.reserva) ? estado.reserva.map(naEra1) : estado.reserva,
   }),
+  // A versão 4 trouxe os equipamentos.
+  3: (estado) => ({ ...estado, equipamentos: SEM_EQUIPAMENTOS }),
 }
 
 function naEra1(membro: unknown): unknown {
