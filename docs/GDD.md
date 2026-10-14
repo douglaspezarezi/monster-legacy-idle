@@ -81,7 +81,7 @@ dano  = ⌊ A × (poder ÷ 100) × A ÷ (A + D) × multiplicador de tipo ⌋, no
 - Sem variação sorteada, sem golpe crítico e sem bônus por a criatura ser do mesmo tipo da técnica: o dano é previsível e a escolha de tipo vem só da tabela.
 - **Ritmo:** cada criatura age a cada `2 s × 2 ÷ (1 + V ÷ Vo)`, onde V é a própria Velocidade e Vo a do oponente, limitado entre 0,5 s e 4 s. Velocidades iguais dão 2 s; o dobro dá cerca de 1,33 s. O teto de 4 s é o próprio limite da fórmula quando o oponente é muito mais rápido; o piso de 0,5 s vale a partir de 7 vezes a Velocidade do oponente.
 
-### Detalhes da caçada no motor **[proposta, já no código do F1]**
+### Detalhes da caçada no motor
 
 - Quando as duas criaturas agem no mesmo instante, a do jogador age primeiro.
 - O Tônico de Retorno traz a criatura de volta com a vida cheia.
