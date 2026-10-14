@@ -55,6 +55,37 @@ Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem 
 | 4 | Sapolho, Ferroa, Raizudo |
 | 5 | Ferroa, Raizudo, Penugem |
 
+### Biomas da Era 1 **[proposta]**
+
+Quatro biomas, todos abertos desde o começo. Cada um favorece um inicial, para que a escolha de tipo e as capturas de um bioma ajudem no outro.
+
+| Bioma | Tipo | Favorece |
+| --- | --- | --- |
+| Mata Funda | Brota | Gelusco (Geada vence Brota) |
+| Serra Partida | Rocha | Rebitim (Liga vence Rocha), e Raizudo e Sapolho da Mata Funda |
+| Campo Bravio | Fera | Zumbilo (Eco vence Fera), e Formigaço e Ferroa da Mata Funda |
+| Baía Turva | Maré | Gelusco (Geada vence Maré), e as espécies Brota da Mata Funda |
+
+- Cada bioma guarda as próprias rotas liberadas e os próprios contadores de chefe. Trocar de bioma encerra a luta, como trocar de rota.
+- O reset de Era volta todos os biomas à rota 1.
+
+| Rota | Serra Partida | Campo Bravio | Baía Turva |
+| --- | --- | --- | --- |
+| 1 | Seixote, Cravelho | Trotelo, Saltico | Bolhim, Siriço |
+| 2 | Seixote, Cravelho, Grutilo | Trotelo, Saltico, Zoadeiro | Bolhim, Siriço, Medusela |
+| 3 | Cravelho, Grutilo, Fagulhito | Saltico, Zoadeiro, Chifrudo | Siriço, Medusela, Geleiro |
+| 4 | Grutilo, Fagulhito, Drusito | Zoadeiro, Chifrudo, Lobruma | Medusela, Geleiro, Enguiço |
+| 5 | Fagulhito, Drusito, Muralhão | Chifrudo, Lobruma, Tourado | Geleiro, Enguiço, Abissão |
+
+Simulação de 36 horas em cada bioma, com o jogador repondo até 5 Tônicos de Retorno e 10 de Cura a cada 10 minutos (média de 4 sementes):
+
+| Bioma | Gelusco aos 24 h | Rebitim aos 24 h | Zumbilo aos 24 h |
+| --- | --- | --- | --- |
+| Mata Funda | nível 35 | 33 | 29 |
+| Serra Partida | 27 | 33 | 34 |
+| Campo Bravio | 35 | 29 | 39 |
+| Baía Turva | 39 | 33 | 26 |
+
 ### Selvagens
 
 - O selvagem nasce num nível sorteado com chance igual entre o piso da faixa da rota e 2 níveis abaixo da criatura ativa, sem passar do teto da faixa. Se esse limite ficar abaixo do piso, o selvagem nasce no piso. O chefe não segue essa regra.
@@ -137,6 +168,16 @@ dano  = ⌊ A × (poder ÷ 100) × A ÷ (A + D) × multiplicador de tipo ⌋, no
 | Limalha | Liga | especial | 80 | 6 s |
 | Estalo | Eco | especial | 55 | 3 s |
 | Ressonância | Eco | especial | 90 | 8 s |
+
+Técnicas novas dos biomas da Era 1 **[proposta]**:
+
+| Técnica | Tipo | Categoria | Poder | Recarga |
+| --- | --- | --- | --- | --- |
+| Centelha | Faísca | especial | 55 | 3 s |
+| Estilhaço | Cristal | física | 60 | 3 s |
+| Cerração | Bruma | especial | 80 | 6 s |
+| Onda Funda | Maré | especial | 85 | 7 s |
+| Desmoronar | Rocha | física | 85 | 7 s |
 
 ### Derrota durante a caçada
 
@@ -255,6 +296,29 @@ Valores base no nível 1, na ordem Vida, Ataque, Defesa, Foco e Velocidade. Téc
 
 Os três iniciais têm tipos com relações diferentes com a Mata Funda: Geada vence Brota, Liga é neutro e Eco perde para Brota. Assim a escolha de tipo pesa desde o começo.
 
+Espécies dos biomas novos da Era 1 **[proposta]**. As somas das bases seguem a Mata Funda: perto de 87 nas espécies da rota 1 e perto de 102 no chefe da rota 5.
+
+| Espécie | Tipos | Base | Técnicas |
+| --- | --- | --- | --- |
+| Seixote | Rocha | 45, 11, 14, 8, 9 | Pedrisco, Investida |
+| Cravelho | Liga | 45, 12, 13, 9, 9 | Limalha, Martelada, Mordida |
+| Grutilo | Rocha, Penumbra | 45, 10, 11, 13, 12 | Pio Sombrio, Pedrisco, Mordida |
+| Fagulhito | Faísca, Rocha | 40, 12, 9, 13, 15 | Centelha, Pedrisco, Investida |
+| Drusito | Cristal, Rocha | 50, 11, 14, 13, 8 | Estilhaço, Pedrisco, Investida |
+| Muralhão | Rocha, Liga | 60, 13, 16, 8, 5 | Desmoronar, Martelada, Pedrisco |
+| Trotelo | Fera | 45, 12, 10, 8, 12 | Investida, Mordida |
+| Saltico | Fera, Brisa | 40, 11, 9, 11, 15 | Rajada, Mordida, Investida |
+| Zoadeiro | Eco, Brisa | 45, 9, 10, 15, 13 | Ressonância, Estalo, Rajada |
+| Chifrudo | Fera, Rocha | 55, 14, 14, 7, 8 | Investida, Pedrisco, Mordida |
+| Lobruma | Fera, Bruma | 45, 13, 10, 12, 14 | Cerração, Mordida, Investida |
+| Tourado | Fera | 60, 15, 13, 7, 7 | Investida, Mordida, Pedrisco |
+| Bolhim | Maré | 45, 9, 11, 12, 10 | Jato de Lodo, Mordida |
+| Siriço | Maré, Rocha | 45, 12, 15, 8, 8 | Pedrisco, Jato de Lodo, Investida |
+| Medusela | Maré, Peçonha | 45, 8, 10, 14, 13 | Névoa Tóxica, Jato de Lodo, Ferrão |
+| Geleiro | Geada, Maré | 50, 10, 12, 13, 10 | Sopro Frio, Lasca Gélida, Jato de Lodo |
+| Enguiço | Maré, Faísca | 40, 11, 9, 14, 16 | Centelha, Jato de Lodo, Mordida |
+| Abissão | Maré, Penumbra | 60, 12, 13, 12, 5 | Onda Funda, Pio Sombrio, Jato de Lodo |
+
 ### Início do jogo
 
 - O jogador escolhe um dos três iniciais. Ele começa no nível 1, com raridade comum e genes sorteados nessa faixa.
@@ -360,6 +424,7 @@ As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a 
 ### Cruzamento no F4
 
 - **Linhagens:** Raiz (Brotelho, Sapolho, Raizudo), Enxame (Formigaço, Ferroa) e Asa (Penugem, Zumbilo). Gelusco e Rebitim formam cada um a sua linhagem e só cruzam com a mesma espécie até chegarem espécies afins de outros biomas.
+- **Linhagens com os biomas novos [proposta]:** Raiz (Brotelho, Sapolho, Raizudo); Enxame (Formigaço, Ferroa, Medusela); Asa (Penugem, Zumbilo, Zoadeiro, Saltico); Gelo (Gelusco, Geleiro); Metal (Rebitim, Cravelho); Pedra (Seixote, Drusito, Muralhão); Gruta (Grutilo, Abissão); Faísca (Fagulhito, Enguiço); Manada (Trotelo, Chifrudo, Lobruma, Tourado); Concha (Bolhim, Siriço). Assim os três iniciais passam a ter com quem cruzar.
 - **Pais:** duas criaturas da reserva, fora de posto de trabalho. A ativa não cruza. A taxa é de 300 de ouro.
 - **Herança:** o jogador escolhe 3 atributos; cada um recebe o maior gene entre os dois pais. Os outros 2 são sorteados de 1 a 20, com chance igual.
 - A raridade do filhote sai da soma dos genes (seção 7). Se a raridade permitir, a chance de ser prismático é de 2%.
