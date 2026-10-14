@@ -110,7 +110,7 @@ dano  = ⌊ A × (poder ÷ 100) × A ÷ (A + D) × multiplicador de tipo ⌋, no
 
 - Quando as duas criaturas agem no mesmo instante, a do jogador age primeiro.
 - O Tônico de Retorno traz a criatura de volta com a vida cheia.
-- Fora do Tônico, a vida não se recupera entre um selvagem e o próximo; a cura fica para os Tônicos de Cura.
+- Depois de vencer um selvagem ou um chefe, a vida da criatura volta cheia antes do próximo. Os Tônicos de Cura servem dentro da luta.
 - **Tônico de Cura:** recupera 50% da Vida máxima. O jogador define o gatilho, que começa em 30%. O tônico é usado logo depois do golpe que deixa a vida abaixo do gatilho e não gasta a vez da criatura.
 - O XP com Fadiga é arredondado para baixo (35 vira 17).
 - Uma luta que não termina até o fim do período simulado fica guardada no estado da caçada e continua no período seguinte. A tela avança a simulação em passos curtos, de cerca de 250 ms.
@@ -256,7 +256,6 @@ Os três iniciais têm tipos com relações diferentes com a Mata Funda: Geada v
 ### XP e nível
 
 - Para subir do nível n para o n + 1 são precisos 6 × n² de XP. Ao subir, o XP do nível volta a 0 e o que sobrou passa para o nível seguinte.
-- Ao subir de nível, a vida atual ganha o mesmo tanto que a Vida máxima ganhou.
 - Com cerca de 4 s por abate na rota 1 (luta mais 1 s de espera), isso dá o nível 10 em cerca de 11 minutos. Com a Vida por rota da seção 4, o nível 100 fica em torno de 20 horas de caçada, estimativa a conferir no F2.
 
 ### Captura e matrizes

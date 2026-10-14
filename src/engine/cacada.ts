@@ -81,13 +81,10 @@ function vencer<Tipo extends string>(
   const ouro = Math.floor(Math.floor(rota.xpBase / 2) * fadiga)
   eventos.push({ tipo: 'abate', instante: agora, especie: encontro.selvagem.especie, chefe: encontro.chefe, xp, ouro })
 
-  // Ao subir de nível, a vida atual ganha o mesmo tanto que a Vida máxima.
   const ativa = { ...estado.ativa, ...ganharXp(estado.ativa, xp) }
-  let vidaDaAtiva = encontro.luta.jogador.vida
-  if (ativa.nivel !== estado.ativa.nivel) {
-    vidaDaAtiva += vidaMaxima(configuracao.catalogo, ativa) - vidaMaxima(configuracao.catalogo, estado.ativa)
-    eventos.push({ tipo: 'nivel', instante: agora, nivel: ativa.nivel })
-  }
+  if (ativa.nivel !== estado.ativa.nivel) eventos.push({ tipo: 'nivel', instante: agora, nivel: ativa.nivel })
+  // Depois da vitória a vida volta cheia, já com a Vida máxima do nível novo.
+  const vidaDaAtiva = vidaMaxima(configuracao.catalogo, ativa)
 
   let { inventario, reserva, proximoId } = estado
   inventario = { ...inventario, ouro: inventario.ouro + ouro }

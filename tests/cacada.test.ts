@@ -6,12 +6,9 @@ import type { Evento, ResultadoDaCacada } from '../src/engine/cacada.ts'
 import { ABATES_PARA_O_CHEFE, simularCacada } from '../src/engine/cacada.ts'
 import type { Tipo } from '../src/conteudo/tipos.ts'
 import { ESPACOS_NA_RESERVA } from '../src/engine/captura.ts'
-import { lutar } from '../src/engine/combate.ts'
-import { combatenteDe } from '../src/engine/criatura.ts'
 import { DURACAO_DA_FADIGA_MS } from '../src/engine/derrota.ts'
 import type { EstadoDoJogo } from '../src/engine/jogo.ts'
 import { vidaMaxima } from '../src/engine/jogo.ts'
-import { gerarSelvagem } from '../src/engine/nascimento.ts'
 import { jogoCom, membro } from './apoio.ts'
 
 const MINUTO = 60 * 1000
@@ -94,20 +91,14 @@ describe('caçada', () => {
     expect(r.estado.inventario.ouro).toBe(200 + abates(r) * 8)
   })
 
-  it('sobe de nível e a vida ganha o mesmo tanto que a Vida máxima', () => {
-    // Falta 1 de XP para o nível 2; sem cura, para conferir a vida da luta.
+  it('depois da vitória a vida volta cheia, com a Vida máxima do nível novo', () => {
+    // Falta 1 de XP para o nível 2; sem cura, para a luta gastar vida.
     const ativa = { ...membro('Gelusco', 1, 10), xpNoNivel: 5 }
-    const inicial = jogoCom(ativa, { gatilhoDeCura: 0 })
-    const r = cacar(inicial, UMA_HORA, 7, UM_SELVAGEM)
+    const r = cacar(jogoCom(ativa, { gatilhoDeCura: 0 }), UMA_HORA, 7, UM_SELVAGEM)
 
-    const gerador = criarGerador(7)
-    const selvagem = combatenteDe(CATALOGO, gerarSelvagem(gerador, CONFIGURACAO.especiesPorRota[0], ROTAS[0].faixaDeNivel))
-    const luta = lutar(CONFIGURACAO.tabela, combatenteDe(CATALOGO, ativa), selvagem, 0, Infinity)
-    expect(luta.vencedor).toBe('jogador')
-
-    const nivel2 = { ...ativa, nivel: 2 }
+    expect(abates(r)).toBe(1)
     expect(r.estado.ativa).toMatchObject({ nivel: 2, xpNoNivel: 9 })
-    expect(r.estado.vidaDaAtiva).toBeCloseTo(luta.vidaDoJogador + vidaMaxima(CATALOGO, nivel2) - vidaMaxima(CATALOGO, ativa))
+    expect(r.estado.vidaDaAtiva).toBe(vidaMaxima(CATALOGO, { ...ativa, nivel: 2 }))
     expect(r.eventos).toContainEqual(expect.objectContaining({ tipo: 'nivel', nivel: 2 }))
   })
 
