@@ -11,13 +11,11 @@ import { novoJogo } from '../engine/jogo.ts'
 import type { Resumo } from '../engine/offline.ts'
 import { creditarTempoFora, resumir } from '../engine/offline.ts'
 import { VERSAO_DO_SAVE, desserializar, serializar } from '../engine/save.ts'
+import { CHAVE_DO_SAVE, CHAVE_DO_SAVE_RECUSADO, guardar, lerGuardado } from './arquivo.ts'
 import { descreverEvento } from './textos.ts'
 
 const PASSO_MS = 100
 const REGISTROS_GUARDADOS = 40
-const CHAVE_DO_SAVE = 'monsterlegacy:save'
-// Um save que o jogo não consegue ler fica guardado aqui em vez de ser sobrescrito.
-const CHAVE_DO_SAVE_RECUSADO = 'monsterlegacy:save-recusado'
 const INTERVALO_DO_SAVE_MS = 5000
 // Recarregar a página não mostra resumo.
 const MINIMO_PARA_RESUMO_MS = 60 * 1000
@@ -45,16 +43,8 @@ export type Comando = (estado: EstadoDoJogo<Tipo>, agora: number, gerador: Gerad
 
 type Abertura = { readonly sessao: Sessao | null; readonly volta: Volta | null; readonly gerador: Gerador }
 
-function gravar(chave: string, texto: string) {
-  try {
-    localStorage.setItem(chave, texto)
-  } catch {
-    // Sem acesso ao armazenamento o jogo segue, só não guarda.
-  }
-}
-
 function gravarSessao(sessao: Sessao) {
-  gravar(CHAVE_DO_SAVE, serializar(sessao.estado, sessao.agora))
+  guardar(CHAVE_DO_SAVE, serializar(sessao.estado, sessao.agora))
 }
 
 // Abre um save e credita o tempo fora; lança se o save não abre.
@@ -91,18 +81,13 @@ export function resumoDoSave(texto: string): ResumoDoSave | null {
 function abrir(): Abertura {
   const agora = Date.now()
   const gerador = criarGerador(agora)
-  let texto: string | null = null
-  try {
-    texto = localStorage.getItem(CHAVE_DO_SAVE)
-  } catch {
-    texto = null
-  }
+  const texto = lerGuardado(CHAVE_DO_SAVE)
   if (texto === null) return { sessao: null, volta: null, gerador }
 
   try {
     return { ...carregar(texto, agora, gerador), gerador }
   } catch {
-    gravar(CHAVE_DO_SAVE_RECUSADO, texto)
+    guardar(CHAVE_DO_SAVE_RECUSADO, texto)
     return { sessao: null, volta: null, gerador }
   }
 }

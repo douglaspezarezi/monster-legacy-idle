@@ -348,3 +348,30 @@ dd {
 .aviso-de-aba {
   max-width: 36rem;
 }
+
+.erro {
+  border-color: var(--aviso);
+  max-width: 40rem;
+}
+
+.botoes-de-erro {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.copia {
+  margin-top: 1rem;
+}
+
+.botao-de-arquivo {
+  background: rgb(255 255 255 / 0.1);
+  border: 1px solid var(--borda);
+  border-radius: 6px;
+  padding: 0.25rem 0.6rem;
+  cursor: pointer;
+}
+
+.botao-de-arquivo input {
+  display: none;
+}
