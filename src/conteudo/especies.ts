@@ -72,6 +72,38 @@ export const ESPECIES: readonly DadosDeEspecie<Tipo>[] = [
   { nome: 'Lobreu', tipos: ['Penumbra', 'Fera'], bases: bases(50, 14, 11, 8, 12), tecnicas: ['Sombra Cortante', 'Mordida', 'Investida'] },
   { nome: 'Breuzal', tipos: ['Penumbra', 'Bruma'], bases: bases(48, 9, 11, 14, 11), tecnicas: ['Cerração', 'Pio Sombrio'] },
   { nome: 'Noitarão', tipos: ['Penumbra'], bases: bases(60, 14, 13, 10, 5), tecnicas: ['Sombra Cortante', 'Pio Sombrio', 'Investida'] },
+  // Cume dos Ventos
+  { nome: 'Ventilho', tipos: ['Brisa'], bases: bases(45, 10, 10, 11, 11), tecnicas: ['Rajada', 'Mordida'], evolucao: { especie: 'Ventaval', nivel: 75 } },
+  { nome: 'Pluminho', tipos: ['Brisa', 'Fera'], bases: bases(40, 12, 9, 9, 16), tecnicas: ['Lufada', 'Investida', 'Mordida'] },
+  { nome: 'Saraivo', tipos: ['Brisa', 'Geada'], bases: bases(45, 10, 11, 14, 12), tecnicas: ['Sopro Frio', 'Rajada', 'Lasca Gélida'] },
+  { nome: 'Escarpim', tipos: ['Brisa', 'Rocha'], bases: bases(52, 13, 14, 8, 9), tecnicas: ['Pedrisco', 'Lufada', 'Desmoronar'] },
+  { nome: 'Ventaval', tipos: ['Brisa'], bases: bases(52, 12, 12, 13, 13), tecnicas: ['Ciclone', 'Lufada', 'Rajada'], evolucao: { especie: 'Furacor', nivel: 150 } },
+  { nome: 'Gaviel', tipos: ['Brisa', 'Penumbra'], bases: bases(45, 11, 10, 15, 15), tecnicas: ['Ciclone', 'Pio Sombrio', 'Rajada'] },
+  { nome: 'Furacor', tipos: ['Brisa'], bases: bases(58, 14, 13, 14, 14), tecnicas: ['Ciclone', 'Lufada', 'Investida'] },
+  // Veio Cristalino
+  { nome: 'Lasquim', tipos: ['Cristal'], bases: bases(45, 11, 12, 10, 9), tecnicas: ['Estilhaço', 'Mordida'], evolucao: { especie: 'Lascardo', nivel: 75 } },
+  { nome: 'Brilhote', tipos: ['Cristal', 'Aurora'], bases: bases(40, 9, 10, 14, 14), tecnicas: ['Clarão', 'Estilhaço'] },
+  { nome: 'Geodim', tipos: ['Cristal', 'Rocha'], bases: bases(55, 11, 15, 9, 7), tecnicas: ['Estilhaço', 'Pedrisco', 'Desmoronar'] },
+  { nome: 'Facetor', tipos: ['Cristal', 'Liga'], bases: bases(50, 13, 15, 9, 8), tecnicas: ['Estilhaço', 'Martelada', 'Limalha'] },
+  { nome: 'Lascardo', tipos: ['Cristal'], bases: bases(52, 13, 14, 12, 11), tecnicas: ['Refração', 'Estilhaço', 'Mordida'], evolucao: { especie: 'Lapidão', nivel: 150 } },
+  { nome: 'Espelhim', tipos: ['Cristal', 'Penumbra'], bases: bases(45, 9, 10, 16, 15), tecnicas: ['Refração', 'Pio Sombrio'] },
+  { nome: 'Lapidão', tipos: ['Cristal', 'Rocha'], bases: bases(60, 15, 17, 12, 9), tecnicas: ['Refração', 'Estilhaço', 'Desmoronar'] },
+  // Lagoa Velada
+  { nome: 'Neblim', tipos: ['Bruma'], bases: bases(45, 10, 10, 12, 10), tecnicas: ['Cerração', 'Mordida'], evolucao: { especie: 'Neblinor', nivel: 75 } },
+  { nome: 'Garoel', tipos: ['Bruma', 'Maré'], bases: bases(50, 9, 11, 12, 9), tecnicas: ['Jato de Lodo', 'Cerração'] },
+  { nome: 'Vultinho', tipos: ['Bruma', 'Penumbra'], bases: bases(42, 10, 9, 15, 14), tecnicas: ['Pio Sombrio', 'Cerração'] },
+  { nome: 'Orvalim', tipos: ['Bruma', 'Brota'], bases: bases(52, 9, 12, 13, 9), tecnicas: ['Esporos', 'Cerração'] },
+  { nome: 'Neblinor', tipos: ['Bruma'], bases: bases(52, 12, 12, 14, 12), tecnicas: ['Cerração', 'Mortalha', 'Mordida'], evolucao: { especie: 'Brumarca', nivel: 150 } },
+  { nome: 'Miragel', tipos: ['Bruma', 'Aurora'], bases: bases(44, 9, 10, 16, 16), tecnicas: ['Clarão', 'Cerração'] },
+  { nome: 'Brumarca', tipos: ['Bruma'], bases: bases(58, 15, 14, 14, 12), tecnicas: ['Mortalha', 'Cerração', 'Investida'] },
+  // Planalto da Alvorada
+  { nome: 'Raiolim', tipos: ['Aurora'], bases: bases(45, 10, 10, 12, 10), tecnicas: ['Clarão', 'Mordida'], evolucao: { especie: 'Raiante', nivel: 75 } },
+  { nome: 'Orvelim', tipos: ['Aurora', 'Brota'], bases: bases(48, 9, 11, 13, 8), tecnicas: ['Clarão', 'Esporos'] },
+  { nome: 'Soalheiro', tipos: ['Aurora', 'Chama'], bases: bases(44, 12, 9, 13, 13), tecnicas: ['Fornalha', 'Clarão', 'Tição'] },
+  { nome: 'Halim', tipos: ['Aurora', 'Cristal'], bases: bases(50, 10, 13, 14, 8), tecnicas: ['Clarão', 'Estilhaço'] },
+  { nome: 'Raiante', tipos: ['Aurora'], bases: bases(52, 12, 12, 14, 12), tecnicas: ['Fulgor', 'Lança de Luz', 'Mordida'], evolucao: { especie: 'Zenital', nivel: 150 } },
+  { nome: 'Alvorel', tipos: ['Aurora', 'Fera'], bases: bases(50, 15, 10, 8, 13), tecnicas: ['Lança de Luz', 'Investida', 'Mordida'] },
+  { nome: 'Zenital', tipos: ['Aurora', 'Brisa'], bases: bases(58, 14, 13, 16, 12), tecnicas: ['Fulgor', 'Lança de Luz', 'Rajada'] },
 ]
 
 export const INICIAIS = ['Gelusco', 'Rebitim', 'Zumbilo'] as const

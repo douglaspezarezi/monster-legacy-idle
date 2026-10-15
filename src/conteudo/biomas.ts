@@ -106,7 +106,64 @@ export const BOSQUE_SEM_LUA: DadosDeBioma<Tipo> = {
   ],
 }
 
-// Os da Era 1 abrem desde o começo; os da Era 2, a partir dela. A ordem não muda: o save guarda o índice.
+// Os da Era 3 são os únicos com a rota 6.
+export const CUME_DOS_VENTOS: DadosDeBioma<Tipo> = {
+  nome: 'Cume dos Ventos',
+  tipo: 'Brisa',
+  era: 3,
+  especiesPorRota: [
+    ['Ventilho', 'Pluminho'],
+    ['Ventilho', 'Pluminho', 'Saraivo'],
+    ['Pluminho', 'Saraivo', 'Escarpim'],
+    ['Saraivo', 'Escarpim', 'Ventaval'],
+    ['Escarpim', 'Ventaval', 'Gaviel'],
+    ['Ventaval', 'Gaviel', 'Furacor'],
+  ],
+}
+
+export const VEIO_CRISTALINO: DadosDeBioma<Tipo> = {
+  nome: 'Veio Cristalino',
+  tipo: 'Cristal',
+  era: 3,
+  especiesPorRota: [
+    ['Lasquim', 'Brilhote'],
+    ['Lasquim', 'Brilhote', 'Geodim'],
+    ['Brilhote', 'Geodim', 'Facetor'],
+    ['Geodim', 'Facetor', 'Lascardo'],
+    ['Facetor', 'Lascardo', 'Espelhim'],
+    ['Lascardo', 'Espelhim', 'Lapidão'],
+  ],
+}
+
+export const LAGOA_VELADA: DadosDeBioma<Tipo> = {
+  nome: 'Lagoa Velada',
+  tipo: 'Bruma',
+  era: 3,
+  especiesPorRota: [
+    ['Neblim', 'Garoel'],
+    ['Neblim', 'Garoel', 'Vultinho'],
+    ['Garoel', 'Vultinho', 'Orvalim'],
+    ['Vultinho', 'Orvalim', 'Neblinor'],
+    ['Orvalim', 'Neblinor', 'Miragel'],
+    ['Neblinor', 'Miragel', 'Brumarca'],
+  ],
+}
+
+export const PLANALTO_DA_ALVORADA: DadosDeBioma<Tipo> = {
+  nome: 'Planalto da Alvorada',
+  tipo: 'Aurora',
+  era: 3,
+  especiesPorRota: [
+    ['Raiolim', 'Orvelim'],
+    ['Raiolim', 'Orvelim', 'Soalheiro'],
+    ['Orvelim', 'Soalheiro', 'Halim'],
+    ['Soalheiro', 'Halim', 'Raiante'],
+    ['Halim', 'Raiante', 'Alvorel'],
+    ['Raiante', 'Alvorel', 'Zenital'],
+  ],
+}
+
+// Os da Era 1 abrem desde o começo; os das Eras seguintes, a partir delas. A ordem não muda: o save guarda o índice.
 export const BIOMAS: readonly DadosDeBioma<Tipo>[] = [
   MATA_FUNDA,
   SERRA_PARTIDA,
@@ -116,4 +173,8 @@ export const BIOMAS: readonly DadosDeBioma<Tipo>[] = [
   CHAPADA_TROVAO,
   PANTANO_AMARGO,
   BOSQUE_SEM_LUA,
+  CUME_DOS_VENTOS,
+  VEIO_CRISTALINO,
+  LAGOA_VELADA,
+  PLANALTO_DA_ALVORADA,
 ]

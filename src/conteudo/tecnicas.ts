@@ -33,4 +33,10 @@ export const TECNICAS: readonly Tecnica<Tipo>[] = [
   { nome: 'Clarão', tipo: 'Aurora', categoria: 'especial', poder: 70, recargaMs: 5 * s },
   { nome: 'Descarga', tipo: 'Faísca', categoria: 'fisica', poder: 85, recargaMs: 7 * s },
   { nome: 'Sombra Cortante', tipo: 'Penumbra', categoria: 'fisica', poder: 60, recargaMs: 3 * s },
+  { nome: 'Lufada', tipo: 'Brisa', categoria: 'fisica', poder: 60, recargaMs: 3 * s },
+  { nome: 'Ciclone', tipo: 'Brisa', categoria: 'especial', poder: 85, recargaMs: 7 * s },
+  { nome: 'Refração', tipo: 'Cristal', categoria: 'especial', poder: 85, recargaMs: 7 * s },
+  { nome: 'Mortalha', tipo: 'Bruma', categoria: 'fisica', poder: 85, recargaMs: 7 * s },
+  { nome: 'Lança de Luz', tipo: 'Aurora', categoria: 'fisica', poder: 60, recargaMs: 3 * s },
+  { nome: 'Fulgor', tipo: 'Aurora', categoria: 'especial', poder: 90, recargaMs: 8 * s },
 ]
