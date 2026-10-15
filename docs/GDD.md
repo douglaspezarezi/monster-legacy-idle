@@ -205,7 +205,7 @@ O jogador compra tônicos de cura com ouro e configura gatilhos, como "usar tôn
 - A nuvem guarda o mesmo texto do save local, um por jogador. Cada jogador só lê e grava o próprio save.
 - Ao entrar, se a nuvem e o navegador têm saves diferentes, o jogo mostra os dois (Era, nível da criatura ativa, ouro e data em que foi salvo) e o jogador escolhe qual fica. Se só um lado tem save, ele vale para os dois.
 - Cada navegador lembra o último save que trocou com a nuvem. Se a nuvem ainda tem esse save, o navegador só continuou dali e grava sem perguntar; a pergunta fica para quando outro dispositivo gravou no meio.
-- Depois disso, o jogo grava na nuvem a cada minuto e quando a aba é escondida.
+- Depois disso, o jogo grava na nuvem a cada minuto e quando a aba é escondida. Antes de cada gravação, confere se outro dispositivo gravou depois da última troca; se sim, pergunta qual save fica em vez de sobrescrever.
 - O tempo fora é creditado a partir do instante salvo no save escolhido, com as regras de sempre.
 
 ## 6. Tipos

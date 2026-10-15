@@ -1,6 +1,7 @@
 // Save na nuvem: login por link no e-mail, decisão ao entrar e gravação periódica (GDD, seção 5).
 import type { Session } from '@supabase/supabase-js'
 import { useCallback, useEffect, useRef, useState } from 'react'
+import type { SaveNaNuvem } from '../nuvem/cliente.ts'
 import { enviarLink, gravarSave, lerSave, nuvem } from '../nuvem/cliente.ts'
 import { decidir } from '../nuvem/sincronizacao.ts'
 import type { ResumoDoSave, SaveExportado } from './useJogo.ts'
@@ -44,6 +45,12 @@ function guardarUltimo(sessao: Session, salvoEm: number) {
   }
 }
 
+function montarConflito(local: SaveExportado, remoto: SaveNaNuvem): Conflito | null {
+  const resumoLocal = resumoDoSave(local.texto)
+  const resumoRemoto = resumoDoSave(remoto.texto)
+  return resumoLocal && resumoRemoto ? { local: resumoLocal, remoto: resumoRemoto, textoRemoto: remoto.texto } : null
+}
+
 function mensagemDe(erro: unknown): string {
   return erro instanceof Error ? erro.message : String(erro)
 }
@@ -76,12 +83,12 @@ export function useNuvem(exportar: () => SaveExportado | null, importar: (texto:
         const local = exportar()
         const decisao = decidir(local, remoto, lerUltimo(s))
         if (decisao === 'perguntar' && local && remoto) {
-          const resumoLocal = resumoDoSave(local.texto)
-          const resumoRemoto = resumoDoSave(remoto.texto)
-          if (resumoLocal && resumoRemoto) {
-            setSituacao({ tipo: 'conflito', conflito: { local: resumoLocal, remoto: resumoRemoto, textoRemoto: remoto.texto } })
+          const conflito = montarConflito(local, remoto)
+          if (conflito) {
+            setSituacao({ tipo: 'conflito', conflito })
             return
           }
+          const resumoRemoto = resumoDoSave(remoto.texto)
           // Um lado que não abre não entra na escolha: fica o outro.
           if (!resumoRemoto) await enviar(s)
           else importar(remoto.texto)
@@ -128,19 +135,35 @@ export function useNuvem(exportar: () => SaveExportado | null, importar: (texto:
   // Depois de sincronizar, grava a cada minuto e quando a aba é escondida.
   useEffect(() => {
     if (!sessao || situacao.tipo !== 'sincronizada') return
-    const gravarAgora = () => {
-      if (sincronizada.current) enviar(sessao).catch((erro: unknown) => setSituacao({ tipo: 'erro', mensagem: mensagemDe(erro) }))
+    // Antes de gravar, confere se outro dispositivo gravou depois da última troca; se sim, pergunta em vez de sobrescrever.
+    const gravarAgora = async () => {
+      if (!nuvem || !sincronizada.current) return
+      try {
+        const remoto = await lerSave(nuvem, sessao)
+        const local = exportar()
+        if (decidir(local, remoto, lerUltimo(sessao)) === 'perguntar' && local && remoto) {
+          const conflito = montarConflito(local, remoto)
+          if (conflito) {
+            sincronizada.current = false
+            setSituacao({ tipo: 'conflito', conflito })
+            return
+          }
+        }
+        await enviar(sessao)
+      } catch (erro) {
+        setSituacao({ tipo: 'erro', mensagem: mensagemDe(erro) })
+      }
     }
     const aoMudarVisibilidade = () => {
-      if (document.visibilityState === 'hidden') gravarAgora()
+      if (document.visibilityState === 'hidden') void gravarAgora()
     }
-    const intervalo = setInterval(gravarAgora, INTERVALO_DA_NUVEM_MS)
+    const intervalo = setInterval(() => void gravarAgora(), INTERVALO_DA_NUVEM_MS)
     document.addEventListener('visibilitychange', aoMudarVisibilidade)
     return () => {
       clearInterval(intervalo)
       document.removeEventListener('visibilitychange', aoMudarVisibilidade)
     }
-  }, [sessao, situacao.tipo, enviar])
+  }, [sessao, situacao.tipo, enviar, exportar])
 
   const entrar = useCallback(async (email: string) => {
     if (!nuvem) return
