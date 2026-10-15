@@ -1,6 +1,7 @@
 import { Cacada } from './interface/Cacada.tsx'
 import { EscolhaDoInicial } from './interface/EscolhaDoInicial.tsx'
 import { PainelDaNuvem } from './interface/PainelDaNuvem.tsx'
+import { PainelDeCopia } from './interface/PainelDeCopia.tsx'
 import { ResumoDaVolta } from './interface/ResumoDaVolta.tsx'
 import { useJogo } from './interface/useJogo.ts'
 import { useNuvem } from './interface/useNuvem.ts'
@@ -33,6 +34,7 @@ function Jogo() {
       <PainelDaNuvem {...nuvem} />
       {volta && <ResumoDaVolta volta={volta} aoFechar={fecharVolta} />}
       {sessao ? <Cacada sessao={sessao} executar={executar} /> : <EscolhaDoInicial aoEscolher={comecar} />}
+      <PainelDeCopia temJogo={sessao !== null} exportar={exportar} importar={importar} />
     </main>
   )
 }
