@@ -12,6 +12,7 @@ import { combatenteDe } from './criatura.ts'
 import type { Catalogo } from './especie.ts'
 import type { Matriz } from './nascimento.ts'
 import { abrirMatriz, criarInicial } from './nascimento.ts'
+import { voltarAoNivel1 } from './evolucao.ts'
 
 // Era em que a criatura passou pelo reset; abaixo da Era atual, ela volta ao nível 1 ao ser ativada.
 export type Membro = Criatura & { readonly id: number; readonly era: number }
@@ -181,7 +182,7 @@ export function trocarAtiva<Tipo extends string>(
 ): EstadoDoJogo<Tipo> {
   const naReserva = estado.reserva.find((m) => m.id === id)
   if (!naReserva) throw new RangeError(`criatura fora da reserva: ${id}`)
-  const entra = naReserva.era < estado.era ? { ...naReserva, nivel: 1, xpNoNivel: 0, era: estado.era } : naReserva
+  const entra = naReserva.era < estado.era ? { ...voltarAoNivel1(catalogo, naReserva), era: estado.era } : naReserva
   if (estado.forja.trabalhadores.includes(id)) throw new RangeError(`criatura trabalhando na Forja: ${id}`)
   const reserva = estado.reserva.map((m) => (m.id === id ? estado.ativa : m))
   return { ...semEncontro(estado, agora), ativa: entra, reserva, vidaDaAtiva: vidaMaxima(catalogo, entra) }

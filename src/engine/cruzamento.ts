@@ -5,6 +5,8 @@ import type { Criatura } from './criatura.ts'
 import type { Atributo, Genes } from './genes.ts'
 import { ATRIBUTOS, GENE_MAXIMO, GENE_MINIMO, podeSerPrismatica, raridadeDosGenes } from './genes.ts'
 import type { EstadoDoJogo } from './jogo.ts'
+import type { Catalogo } from './especie.ts'
+import { primeiraForma } from './evolucao.ts'
 import { CHANCE_PRISMATICA } from './nascimento.ts'
 import { reduzir } from './equipamentos.ts'
 
@@ -58,6 +60,7 @@ export type PedidoDeCruzamento = {
 // Os pais saem da reserva para sempre; o filhote entra no lugar.
 export function cruzar<Tipo extends string>(
   estado: EstadoDoJogo<Tipo>,
+  catalogo: Catalogo<Tipo>,
   linhagens: readonly Linhagem[],
   pedido: PedidoDeCruzamento,
   gerador: Gerador,
@@ -78,7 +81,8 @@ export function cruzar<Tipo extends string>(
   const taxa = taxaDeCruzamento(estado)
   if (estado.inventario.ouro < taxa) throw new RangeError(`ouro insuficiente: ${estado.inventario.ouro}`)
 
-  const especie = especieDe === paiA ? a.especie : b.especie
+  // O filhote nasce na primeira forma da linha do pai escolhido.
+  const especie = primeiraForma(catalogo, especieDe === paiA ? a.especie : b.especie)
   const filhote = { ...nascerDoCruzamento(a, b, especie, herdados, gerador), id: estado.proximoId, era: estado.era }
   return {
     ...estado,

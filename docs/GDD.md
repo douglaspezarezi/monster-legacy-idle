@@ -362,7 +362,7 @@ O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% d
 - Linhas de 2 formas evoluem no nível 75.
 - Linhas de 3 formas dividem os intervalos de forma simétrica, evoluindo nos níveis 75 e 150.
 
-**Evolução no F9 [proposta]:**
+**Evolução no F9:**
 
 - **Efeito:** cada forma multiplica todos os atributos: ×1,10 na segunda forma e ×1,20 na terceira, junto com o bônus prismático. Sem isso a evolução seria quase só visual, porque a base de uma espécie só entra como o valor do nível 1: no nível 75, um Gelusco com gene 8 tem 642 de Vida, e uma forma com base 8 maior teria 650 (+1,2%). Com ×1,10, fica em cerca de 715.
 - **Quando:** ao chegar ao nível da evolução, a criatura ativa evolui na hora, com aviso no registro. Ficam os genes, a raridade, a variação prismática, o nível e o XP; mudam a espécie, os tipos e as técnicas.
@@ -371,7 +371,7 @@ O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% d
 - **Matriz:** gera a espécie indicada nela, mesmo que seja uma forma evoluída.
 - Na Era 1 o teto é 50, então a primeira evolução aparece na Era 2; a do nível 150 espera a Era 3.
 
-**Linhas de 3 formas: os iniciais [proposta].** Bases cerca de 14% maiores a cada forma.
+**Linhas de 3 formas: os iniciais.** Bases cerca de 14% maiores a cada forma.
 
 | Linha | Forma 1 | Forma 2 (nível 75) | Forma 3 (nível 150) |
 | --- | --- | --- | --- |
@@ -382,7 +382,7 @@ O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% d
 - Técnicas: Gelundo e Rebitaço e Zumbrado mantêm as da primeira forma. Glaciarca: Avalanche, Sopro Frio, Lasca Gélida, Rajada. Couraçor: Prensa, Martelada, Limalha, Desmoronar. Estrondor: Ressonância, Pio Sombrio, Estalo, Rajada.
 - Técnicas novas: **Avalanche** (Geada, física, 90, 8 s) e **Prensa** (Liga, física, 90, 8 s).
 
-**Linhas de 2 formas com espécies que já existem [proposta].** Cada par já foi desenhado como a espécie da rota 1 e o chefe da rota 5 do mesmo bioma, com somas 87 e 102:
+**Linhas de 2 formas com espécies que já existem.** Cada par já foi desenhado como a espécie da rota 1 e o chefe da rota 5 do mesmo bioma, com somas 87 e 102:
 
 | Forma 1 | Forma 2 (nível 75) |
 | --- | --- |
@@ -465,7 +465,7 @@ As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a 
 ### Cruzamento no F4
 
 - **Linhagens:** Raiz (Brotelho, Sapolho, Raizudo), Enxame (Formigaço, Ferroa) e Asa (Penugem, Zumbilo). Gelusco e Rebitim formam cada um a sua linhagem e só cruzam com a mesma espécie até chegarem espécies afins de outros biomas.
-- **Linhagens com os biomas novos:** Raiz (Brotelho, Sapolho, Raizudo); Enxame (Formigaço, Ferroa, Medusela); Asa (Penugem, Zumbilo, Zoadeiro, Saltico); Gelo (Gelusco, Geleiro); Metal (Rebitim, Cravelho); Pedra (Seixote, Drusito, Muralhão); Gruta (Grutilo, Abissão); Faísca (Fagulhito, Enguiço); Manada (Trotelo, Chifrudo, Lobruma, Tourado); Concha (Bolhim, Siriço). Assim os três iniciais passam a ter com quem cruzar.
+- **Linhagens com os biomas novos:** Raiz (Brotelho, Sapolho, Raizudo); Enxame (Formigaço, Ferroa, Medusela); Asa (Penugem, Zumbilo, Zumbrado, Estrondor, Zoadeiro, Saltico); Gelo (Gelusco, Gelundo, Glaciarca, Geleiro); Metal (Rebitim, Rebitaço, Couraçor, Cravelho); Pedra (Seixote, Drusito, Muralhão); Gruta (Grutilo); Faísca (Fagulhito, Enguiço); Manada (Trotelo, Chifrudo, Lobruma, Tourado); Concha (Bolhim, Siriço, Abissão). Assim os três iniciais passam a ter com quem cruzar.
 - **Pais:** duas criaturas da reserva, fora de posto de trabalho. A ativa não cruza. A taxa é de 300 de ouro.
 - **Herança:** o jogador escolhe 3 atributos; cada um recebe o maior gene entre os dois pais. Os outros 2 são sorteados de 1 a 20, com chance igual.
 - A raridade do filhote sai da soma dos genes (seção 7). Se a raridade permitir, a chance de ser prismático é de 2%.

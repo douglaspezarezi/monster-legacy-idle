@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { BIOMAS } from '../src/conteudo/biomas.ts'
+import { CATALOGO } from '../src/conteudo/jogo.ts'
+import { formaDa } from '../src/engine/evolucao.ts'
 import { ESPECIES, INICIAIS } from '../src/conteudo/especies.ts'
 import { ROTAS } from '../src/conteudo/rotas.ts'
 import { TECNICAS } from '../src/conteudo/tecnicas.ts'
@@ -36,12 +38,22 @@ describe('conteúdo', () => {
     }
   })
 
-  it('nomes únicos e toda espécie que não é inicial aparece em algum bioma', () => {
+  it('nomes únicos e toda espécie é inicial, aparece em algum bioma ou é alcançada por evolução', () => {
     expect(nomesDeEspecies.size).toBe(ESPECIES.length)
     expect(nomesDeTecnicas.size).toBe(TECNICAS.length)
-    const nosBiomas = new Set(BIOMAS.flatMap((b) => b.especiesPorRota.flat()))
-    for (const nome of nomesDeEspecies) {
-      if (!(INICIAIS as readonly string[]).includes(nome)) expect(nosBiomas).toContain(nome)
+    const alcancaveis = new Set<string>([...INICIAIS, ...BIOMAS.flatMap((b) => b.especiesPorRota.flat())])
+    for (const especie of ESPECIES) if (especie.evolucao && alcancaveis.has(especie.nome)) alcancaveis.add(especie.evolucao.especie)
+    for (const especie of ESPECIES) if (especie.evolucao && alcancaveis.has(especie.nome)) alcancaveis.add(especie.evolucao.especie)
+    for (const nome of nomesDeEspecies) expect(alcancaveis).toContain(nome)
+  })
+
+  it('evoluções levam a espécies que existem, no nível 75 da primeira forma e 150 da segunda', () => {
+    for (const especie of ESPECIES) {
+      if (!especie.evolucao) continue
+      expect(nomesDeEspecies).toContain(especie.evolucao.especie)
+      const forma = formaDa(CATALOGO, especie.nome)
+      expect(especie.evolucao.nivel).toBe(forma === 1 ? 75 : 150)
+      expect(formaDa(CATALOGO, especie.evolucao.especie)).toBeLessThanOrEqual(3)
     }
   })
 

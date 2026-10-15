@@ -1,7 +1,9 @@
 // Escolha da espécie e dos genes herdados para dois pais selecionados na reserva.
 import { useState } from 'react'
+import { CATALOGO } from '../conteudo/jogo.ts'
 import { LINHAGENS } from '../conteudo/linhagens.ts'
 import type { Tipo } from '../conteudo/tipos.ts'
+import { primeiraForma } from '../engine/evolucao.ts'
 import { GENES_HERDADOS, cruzar, linhagemDe, mesmaLinhagem, taxaDeCruzamento } from '../engine/cruzamento.ts'
 import type { Atributo } from '../engine/genes.ts'
 import { ATRIBUTOS } from '../engine/genes.ts'
@@ -51,7 +53,7 @@ export function PainelDeCruzamento({ estado, pais, executar, aoCruzar }: Props) 
         Espécie do filhote:
         {pais.map((pai) => (
           <label key={pai.id}>
-            <input type="radio" checked={especieDe === pai.id} onChange={() => setEspecieDe(pai.id)} /> {pai.especie}
+            <input type="radio" checked={especieDe === pai.id} onChange={() => setEspecieDe(pai.id)} /> {primeiraForma(CATALOGO, pai.especie)}
           </label>
         ))}
       </div>
@@ -75,7 +77,7 @@ export function PainelDeCruzamento({ estado, pais, executar, aoCruzar }: Props) 
       <button
         disabled={!pronto}
         onClick={() => {
-          executar((e, _t, g) => cruzar(e, LINHAGENS, { paiA: a.id, paiB: b.id, especieDe, herdados }, g))
+          executar((e, _t, g) => cruzar(e, CATALOGO, LINHAGENS, { paiA: a.id, paiB: b.id, especieDe, herdados }, g))
           aoCruzar()
         }}
       >

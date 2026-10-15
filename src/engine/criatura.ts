@@ -5,17 +5,17 @@ import { especieDo, tecnicasDa } from './especie.ts'
 import type { Atributo, Genes } from './genes.ts'
 import { ATRIBUTOS, multiplicadorDeRaridade } from './genes.ts'
 import { valorDoAtributo } from './atributos.ts'
+import { multiplicadorDaForma } from './evolucao.ts'
 
 export type Atributos = Readonly<Record<Atributo, number>>
 
-export function calcularAtributos(bases: Atributos, genes: Genes, nivel: number, prismatica: boolean): Atributos {
+// O fator da forma vem da evolução: 1 na primeira forma da linha.
+export function calcularAtributos(bases: Atributos, genes: Genes, nivel: number, prismatica: boolean, fatorDaForma = 1): Atributos {
   const multiplicador = multiplicadorDeRaridade(genes)
   const atributos = {} as Record<Atributo, number>
   for (const atributo of ATRIBUTOS) {
-    atributos[atributo] = valorDoAtributo(
-      { base: bases[atributo], gene: genes[atributo], multiplicadorDeRaridade: multiplicador, prismatica },
-      nivel,
-    )
+    const valor = valorDoAtributo({ base: bases[atributo], gene: genes[atributo], multiplicadorDeRaridade: multiplicador, prismatica }, nivel)
+    atributos[atributo] = valor * fatorDaForma
   }
   return atributos
 }
@@ -35,7 +35,7 @@ export function combatenteDe<Tipo extends string>(
   multiplicadorDeVida = 1,
 ): Combatente<Tipo> {
   const especie = especieDo(catalogo, criatura.especie)
-  const calculados = calcularAtributos(especie.bases, criatura.genes, criatura.nivel, criatura.prismatica)
+  const calculados = calcularAtributos(especie.bases, criatura.genes, criatura.nivel, criatura.prismatica, multiplicadorDaForma(catalogo, especie.nome))
   // Mais Vida e menos Ataque e Foco na mesma proporção: a luta fica longa sem aumentar o dano total.
   const atributos = {
     ...calculados,

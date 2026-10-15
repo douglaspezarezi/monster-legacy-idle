@@ -2,6 +2,7 @@
 import type { Catalogo } from './especie.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 import { vidaMaxima } from './jogo.ts'
+import { voltarAoNivel1 } from './evolucao.ts'
 
 export type DadosDeEra = {
   // Nenhuma criatura passa deste nível na Era.
@@ -21,7 +22,7 @@ export function podeReiniciarEra<Tipo extends string>(eras: readonly DadosDeEra[
   return estado.era < eras.length && estado.ativa.nivel >= dadosDaEra(eras, estado.era).teto
 }
 
-// A ativa volta ao nível 1 com os mesmos genes; rotas e chefes de todos os biomas voltam ao começo. O resto fica.
+// A ativa volta ao nível 1, na primeira forma da linha, com os mesmos genes; rotas e chefes de todos os biomas voltam ao começo. O resto fica.
 export function reiniciarEra<Tipo extends string>(
   configuracao: { readonly eras: readonly DadosDeEra[]; readonly catalogo: Catalogo<Tipo> },
   estado: EstadoDoJogo<Tipo>,
@@ -29,7 +30,7 @@ export function reiniciarEra<Tipo extends string>(
 ): EstadoDoJogo<Tipo> {
   if (!podeReiniciarEra(configuracao.eras, estado)) throw new RangeError('a Era ainda não fechou')
   const era = estado.era + 1
-  const ativa = { ...estado.ativa, nivel: 1, xpNoNivel: 0, era }
+  const ativa = { ...voltarAoNivel1(configuracao.catalogo, estado.ativa), era }
   return {
     ...estado,
     era,

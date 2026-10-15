@@ -9,6 +9,8 @@ export type DadosDeEspecie<Tipo extends string> = {
   readonly bases: Atributos
   // Nomes das técnicas, em ordem de prioridade.
   readonly tecnicas: readonly string[]
+  // A forma seguinte da linha e o nível em que a criatura evolui para ela.
+  readonly evolucao?: { readonly especie: string; readonly nivel: number }
 }
 
 export type Catalogo<Tipo extends string> = {

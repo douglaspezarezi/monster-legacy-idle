@@ -26,4 +26,6 @@ export const TECNICAS: readonly Tecnica<Tipo>[] = [
   { nome: 'Cerração', tipo: 'Bruma', categoria: 'especial', poder: 80, recargaMs: 6 * s },
   { nome: 'Onda Funda', tipo: 'Maré', categoria: 'especial', poder: 85, recargaMs: 7 * s },
   { nome: 'Desmoronar', tipo: 'Rocha', categoria: 'fisica', poder: 85, recargaMs: 7 * s },
+  { nome: 'Avalanche', tipo: 'Geada', categoria: 'fisica', poder: 90, recargaMs: 8 * s },
+  { nome: 'Prensa', tipo: 'Liga', categoria: 'fisica', poder: 90, recargaMs: 8 * s },
 ]

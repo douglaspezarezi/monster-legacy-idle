@@ -13,6 +13,7 @@ import type { Matriz } from './nascimento.ts'
 import { faixaDoSelvagem, gerarChefe, gerarSelvagem } from './nascimento.ts'
 import type { TabelaDeTipos } from './multiplicador-de-tipo.ts'
 import { ganharXp } from './nivel.ts'
+import { evoluir } from './evolucao.ts'
 import type { Equipamento } from './equipamentos.ts'
 import { CHANCE_DE_EQUIPAMENTO_DO_CHEFE, ESPACOS, aumentar, reduzir } from './equipamentos.ts'
 import { inteiroEntre } from './aleatorio.ts'
@@ -55,6 +56,7 @@ export type Evento =
   | { readonly tipo: 'captura'; readonly instante: number; readonly especie: string; readonly raridade: Raridade; readonly sucesso: boolean }
   | { readonly tipo: 'rota-liberada'; readonly instante: number; readonly bioma: string; readonly rota: number }
   | { readonly tipo: 'equipamento'; readonly instante: number; readonly equipamento: Equipamento }
+  | { readonly tipo: 'evolucao'; readonly instante: number; readonly de: string; readonly para: string }
 
 export type ResultadoDaCacada<Tipo extends string> = {
   readonly estado: EstadoDoJogo<Tipo>
@@ -97,8 +99,10 @@ function vencer<Tipo extends string>(
   eventos.push({ tipo: 'abate', instante: agora, especie: encontro.selvagem.especie, chefe: encontro.chefe, xp, ouro })
 
   const era = dadosDaEra(configuracao.eras, estado.era)
-  const ativa = { ...estado.ativa, ...ganharXp(estado.ativa, xp, era.teto) }
-  if (ativa.nivel !== estado.ativa.nivel) eventos.push({ tipo: 'nivel', instante: agora, nivel: ativa.nivel })
+  const subiu = { ...estado.ativa, ...ganharXp(estado.ativa, xp, era.teto) }
+  if (subiu.nivel !== estado.ativa.nivel) eventos.push({ tipo: 'nivel', instante: agora, nivel: subiu.nivel })
+  const ativa = evoluir(configuracao.catalogo, subiu)
+  if (ativa.especie !== subiu.especie) eventos.push({ tipo: 'evolucao', instante: agora, de: subiu.especie, para: ativa.especie })
   // Depois da vitória a vida volta cheia, já com a Vida máxima do nível novo.
   const vidaDaAtiva = vidaMaxima(configuracao.catalogo, ativa)
 
