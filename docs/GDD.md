@@ -362,6 +362,38 @@ O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% d
 - Linhas de 2 formas evoluem no nível 75.
 - Linhas de 3 formas dividem os intervalos de forma simétrica, evoluindo nos níveis 75 e 150.
 
+**Evolução no F9 [proposta]:**
+
+- **Efeito:** cada forma multiplica todos os atributos: ×1,10 na segunda forma e ×1,20 na terceira, junto com o bônus prismático. Sem isso a evolução seria quase só visual, porque a base de uma espécie só entra como o valor do nível 1: no nível 75, um Gelusco com gene 8 tem 642 de Vida, e uma forma com base 8 maior teria 650 (+1,2%). Com ×1,10, fica em cerca de 715.
+- **Quando:** ao chegar ao nível da evolução, a criatura ativa evolui na hora, com aviso no registro. Ficam os genes, a raridade, a variação prismática, o nível e o XP; mudam a espécie, os tipos e as técnicas.
+- **Reset de Era e reserva de Era anterior:** a criatura que volta ao nível 1 volta também à primeira forma da linha.
+- **Cruzamento:** o filhote nasce na primeira forma da linha do pai escolhido (seção 10).
+- **Matriz:** gera a espécie indicada nela, mesmo que seja uma forma evoluída.
+- Na Era 1 o teto é 50, então a primeira evolução aparece na Era 2; a do nível 150 espera a Era 3.
+
+**Linhas de 3 formas: os iniciais [proposta].** Bases cerca de 14% maiores a cada forma.
+
+| Linha | Forma 1 | Forma 2 (nível 75) | Forma 3 (nível 150) |
+| --- | --- | --- | --- |
+| Gelo | Gelusco · Geada · 50, 13, 11, 13, 12 | Gelundo · Geada · 58, 15, 13, 15, 13 | Glaciarca · Geada, Brisa · 66, 17, 15, 17, 14 |
+| Metal | Rebitim · Liga · 55, 13, 15, 9, 9 | Rebitaço · Liga · 63, 15, 17, 10, 10 | Couraçor · Liga, Rocha · 72, 17, 20, 11, 10 |
+| Asa | Zumbilo · Eco · 45, 9, 10, 15, 14 | Zumbrado · Eco, Brisa · 52, 10, 11, 17, 16 | Estrondor · Eco, Penumbra · 59, 11, 12, 20, 18 |
+
+- Técnicas: Gelundo e Rebitaço e Zumbrado mantêm as da primeira forma. Glaciarca: Avalanche, Sopro Frio, Lasca Gélida, Rajada. Couraçor: Prensa, Martelada, Limalha, Desmoronar. Estrondor: Ressonância, Pio Sombrio, Estalo, Rajada.
+- Técnicas novas: **Avalanche** (Geada, física, 90, 8 s) e **Prensa** (Liga, física, 90, 8 s).
+
+**Linhas de 2 formas com espécies que já existem [proposta].** Cada par já foi desenhado como a espécie da rota 1 e o chefe da rota 5 do mesmo bioma, com somas 87 e 102:
+
+| Forma 1 | Forma 2 (nível 75) |
+| --- | --- |
+| Brotelho | Raizudo |
+| Seixote | Muralhão |
+| Trotelo | Tourado |
+| Bolhim | Abissão |
+
+- As demais espécies ficam com uma forma só por enquanto.
+- Linhagens: Abissão sai de Gruta e entra em Concha, junto de Bolhim; Gruta fica só com Grutilo. As formas novas dos iniciais entram nas linhagens deles (Gelo, Metal, Asa).
+
 ### Eras (prestígio)
 
 - **Tetos:** a Era 1 vai até o nível 50 e usa as rotas 1 a 3 de cada bioma. A Era 2 vai até o 100 e libera as rotas 4 e 5. As Eras 3 (150) e 4 (200) entram quando houver biomas para elas. Assim o teto de cada Era coincide com o topo de uma rota.
