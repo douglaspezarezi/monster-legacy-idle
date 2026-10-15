@@ -35,13 +35,40 @@ describe('teto da Era', () => {
     const r = simularCacada(CONFIGURACAO, estado, 0, 5 * 60 * 1000, criarGerador(2))
     expect(r.estado.rotasLiberadas).toBe(4)
   })
+
+  it('na Era 3 o chefe da rota 5 libera a rota 6 só num bioma da Era 3', () => {
+    const naRota5 = { era: 3, rota: 5, rotasLiberadas: 5, abatesPorRota: [0, 0, 0, 0, 100, 0], avancoAutomatico: false }
+    const ativa = membro('Gelusco', 110, 20, 1, 3)
+    const cumeDosVentos = simularCacada(CONFIGURACAO, jogoCom(ativa, { ...naRota5, bioma: 8 }), 0, 5 * 60 * 1000, criarGerador(2))
+    expect(cumeDosVentos.eventos).toContainEqual(expect.objectContaining({ tipo: 'abate', chefe: true }))
+    expect(cumeDosVentos.estado.rotasLiberadas).toBe(6)
+    const mataFunda = simularCacada(CONFIGURACAO, jogoCom(ativa, { ...naRota5, bioma: 0 }), 0, 5 * 60 * 1000, criarGerador(2))
+    expect(mataFunda.eventos).toContainEqual(expect.objectContaining({ tipo: 'abate', chefe: true }))
+    expect(mataFunda.estado.rotasLiberadas).toBe(5)
+  })
+
+  it('um contador de chefe que falta, como o da rota 6 num save antigo, conta a partir de zero', () => {
+    const ativa = membro('Gelusco', 110, 20, 1, 3)
+    const estado = jogoCom(ativa, { era: 3, bioma: 8, rota: 6, rotasLiberadas: 6, abatesPorRota: [0, 0, 0, 0, 0], avancoAutomatico: false })
+    const r = simularCacada(CONFIGURACAO, estado, 0, 5 * 60 * 1000, criarGerador(4))
+    expect(r.estado.abatesPorRota).toHaveLength(6)
+    expect(r.estado.abatesPorRota[5]).toBeGreaterThan(0)
+  })
+
+  it('na Era 3 a caçada na rota 6 passa do nível 100 e para no 150', () => {
+    const ativa = membro('Gelusco', 149, 20, 1, 3)
+    const r = simularCacada(CONFIGURACAO, jogoCom(ativa, { era: 3, bioma: 8, rota: 6, rotasLiberadas: 6, avancoAutomatico: false }), 0, HORA, criarGerador(3))
+    expect(r.estado.ativa.nivel).toBe(150)
+    expect(r.estado.ativa.xpNoNivel).toBe(0)
+  })
 })
 
 describe('reset de Era', () => {
   it('só com a criatura ativa no teto e com uma Era seguinte', () => {
     expect(podeReiniciarEra(ERAS, jogoCom(membro('Gelusco', 49, 10)))).toBe(false)
     expect(podeReiniciarEra(ERAS, jogoCom(membro('Gelusco', 50, 10)))).toBe(true)
-    expect(podeReiniciarEra(ERAS, jogoCom(membro('Gelusco', 100, 10, 1, 2), { era: 2 }))).toBe(false)
+    expect(podeReiniciarEra(ERAS, jogoCom(membro('Gelusco', 100, 10, 1, 2), { era: 2 }))).toBe(true)
+    expect(podeReiniciarEra(ERAS, jogoCom(membro('Gelusco', 150, 10, 1, 3), { era: 3 }))).toBe(false)
     expect(() => reiniciarEra(CONFIGURACAO, jogoCom(membro('Gelusco', 49, 10)), 0)).toThrow(RangeError)
   })
 

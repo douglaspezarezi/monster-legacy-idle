@@ -82,8 +82,9 @@ function encontrar<Tipo extends string>(
   return { selvagem, chefe, luta }
 }
 
+// Um contador que falta, como o da rota 6 num save antigo, conta como zero.
 function comAbates(abatesPorRota: readonly number[], rota: number, valor: number): number[] {
-  return abatesPorRota.map((abates, i) => (i === rota - 1 ? valor : abates))
+  return Array.from({ length: Math.max(abatesPorRota.length, rota) }, (_, i) => (i === rota - 1 ? valor : (abatesPorRota[i] ?? 0)))
 }
 
 function vencer<Tipo extends string>(
@@ -145,13 +146,15 @@ function vencer<Tipo extends string>(
       eventos.push({ tipo: 'equipamento', instante: agora, equipamento })
     }
     abatesPorRota = comAbates(estado.abatesPorRota, numeroDaRota, 0)
-    if (numeroDaRota === rotasLiberadas && rotasLiberadas < Math.min(era.rotas, configuracao.rotas.length)) {
+    // A Era e o bioma limitam as rotas: os biomas das Eras 1 e 2 não têm a rota 6.
+    const ultimaRota = Math.min(era.rotas, configuracao.rotas.length, configuracao.biomas[estado.bioma].especiesPorRota.length)
+    if (numeroDaRota === rotasLiberadas && rotasLiberadas < ultimaRota) {
       rotasLiberadas++
       eventos.push({ tipo: 'rota-liberada', instante: agora, bioma: configuracao.biomas[estado.bioma].nome, rota: rotasLiberadas })
     }
     if (estado.avancoAutomatico && numeroDaRota < rotasLiberadas) numeroDaRota++
   } else {
-    abatesPorRota = comAbates(estado.abatesPorRota, numeroDaRota, estado.abatesPorRota[numeroDaRota - 1] + 1)
+    abatesPorRota = comAbates(estado.abatesPorRota, numeroDaRota, (estado.abatesPorRota[numeroDaRota - 1] ?? 0) + 1)
   }
 
   return { ...estado, ativa, vidaDaAtiva, inventario, reserva, proximoId, rota: numeroDaRota, rotasLiberadas, abatesPorRota, equipamentos }

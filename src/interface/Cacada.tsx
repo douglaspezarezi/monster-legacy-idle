@@ -74,7 +74,7 @@ export function Cacada({ sessao, executar }: Props) {
   const { estado, agora, registros } = sessao
   const { ativa, inventario, encontro } = estado
   const maximaDaAtiva = vidaMaxima(CATALOGO, ativa)
-  const abates = estado.abatesPorRota[estado.rota - 1]
+  const abates = estado.abatesPorRota[estado.rota - 1] ?? 0
   const fadigaRestante = estado.fadigaAte - agora
   const era = dadosDaEra(CONFIGURACAO.eras, estado.era)
   const bioma = BIOMAS[estado.bioma]
@@ -152,7 +152,8 @@ export function Cacada({ sessao, executar }: Props) {
         </div>
         <h3>Rotas</h3>
         <div className="botoes">
-          {CONFIGURACAO.rotas.map((rota, i) => {
+          {/* Os biomas das Eras 1 e 2 não têm a rota 6. */}
+          {CONFIGURACAO.rotas.slice(0, bioma.especiesPorRota.length).map((rota, i) => {
             const numero = i + 1
             return (
               <button
