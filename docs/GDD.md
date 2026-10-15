@@ -111,6 +111,39 @@ Simulação de 72 horas na Era 2, a partir do nível 1, com reposição automát
 - Com genes comuns, a desvantagem de tipo trava o inicial: Gelusco na Encosta Rubra e Rebitim na Chapada Trovão não chegam ao 100. Com genes raros, a Era 2 leva de 6 a 17 horas, mais rápida que a Era 1, porque os genes acumulados aceleram cada Era.
 - Espécies da Era 1 com o tipo que vence o bioma, mas bases e técnicas fracas (Seixote na Chapada, Saltico no Pântano), não foram mais rápidas que os iniciais.
 
+### Biomas da Era 3 [proposta]
+
+- Os biomas da Era 3 aparecem a partir da Era 3 e são os únicos com a **rota 6**. Os das Eras 1 e 2 continuam com 5 rotas; para passar do nível 100 é preciso caçar num bioma da Era 3.
+- Tipos: Brisa, Cristal, Bruma e Aurora. Ficam para a Era 4 Geada, Liga, Eco e Astro.
+- Cada inicial tem um bioma favorável: Geada vence Brisa (Gelusco no Cume dos Ventos); Liga e Eco vencem Cristal (Rebitim e Zumbilo no Veio Cristalino); Brisa, segundo tipo do Zumbrado, vence Bruma. Aurora resiste a Geada, e o Gelusco sofre no Planalto da Alvorada.
+
+| Rota | Faixa de nível | Abate médio | XP base | XP por hora | Queda de matriz | Vida e dano |
+| --- | --- | --- | --- | --- | --- | --- |
+| 6 | 101 a 150 | 16 s | 1.600 | 360.000 | 0,01% (mítica) | Vida ×6, Ataque e Foco ÷6 |
+
+- O chefe da rota 6 deixa cair equipamento mítico, na mesma chance dos outros chefes. Os números seguem o padrão das rotas 1 a 5.
+
+| Rota | Cume dos Ventos (Brisa) | Veio Cristalino (Cristal) | Lagoa Velada (Bruma) | Planalto da Alvorada (Aurora) |
+| --- | --- | --- | --- | --- |
+| 1 | Ventilho, Pluminho | Lasquim, Brilhote | Neblim, Garoel | Raiolim, Orvelim |
+| 2 | Ventilho, Pluminho, Saraivo | Lasquim, Brilhote, Geodim | Neblim, Garoel, Vultinho | Raiolim, Orvelim, Soalheiro |
+| 3 | Pluminho, Saraivo, Escarpim | Brilhote, Geodim, Facetor | Garoel, Vultinho, Orvalim | Orvelim, Soalheiro, Halim |
+| 4 | Saraivo, Escarpim, Ventaval | Geodim, Facetor, Lascardo | Vultinho, Orvalim, Neblinor | Soalheiro, Halim, Raiante |
+| 5 | Escarpim, Ventaval, Gaviel | Facetor, Lascardo, Espelhim | Orvalim, Neblinor, Miragel | Halim, Raiante, Alvorel |
+| 6 | Ventaval, Gaviel, Furacor | Lascardo, Espelhim, Lapidão | Neblinor, Miragel, Brumarca | Raiante, Alvorel, Zenital |
+
+Simulação de 120 horas na Era 3, a partir do nível 1, com reposição automática (horas até o nível 100 / até o 150, mediana de 3 sementes):
+
+| Bioma | Gelusco raro | Rebitim raro | Zumbilo raro | Gelusco épico | Rebitim épico | Zumbilo épico |
+| --- | --- | --- | --- | --- | --- | --- |
+| Cume dos Ventos | 5 / 9 | 7 / 13 | 6 / 11 | 3 / 6 | 5 / 9 | 4 / 7 |
+| Veio Cristalino | 12 / 20 | 5 / 8 | 4 / 7 | 7 / 12 | 3 / 5 | 2 / 4 |
+| Lagoa Velada | 7 / 12 | 7 / 12 | 7 / 11 | 4 / 8 | 4 / 7 | 4 / 7 |
+| Planalto da Alvorada | 13 / 20 | 8 / 13 | 5 / 9 | 7 / 12 | 4 / 8 | 3 / 6 |
+
+- Com genes raros, a Era 3 leva de 7 a 20 horas, perto da Era 2 (6 a 17), mesmo com 50 níveis a mais: os genes acumulados aceleram cada Era.
+- A rota 6 pesa pouco no tempo. Com Vida ×8 ou XP base 1.200, o nível 150 atrasa só de 1 a 4 horas, porque genes raros vencem o selvagem antes de a Vida extra contar. Por isso a proposta mantém o padrão das rotas anteriores.
+
 
 - O selvagem nasce num nível sorteado com chance igual entre o piso da faixa da rota e 2 níveis abaixo da criatura ativa, sem passar do teto da faixa. Se esse limite ficar abaixo do piso, o selvagem nasce no piso. O chefe não segue essa regra.
 - Raridade ao nascer: fraca 25%, comum 55%, incomum 15%, rara 4%, épica 0,9%, lendária 0,09%, mítica 0,01%.
@@ -212,6 +245,17 @@ Técnicas novas da Era 2:
 | Clarão | Aurora | especial | 70 | 5 s |
 | Descarga | Faísca | física | 85 | 7 s |
 | Sombra Cortante | Penumbra | física | 60 | 3 s |
+
+Técnicas novas da Era 3 **[proposta]**:
+
+| Técnica | Tipo | Categoria | Poder | Recarga |
+| --- | --- | --- | --- | --- |
+| Lufada | Brisa | física | 60 | 3 s |
+| Ciclone | Brisa | especial | 85 | 7 s |
+| Refração | Cristal | especial | 85 | 7 s |
+| Mortalha | Bruma | física | 85 | 7 s |
+| Lança de Luz | Aurora | física | 60 | 3 s |
+| Fulgor | Aurora | especial | 90 | 8 s |
 
 ### Derrota durante a caçada
 
@@ -393,6 +437,42 @@ Espécies da Era 2. Em cada bioma, a espécie da rota 1 evolui no nível 75 para
 
 - **Linhagens da Era 2:** Brasa (Cinzelo, Fornalho, Brasino); Fumaça (Lavrudo, Pirilume); Faísca recebe Choquim, Trovejão, Zapeta; Metal recebe Magnetil; Manada recebe Trovisco, Rastejo, Lobreu; Enxame recebe Lodilho, Atoleiro, Mosquel; Raiz recebe Mofento; Gruta recebe Sombrito, Noitarão; Asa recebe Noctino, Vigília; Névoa nova (Fumarel, Nimbeiro, Brumoso, Breuzal).
 
+**Espécies da Era 3 [proposta].** Em cada bioma, a espécie da rota 1 forma uma linha de 3 formas: evolui no nível 75 para a espécie que é chefe da rota 5 e no 150 para o chefe da rota 6. As somas das bases seguem os iniciais: perto de 87, 102 e 114.
+
+| Espécie | Tipos | Base | Técnicas |
+| --- | --- | --- | --- |
+| Ventilho | Brisa | 45, 10, 10, 11, 11 | Rajada, Mordida |
+| Pluminho | Brisa, Fera | 40, 12, 9, 9, 16 | Lufada, Investida, Mordida |
+| Saraivo | Brisa, Geada | 45, 10, 11, 14, 12 | Sopro Frio, Rajada, Lasca Gélida |
+| Escarpim | Brisa, Rocha | 52, 13, 14, 8, 9 | Pedrisco, Lufada, Desmoronar |
+| Ventaval | Brisa | 52, 12, 12, 13, 13 | Ciclone, Lufada, Rajada |
+| Gaviel | Brisa, Penumbra | 45, 11, 10, 15, 15 | Ciclone, Pio Sombrio, Rajada |
+| Furacor | Brisa | 58, 14, 13, 14, 14 | Ciclone, Lufada, Investida |
+| Lasquim | Cristal | 45, 11, 12, 10, 9 | Estilhaço, Mordida |
+| Brilhote | Cristal, Aurora | 40, 9, 10, 14, 14 | Clarão, Estilhaço |
+| Geodim | Cristal, Rocha | 55, 11, 15, 9, 7 | Estilhaço, Pedrisco, Desmoronar |
+| Facetor | Cristal, Liga | 50, 13, 15, 9, 8 | Estilhaço, Martelada, Limalha |
+| Lascardo | Cristal | 52, 13, 14, 12, 11 | Refração, Estilhaço, Mordida |
+| Espelhim | Cristal, Penumbra | 45, 9, 10, 16, 15 | Refração, Pio Sombrio |
+| Lapidão | Cristal, Rocha | 60, 15, 17, 12, 9 | Refração, Estilhaço, Desmoronar |
+| Neblim | Bruma | 45, 10, 10, 12, 10 | Cerração, Mordida |
+| Garoel | Bruma, Maré | 50, 9, 11, 12, 9 | Jato de Lodo, Cerração |
+| Vultinho | Bruma, Penumbra | 42, 10, 9, 15, 14 | Pio Sombrio, Cerração |
+| Orvalim | Bruma, Brota | 52, 9, 12, 13, 9 | Esporos, Cerração |
+| Neblinor | Bruma | 52, 12, 12, 14, 12 | Cerração, Mortalha, Mordida |
+| Miragel | Bruma, Aurora | 44, 9, 10, 16, 16 | Clarão, Cerração |
+| Brumarca | Bruma | 58, 15, 14, 14, 12 | Mortalha, Cerração, Investida |
+| Raiolim | Aurora | 45, 10, 10, 12, 10 | Clarão, Mordida |
+| Orvelim | Aurora, Brota | 48, 9, 11, 13, 8 | Clarão, Esporos |
+| Soalheiro | Aurora, Chama | 44, 12, 9, 13, 13 | Fornalha, Clarão, Tição |
+| Halim | Aurora, Cristal | 50, 10, 13, 14, 8 | Clarão, Estilhaço |
+| Raiante | Aurora | 52, 12, 12, 14, 12 | Fulgor, Lança de Luz, Mordida |
+| Alvorel | Aurora, Fera | 50, 15, 10, 8, 13 | Lança de Luz, Investida, Mordida |
+| Zenital | Aurora, Brisa | 58, 14, 13, 16, 12 | Fulgor, Lança de Luz, Rajada |
+
+- **Linhas:** Ventilho → Ventaval → Furacor; Lasquim → Lascardo → Lapidão; Neblim → Neblinor → Brumarca; Raiolim → Raiante → Zenital.
+- **Linhagens da Era 3:** Vento nova (Ventilho, Ventaval, Furacor, Pluminho); Lasca nova (Lasquim, Lascardo, Lapidão, Geodim, Facetor); Véu nova (Neblim, Neblinor, Brumarca, Garoel); Luz nova (Raiolim, Raiante, Zenital, Orvelim, Halim, Brilhote); Gelo recebe Saraivo; Pedra recebe Escarpim; Asa recebe Gaviel; Gruta recebe Espelhim; Névoa recebe Vultinho e Miragel; Raiz recebe Orvalim; Brasa recebe Soalheiro; Manada recebe Alvorel.
+
 ### Início do jogo
 
 - O jogador escolhe um dos três iniciais. Ele começa no nível 1, com raridade comum e genes sorteados nessa faixa.
@@ -462,6 +542,7 @@ O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% d
 ### Eras (prestígio)
 
 - **Tetos:** a Era 1 vai até o nível 50 e usa as rotas 1 a 3 de cada bioma. A Era 2 vai até o 100 e libera as rotas 4 e 5. As Eras 3 (150) e 4 (200) entram quando houver biomas para elas. Assim o teto de cada Era coincide com o topo de uma rota.
+- **Era 3 [proposta]:** vai até o nível 150 e libera a rota 6, que só os biomas da Era 3 têm (seção 4). Como o teto é 150, o limite suave não pesa na Era 3; a pendência do nível 150 ao 200 fica para a Era 4.
 - **Sem nível próprio do Treinador:** a Era fecha quando a criatura ativa chega ao teto. Nenhuma criatura passa do teto da Era atual.
 - **Reset:** a criatura ativa volta ao nível 1 com os mesmos genes; as rotas liberadas voltam à rota 1 e os contadores de chefe zeram. Ficam ouro, itens, matrizes, equipamentos e a Forja. O Treinador ganha a marca da Era.
 - **Reserva:** mantém o nível. Uma criatura que ainda não passou pelo reset da Era atual, ao ser ativada, volta ao nível 1. As que nascem ou são capturadas na Era atual já contam como passadas.
@@ -617,8 +698,9 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F8 · Robustez | Uma aba por vez, tela de erro com o save, exportar e importar o save em arquivo, workflow atualizado | Duas abas abertas não corrompem o save e um save quebrado não deixa a tela em branco |
 | F9 · Evolução | Linhas de 2 e 3 formas, multiplicador por forma e formas dos iniciais | Uma criatura evolui ao chegar ao nível 75 na Era 2 |
 | F10 · Era 2 | Biomas Encosta Rubra, Chapada Trovão, Pântano Amargo e Bosque Sem Lua, 24 espécies e o nome Monstros | Um monstro chega ao nível 100 na Era 2 caçando nos biomas novos |
+| F11 · Era 3 **[proposta]** | Rota 6, biomas Cume dos Ventos, Veio Cristalino, Lagoa Velada e Planalto da Alvorada, 28 espécies e 6 técnicas | Um monstro chega ao nível 150 na Era 3 caçando nos biomas novos |
 
 ## 17. Pendências
 
-1. Biomas, espécies e valores base das Eras 3 e 4 (tetos 150 e 200), com os 8 tipos restantes, e se há mais Eras depois delas.
+1. Biomas, espécies e valores base da Era 4 (teto 200), com os tipos Geada, Liga, Eco e Astro, e se há mais Eras depois dela. A Era 3 está em proposta na seção 4.
 2. Diferença entre os níveis 150 e 200 no limite suave (seção 7).
