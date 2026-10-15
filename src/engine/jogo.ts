@@ -201,11 +201,13 @@ export function progressoNovo(numeroDeRotas: number): ProgressoDoBioma {
 // O progresso do bioma atual vai para a guarda e o do bioma escolhido volta dela.
 export function escolherBioma<Tipo extends string>(
   estado: EstadoDoJogo<Tipo>,
-  numeroDeBiomas: number,
+  biomas: readonly { readonly era: number }[],
   bioma: number,
   agora: number,
 ): EstadoDoJogo<Tipo> {
-  if (!Number.isInteger(bioma) || bioma < 0 || bioma >= numeroDeBiomas) throw new RangeError(`bioma inexistente: ${bioma}`)
+  const dados = biomas[bioma]
+  if (!Number.isInteger(bioma) || !dados) throw new RangeError(`bioma inexistente: ${bioma}`)
+  if (dados.era > estado.era) throw new RangeError(`bioma da Era ${dados.era}`)
   if (bioma === estado.bioma) return estado
   const { [bioma]: guardado, ...demais } = estado.outrosBiomas
   const destino = guardado ?? progressoNovo(estado.abatesPorRota.length)

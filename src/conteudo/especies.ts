@@ -44,6 +44,34 @@ export const ESPECIES: readonly DadosDeEspecie<Tipo>[] = [
   { nome: 'Geleiro', tipos: ['Geada', 'Maré'], bases: bases(50, 10, 12, 13, 10), tecnicas: ['Sopro Frio', 'Lasca Gélida', 'Jato de Lodo'] },
   { nome: 'Enguiço', tipos: ['Maré', 'Faísca'], bases: bases(40, 11, 9, 14, 16), tecnicas: ['Centelha', 'Jato de Lodo', 'Mordida'] },
   { nome: 'Abissão', tipos: ['Maré', 'Penumbra'], bases: bases(60, 12, 13, 12, 5), tecnicas: ['Onda Funda', 'Pio Sombrio', 'Jato de Lodo'] },
+  // Encosta Rubra
+  { nome: 'Cinzelo', tipos: ['Chama'], bases: bases(45, 12, 10, 11, 9), tecnicas: ['Tição', 'Mordida'], evolucao: { especie: 'Fornalho', nivel: 75 } },
+  { nome: 'Brasino', tipos: ['Chama', 'Fera'], bases: bases(42, 13, 9, 8, 14), tecnicas: ['Tição', 'Investida', 'Mordida'] },
+  { nome: 'Fumarel', tipos: ['Chama', 'Bruma'], bases: bases(45, 9, 10, 14, 13), tecnicas: ['Fornalha', 'Cerração', 'Tição'] },
+  { nome: 'Lavrudo', tipos: ['Chama', 'Rocha'], bases: bases(55, 13, 15, 8, 7), tecnicas: ['Tição', 'Pedrisco', 'Desmoronar'] },
+  { nome: 'Pirilume', tipos: ['Chama', 'Aurora'], bases: bases(42, 9, 10, 16, 15), tecnicas: ['Fornalha', 'Clarão', 'Tição'] },
+  { nome: 'Fornalho', tipos: ['Chama'], bases: bases(60, 15, 13, 8, 6), tecnicas: ['Fornalha', 'Tição', 'Investida'] },
+  // Chapada Trovão
+  { nome: 'Choquim', tipos: ['Faísca'], bases: bases(45, 10, 10, 12, 10), tecnicas: ['Centelha', 'Mordida'], evolucao: { especie: 'Trovejão', nivel: 75 } },
+  { nome: 'Zapeta', tipos: ['Faísca', 'Brisa'], bases: bases(40, 10, 9, 12, 15), tecnicas: ['Centelha', 'Rajada'] },
+  { nome: 'Magnetil', tipos: ['Faísca', 'Liga'], bases: bases(50, 12, 14, 10, 7), tecnicas: ['Descarga', 'Martelada', 'Limalha'] },
+  { nome: 'Trovisco', tipos: ['Faísca', 'Fera'], bases: bases(48, 14, 10, 10, 13), tecnicas: ['Descarga', 'Investida', 'Mordida'] },
+  { nome: 'Nimbeiro', tipos: ['Faísca', 'Bruma'], bases: bases(45, 9, 10, 15, 13), tecnicas: ['Centelha', 'Cerração', 'Rajada'] },
+  { nome: 'Trovejão', tipos: ['Faísca'], bases: bases(60, 14, 12, 10, 6), tecnicas: ['Descarga', 'Centelha', 'Investida'] },
+  // Pântano Amargo
+  { nome: 'Lodilho', tipos: ['Peçonha'], bases: bases(45, 10, 11, 11, 10), tecnicas: ['Ferrão', 'Mordida'], evolucao: { especie: 'Atoleiro', nivel: 75 } },
+  { nome: 'Mosquel', tipos: ['Peçonha', 'Brisa'], bases: bases(38, 11, 8, 12, 16), tecnicas: ['Ferrão', 'Rajada'] },
+  { nome: 'Mofento', tipos: ['Peçonha', 'Brota'], bases: bases(50, 9, 12, 13, 8), tecnicas: ['Névoa Tóxica', 'Esporos'] },
+  { nome: 'Rastejo', tipos: ['Peçonha', 'Fera'], bases: bases(48, 14, 10, 9, 13), tecnicas: ['Ferrão', 'Investida', 'Mordida'] },
+  { nome: 'Brumoso', tipos: ['Peçonha', 'Bruma'], bases: bases(45, 9, 11, 15, 12), tecnicas: ['Névoa Tóxica', 'Cerração'] },
+  { nome: 'Atoleiro', tipos: ['Peçonha', 'Maré'], bases: bases(62, 13, 14, 8, 5), tecnicas: ['Névoa Tóxica', 'Jato de Lodo', 'Ferrão'] },
+  // Bosque Sem Lua
+  { nome: 'Sombrito', tipos: ['Penumbra'], bases: bases(45, 10, 10, 12, 10), tecnicas: ['Pio Sombrio', 'Mordida'], evolucao: { especie: 'Noitarão', nivel: 75 } },
+  { nome: 'Noctino', tipos: ['Penumbra', 'Brisa'], bases: bases(40, 10, 9, 12, 15), tecnicas: ['Pio Sombrio', 'Rajada'] },
+  { nome: 'Vigília', tipos: ['Penumbra', 'Eco'], bases: bases(45, 9, 10, 15, 13), tecnicas: ['Ressonância', 'Pio Sombrio', 'Estalo'] },
+  { nome: 'Lobreu', tipos: ['Penumbra', 'Fera'], bases: bases(50, 14, 11, 8, 12), tecnicas: ['Sombra Cortante', 'Mordida', 'Investida'] },
+  { nome: 'Breuzal', tipos: ['Penumbra', 'Bruma'], bases: bases(48, 9, 11, 14, 11), tecnicas: ['Cerração', 'Pio Sombrio'] },
+  { nome: 'Noitarão', tipos: ['Penumbra'], bases: bases(60, 14, 13, 10, 5), tecnicas: ['Sombra Cortante', 'Pio Sombrio', 'Investida'] },
 ]
 
 export const INICIAIS = ['Gelusco', 'Rebitim', 'Zumbilo'] as const

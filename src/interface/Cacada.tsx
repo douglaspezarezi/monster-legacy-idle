@@ -141,7 +141,9 @@ export function Cacada({ sessao, executar }: Props) {
             <button
               key={b.nome}
               className={i === estado.bioma ? 'escolhida' : ''}
-              onClick={() => executar((e, t) => escolherBioma(e, BIOMAS.length, i, t))}
+              disabled={b.era > estado.era}
+              title={b.era > estado.era ? `Abre na Era ${b.era}` : undefined}
+              onClick={() => executar((e, t) => escolherBioma(e, BIOMAS, i, t))}
             >
               {b.nome}
               <small>{b.tipo}</small>

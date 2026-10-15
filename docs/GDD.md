@@ -29,7 +29,7 @@ Idle RPG de criaturas para navegador. O jogador forma criaturas, deixa-as caçan
 
 ## 4. Mundo e rotas
 
-O mundo tem 18 biomas, um por tipo **[a definir: o documento original fala em 18 mapas elementares; a lista de tipos da seção 6 tem 16, então 2 biomas ficam mistos ou a lista de tipos muda]**. Cada bioma tem 5 rotas.
+O mundo tem 16 biomas, um por tipo, 4 por Era. Cada bioma tem 5 rotas.
 
 Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem de tipo e os materiais que caem ali.
 
@@ -86,9 +86,8 @@ Simulação de 36 horas em cada bioma, com o jogador repondo até 5 Tônicos de 
 | Campo Bravio | 35 | 29 | 39 |
 | Baía Turva | 39 | 33 | 26 |
 
-### Biomas da Era 2 **[proposta]**
+### Biomas da Era 2
 
-- **Pendência 1:** o mundo passa a ter 16 biomas, um por tipo, 4 por Era (Eras 1 a 4).
 - Os biomas da Era 2 aparecem a partir da Era 2, com as 5 rotas. Os da Era 1 continuam abertos.
 - Tipos: Chama, Faísca, Peçonha e Penumbra.
 
@@ -204,7 +203,7 @@ Técnicas novas dos biomas da Era 1:
 | Onda Funda | Maré | especial | 85 | 7 s |
 | Desmoronar | Rocha | física | 85 | 7 s |
 
-Técnicas novas da Era 2 **[proposta]**:
+Técnicas novas da Era 2:
 
 | Técnica | Tipo | Categoria | Poder | Recarga |
 | --- | --- | --- | --- | --- |
@@ -363,7 +362,7 @@ Espécies dos biomas novos da Era 1. As somas das bases seguem a Mata Funda: per
 | Enguiço | Maré, Faísca | 40, 11, 9, 14, 16 | Centelha, Jato de Lodo, Mordida |
 | Abissão | Maré, Penumbra | 60, 12, 13, 12, 5 | Onda Funda, Pio Sombrio, Jato de Lodo |
 
-Espécies da Era 2 **[proposta]**. Em cada bioma, a espécie da rota 1 evolui no nível 75 para o chefe da rota 5: Cinzelo → Fornalho, Choquim → Trovejão, Lodilho → Atoleiro, Sombrito → Noitarão.
+Espécies da Era 2. Em cada bioma, a espécie da rota 1 evolui no nível 75 para o chefe da rota 5: Cinzelo → Fornalho, Choquim → Trovejão, Lodilho → Atoleiro, Sombrito → Noitarão.
 
 | Espécie | Tipos | Base | Técnicas |
 | --- | --- | --- | --- |
@@ -392,7 +391,7 @@ Espécies da Era 2 **[proposta]**. Em cada bioma, a espécie da rota 1 evolui no
 | Breuzal | Penumbra, Bruma | 48, 9, 11, 14, 11 | Cerração, Pio Sombrio |
 | Noitarão | Penumbra | 60, 14, 13, 10, 5 | Sombra Cortante, Pio Sombrio, Investida |
 
-- **Linhagens [proposta]:** Brasa (Cinzelo, Fornalho, Brasino); Fumaça (Lavrudo, Pirilume); Faísca recebe Choquim, Trovejão, Zapeta; Metal recebe Magnetil; Manada recebe Trovisco, Rastejo, Lobreu; Enxame recebe Lodilho, Atoleiro, Mosquel; Raiz recebe Mofento; Gruta recebe Sombrito, Noitarão; Asa recebe Noctino, Vigília; Névoa nova (Fumarel, Nimbeiro, Brumoso, Breuzal).
+- **Linhagens da Era 2:** Brasa (Cinzelo, Fornalho, Brasino); Fumaça (Lavrudo, Pirilume); Faísca recebe Choquim, Trovejão, Zapeta; Metal recebe Magnetil; Manada recebe Trovisco, Rastejo, Lobreu; Enxame recebe Lodilho, Atoleiro, Mosquel; Raiz recebe Mofento; Gruta recebe Sombrito, Noitarão; Asa recebe Noctino, Vigília; Névoa nova (Fumarel, Nimbeiro, Brumoso, Breuzal).
 
 ### Início do jogo
 
@@ -617,11 +616,9 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F7 · Pós-lançamento | Save na nuvem e arte final | Progresso mantido entre dispositivos |
 | F8 · Robustez | Uma aba por vez, tela de erro com o save, exportar e importar o save em arquivo, workflow atualizado | Duas abas abertas não corrompem o save e um save quebrado não deixa a tela em branco |
 | F9 · Evolução | Linhas de 2 e 3 formas, multiplicador por forma e formas dos iniciais | Uma criatura evolui ao chegar ao nível 75 na Era 2 |
+| F10 · Era 2 | Biomas Encosta Rubra, Chapada Trovão, Pântano Amargo e Bosque Sem Lua, 24 espécies e o nome Monstros | Um monstro chega ao nível 100 na Era 2 caçando nos biomas novos |
 
 ## 17. Pendências
 
-1. 18 biomas para 16 tipos (seção 4): biomas mistos ou mudança na lista de tipos.
-2. Biomas e espécies da Era 2 em diante (a Era 1 tem os 4 biomas da seção 4).
-3. Valores base das espécies dos demais biomas.
-4. Biomas das Eras 3 e 4 (tetos 150 e 200) e se há mais Eras depois delas.
-5. Diferença entre os níveis 150 e 200 no limite suave (seção 7).
+1. Biomas, espécies e valores base das Eras 3 e 4 (tetos 150 e 200), com os 8 tipos restantes, e se há mais Eras depois delas.
+2. Diferença entre os níveis 150 e 200 no limite suave (seção 7).

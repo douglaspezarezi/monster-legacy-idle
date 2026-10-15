@@ -34,6 +34,8 @@ export const ABATES_PARA_O_CHEFE = 100
 export type DadosDeBioma<Tipo extends string> = {
   readonly nome: string
   readonly tipo: Tipo
+  // Era a partir da qual o bioma abre.
+  readonly era: number
   // Espécies de cada rota, com chance igual; índice 0 para a rota 1.
   readonly especiesPorRota: readonly (readonly string[])[]
 }

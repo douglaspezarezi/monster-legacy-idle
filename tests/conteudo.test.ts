@@ -57,8 +57,10 @@ describe('conteúdo', () => {
     }
   })
 
-  it('a Era 1 tem quatro biomas de tipos diferentes', () => {
-    expect(BIOMAS.map((b) => b.tipo)).toEqual(['Brota', 'Rocha', 'Fera', 'Maré'])
+  it('um bioma por tipo, quatro por Era', () => {
+    expect(new Set(BIOMAS.map((b) => b.tipo)).size).toBe(BIOMAS.length)
+    expect(BIOMAS.filter((b) => b.era === 1).map((b) => b.tipo)).toEqual(['Brota', 'Rocha', 'Fera', 'Maré'])
+    expect(BIOMAS.filter((b) => b.era === 2).map((b) => b.tipo)).toEqual(['Chama', 'Faísca', 'Peçonha', 'Penumbra'])
   })
 
   it('as faixas de nível das rotas são contíguas', () => {
