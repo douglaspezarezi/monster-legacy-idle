@@ -29,7 +29,7 @@ Idle RPG de criaturas para navegador. O jogador forma criaturas, deixa-as caçan
 
 ## 4. Mundo e rotas
 
-O mundo tem 16 biomas, um por tipo, 4 por Era. Os biomas das Eras 1 e 2 têm 5 rotas; os da Era 3 têm também a rota 6.
+O mundo tem 16 biomas, um por tipo, 4 por Era. Os biomas das Eras 1 e 2 têm 5 rotas; os da Era 3 têm também a rota 6, e os da Era 4, as rotas 6 e 7.
 
 Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem de tipo e os materiais que caem ali.
 
@@ -144,7 +144,7 @@ Simulação de 120 horas na Era 3, a partir do nível 1, com reposição automá
 - Com genes raros, a Era 3 leva de 7 a 20 horas, perto da Era 2 (6 a 17), mesmo com 50 níveis a mais: os genes acumulados aceleram cada Era.
 - A rota 6 pesa pouco no tempo. Com Vida ×8 ou XP base 1.200, o nível 150 atrasa só de 1 a 4 horas, porque genes raros vencem o selvagem antes de a Vida extra contar. Por isso a proposta mantém o padrão das rotas anteriores.
 
-### Biomas da Era 4 [proposta]
+### Biomas da Era 4
 
 - Os biomas da Era 4 aparecem a partir da Era 4 e são os únicos com a **rota 7**, além da rota 6. Para passar do nível 150 é preciso caçar num bioma da Era 4.
 - Tipos: Geada, Liga, Eco e Astro, os últimos 4 dos 16. A Era 4 é a última: o nível 200 é o máximo do jogo, e o que vem depois é o fim de jogo da seção 11.
@@ -291,7 +291,7 @@ Técnicas novas da Era 3:
 | Lança de Luz | Aurora | física | 60 | 3 s |
 | Fulgor | Aurora | especial | 90 | 8 s |
 
-Técnicas novas da Era 4 **[proposta]**. Astro ainda não tinha técnica:
+Técnicas novas da Era 4. Astro ainda não tinha técnica:
 
 | Técnica | Tipo | Categoria | Poder | Recarga |
 | --- | --- | --- | --- | --- |
@@ -517,7 +517,7 @@ Espécies da Era 2. Em cada bioma, a espécie da rota 1 evolui no nível 75 para
 - **Linhas:** Ventilho → Ventaval → Furacor; Lasquim → Lascardo → Lapidão; Neblim → Neblinor → Brumarca; Raiolim → Raiante → Zenital.
 - **Linhagens da Era 3:** Vento nova (Ventilho, Ventaval, Furacor, Pluminho); Lasca nova (Lasquim, Lascardo, Lapidão, Geodim, Facetor); Véu nova (Neblim, Neblinor, Brumarca, Garoel); Luz nova (Raiolim, Raiante, Zenital, Orvelim, Halim, Brilhote); Gelo recebe Saraivo; Pedra recebe Escarpim; Asa recebe Gaviel; Gruta recebe Espelhim; Névoa recebe Vultinho e Miragel; Raiz recebe Orvalim; Brasa recebe Soalheiro; Manada recebe Alvorel.
 
-**Espécies da Era 4 [proposta].** Cada bioma tem uma linha de 3 formas, como na Era 3: a espécie da rota 1 evolui no nível 75 para o chefe da rota 5 e no 150 para o chefe da rota 6. O chefe da rota 7 tem uma forma só e soma 120.
+**Espécies da Era 4.** Cada bioma tem uma linha de 3 formas, como na Era 3: a espécie da rota 1 evolui no nível 75 para o chefe da rota 5 e no 150 para o chefe da rota 6. O chefe da rota 7 tem uma forma só e soma 120.
 
 | Espécie | Tipos | Base | Técnicas |
 | --- | --- | --- | --- |
@@ -584,9 +584,9 @@ Espécies da Era 2. Em cada bioma, a espécie da rota 1 evolui no nível 75 para
 
 ### Limite suave
 
-O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% do normal. **[a definir: o texto original dizia que o nível 200 fica cerca de 12% acima do 150, mas pela fórmula a diferença é de no máximo 8,4% (12,5 níveis de ganho sobre 149), menos ainda com base alta. Ou o texto vira "cerca de 8%", ou o ganho depois do 150 sobe para cerca de 36%.]** A diferença no topo vem de genes, raridade e escolha de tipos.
+O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% do normal, e o nível 200 fica cerca de 8% acima do 150 (no máximo 8,4%: 12,5 níveis de ganho sobre 149, menos com base alta). A diferença no topo vem de genes, raridade e escolha de tipos.
 
-**Limite suave [proposta]:** manter o ganho de 25% depois do 150, que já está no motor, e corrigir o texto para "o nível 200 fica cerca de 8% acima do 150". Na simulação da Era 4, o 150 ao 200 leva de 3 a 6 horas com genes épicos; subir o ganho para 36% não muda esse tempo, porque o selvagem da rota 7 cresce na mesma proporção. A escolha só muda o tamanho da diferença no topo.
+**Por que 25%:** na simulação da Era 4, o 150 ao 200 leva de 3 a 6 horas com genes épicos; subir o ganho para 36% não muda esse tempo, porque o selvagem da rota 7 cresce na mesma proporção. O ganho só muda o tamanho da diferença no topo.
 
 ### Evolução
 
@@ -627,9 +627,9 @@ O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% d
 
 ### Eras (prestígio)
 
-- **Tetos:** a Era 1 vai até o nível 50 e usa as rotas 1 a 3 de cada bioma. A Era 2 vai até o 100 e libera as rotas 4 e 5. A Era 3 vai até o 150 e libera a rota 6. A Era 4 (200) entra quando houver biomas para ela. Assim o teto de cada Era coincide com o topo de uma rota.
+- **Tetos:** a Era 1 vai até o nível 50 e usa as rotas 1 a 3 de cada bioma. A Era 2 vai até o 100 e libera as rotas 4 e 5. A Era 3 vai até o 150 e libera a rota 6. A Era 4 vai até o 200, o máximo do jogo, e libera a rota 7. Assim o teto de cada Era coincide com o topo de uma rota.
 - **Era 3:** vai até o nível 150 e libera a rota 6, que só os biomas da Era 3 têm (seção 4). Como o teto é 150, o limite suave não pesa na Era 3; a pendência do nível 150 ao 200 fica para a Era 4.
-- **Era 4 [proposta]:** vai até o nível 200 e libera a rota 7, que só os biomas da Era 4 têm. É a última Era: no nível 200 não há reset.
+- **Era 4:** vai até o nível 200 e libera a rota 7, que só os biomas da Era 4 têm. É a última Era: no nível 200 não há reset.
 - **Sem nível próprio do Treinador:** a Era fecha quando a criatura ativa chega ao teto. Nenhuma criatura passa do teto da Era atual.
 - **Reset:** a criatura ativa volta ao nível 1 com os mesmos genes; as rotas liberadas voltam à rota 1 e os contadores de chefe zeram. Ficam ouro, itens, matrizes, equipamentos e a Forja. O Treinador ganha a marca da Era.
 - **Reserva:** mantém o nível. Uma criatura que ainda não passou pelo reset da Era atual, ao ser ativada, volta ao nível 1. As que nascem ou são capturadas na Era atual já contam como passadas.
@@ -786,9 +786,8 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F9 · Evolução | Linhas de 2 e 3 formas, multiplicador por forma e formas dos iniciais | Uma criatura evolui ao chegar ao nível 75 na Era 2 |
 | F10 · Era 2 | Biomas Encosta Rubra, Chapada Trovão, Pântano Amargo e Bosque Sem Lua, 24 espécies e o nome Monstros | Um monstro chega ao nível 100 na Era 2 caçando nos biomas novos |
 | F11 · Era 3 | Rota 6, biomas Cume dos Ventos, Veio Cristalino, Lagoa Velada e Planalto da Alvorada, 28 espécies e 6 técnicas | Um monstro chega ao nível 150 na Era 3 caçando nos biomas novos |
-| F12 · Era 4 **[proposta]** | Rota 7, biomas Planície Gelada, Ruínas de Ferro, Desfiladeiro do Eco e Cratera Estelar, 32 espécies e 5 técnicas | Um monstro chega ao nível 200 na Era 4 caçando nos biomas novos |
+| F12 · Era 4 | Rota 7, biomas Planície Gelada, Ruínas de Ferro, Desfiladeiro do Eco e Cratera Estelar, 32 espécies e 5 técnicas | Um monstro chega ao nível 200 na Era 4 caçando nos biomas novos |
 
 ## 17. Pendências
 
-1. Se há conteúdo de nível depois da Era 4. A Era 4 está em proposta na seção 4.
-2. Diferença entre os níveis 150 e 200 no limite suave (seção 7). Há proposta na seção 7.
+1. Se há conteúdo de nível depois da Era 4.
