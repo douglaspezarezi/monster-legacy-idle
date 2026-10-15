@@ -344,3 +344,7 @@ dd {
   gap: 1rem;
   margin-top: 0.8rem;
 }
+
+.aviso-de-aba {
+  max-width: 36rem;
+}
