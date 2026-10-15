@@ -9,4 +9,6 @@ export const ROTAS: readonly DadosDeRota[] = [
   { faixaDeNivel: [76, 100], xpBase: 650, multiplicadorDeVida: 4, quedaDeMatriz: { chance: 0.0002, raridade: 'lendaria' }, raridadeDoEquipamento: 'lendaria' },
   // Só os biomas da Era 3 em diante têm a rota 6.
   { faixaDeNivel: [101, 150], xpBase: 1600, multiplicadorDeVida: 6, quedaDeMatriz: { chance: 0.0001, raridade: 'mitica' }, raridadeDoEquipamento: 'mitica' },
+  // Só os biomas da Era 4 têm a rota 7.
+  { faixaDeNivel: [151, 200], xpBase: 4000, multiplicadorDeVida: 8, quedaDeMatriz: { chance: 0.00005, raridade: 'mitica' }, raridadeDoEquipamento: 'mitica' },
 ]

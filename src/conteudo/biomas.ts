@@ -163,6 +163,67 @@ export const PLANALTO_DA_ALVORADA: DadosDeBioma<Tipo> = {
   ],
 }
 
+// Os da Era 4 são os únicos com a rota 7.
+export const PLANICIE_GELADA: DadosDeBioma<Tipo> = {
+  nome: 'Planície Gelada',
+  tipo: 'Geada',
+  era: 4,
+  especiesPorRota: [
+    ['Friozim', 'Nevisco'],
+    ['Friozim', 'Nevisco', 'Cristagelo'],
+    ['Nevisco', 'Cristagelo', 'Morsudo'],
+    ['Cristagelo', 'Morsudo', 'Friagem'],
+    ['Morsudo', 'Friagem', 'Geadouro'],
+    ['Friagem', 'Geadouro', 'Invernal'],
+    ['Geadouro', 'Invernal', 'Permafrio'],
+  ],
+}
+
+export const RUINAS_DE_FERRO: DadosDeBioma<Tipo> = {
+  nome: 'Ruínas de Ferro',
+  tipo: 'Liga',
+  era: 4,
+  especiesPorRota: [
+    ['Parafim', 'Engrenil'],
+    ['Parafim', 'Engrenil', 'Ferrugo'],
+    ['Engrenil', 'Ferrugo', 'Lâmino'],
+    ['Ferrugo', 'Lâmino', 'Parafusão'],
+    ['Lâmino', 'Parafusão', 'Sentinela'],
+    ['Parafusão', 'Sentinela', 'Blindarca'],
+    ['Sentinela', 'Blindarca', 'Colosferro'],
+  ],
+}
+
+export const DESFILADEIRO_DO_ECO: DadosDeBioma<Tipo> = {
+  nome: 'Desfiladeiro do Eco',
+  tipo: 'Eco',
+  era: 4,
+  especiesPorRota: [
+    ['Ecoim', 'Grilão'],
+    ['Ecoim', 'Grilão', 'Sinim'],
+    ['Grilão', 'Sinim', 'Morcegal'],
+    ['Sinim', 'Morcegal', 'Ecoante'],
+    ['Morcegal', 'Ecoante', 'Trovoz'],
+    ['Ecoante', 'Trovoz', 'Retumbo'],
+    ['Trovoz', 'Retumbo', 'Sonarca'],
+  ],
+}
+
+export const CRATERA_ESTELAR: DadosDeBioma<Tipo> = {
+  nome: 'Cratera Estelar',
+  tipo: 'Astro',
+  era: 4,
+  especiesPorRota: [
+    ['Estelim', 'Cometo'],
+    ['Estelim', 'Cometo', 'Meteorim'],
+    ['Cometo', 'Meteorim', 'Luarel'],
+    ['Meteorim', 'Luarel', 'Estelado'],
+    ['Luarel', 'Estelado', 'Nebulim'],
+    ['Estelado', 'Nebulim', 'Constelar'],
+    ['Nebulim', 'Constelar', 'Eclipsor'],
+  ],
+}
+
 // Os da Era 1 abrem desde o começo; os das Eras seguintes, a partir delas. A ordem não muda: o save guarda o índice.
 export const BIOMAS: readonly DadosDeBioma<Tipo>[] = [
   MATA_FUNDA,
@@ -177,4 +238,8 @@ export const BIOMAS: readonly DadosDeBioma<Tipo>[] = [
   VEIO_CRISTALINO,
   LAGOA_VELADA,
   PLANALTO_DA_ALVORADA,
+  PLANICIE_GELADA,
+  RUINAS_DE_FERRO,
+  DESFILADEIRO_DO_ECO,
+  CRATERA_ESTELAR,
 ]

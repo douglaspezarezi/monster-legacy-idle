@@ -40,6 +40,13 @@ describe('biomas', () => {
     expect(escolherBioma(naEra3, BIOMAS, 8, 0).bioma).toBe(8)
   })
 
+  it('bioma da Era 4 só abre a partir da Era 4', () => {
+    const naEra3 = jogoCom(membro('Gelusco', 10, 10, 1, 3), { era: 3 })
+    expect(() => escolherBioma(naEra3, BIOMAS, 12, 0)).toThrow(RangeError)
+    const naEra4 = jogoCom(membro('Gelusco', 10, 10, 1, 4), { era: 4 })
+    expect(escolherBioma(naEra4, BIOMAS, 12, 0).bioma).toBe(12)
+  })
+
   it('recusa bioma inexistente e não muda nada ao escolher o mesmo', () => {
     const estado = jogoCom(membro('Gelusco', 1, 5))
     expect(() => escolherBioma(estado, BIOMAS, 99, 0)).toThrow(RangeError)

@@ -47,6 +47,24 @@ describe('teto da Era', () => {
     expect(mataFunda.estado.rotasLiberadas).toBe(5)
   })
 
+  it('na Era 4 o chefe da rota 6 libera a rota 7 só num bioma da Era 4', () => {
+    const naRota6 = { era: 4, rota: 6, rotasLiberadas: 6, abatesPorRota: [0, 0, 0, 0, 0, 100, 0], avancoAutomatico: false }
+    const ativa = membro('Rebitim', 160, 20, 1, 4)
+    const planicie = simularCacada(CONFIGURACAO, jogoCom(ativa, { ...naRota6, bioma: 12 }), 0, 5 * 60 * 1000, criarGerador(2))
+    expect(planicie.eventos).toContainEqual(expect.objectContaining({ tipo: 'abate', chefe: true }))
+    expect(planicie.estado.rotasLiberadas).toBe(7)
+    const cume = simularCacada(CONFIGURACAO, jogoCom(ativa, { ...naRota6, bioma: 8 }), 0, 5 * 60 * 1000, criarGerador(2))
+    expect(cume.eventos).toContainEqual(expect.objectContaining({ tipo: 'abate', chefe: true }))
+    expect(cume.estado.rotasLiberadas).toBe(6)
+  })
+
+  it('na Era 4 a caçada na rota 7 chega ao nível 200, o máximo', () => {
+    const ativa = membro('Rebitim', 199, 20, 1, 4)
+    const r = simularCacada(CONFIGURACAO, jogoCom(ativa, { era: 4, bioma: 12, rota: 7, rotasLiberadas: 7, avancoAutomatico: false }), 0, HORA, criarGerador(3))
+    expect(r.estado.ativa.nivel).toBe(200)
+    expect(r.estado.ativa.xpNoNivel).toBe(0)
+  })
+
   it('um contador de chefe que falta, como o da rota 6 num save antigo, conta a partir de zero', () => {
     const ativa = membro('Gelusco', 110, 20, 1, 3)
     const estado = jogoCom(ativa, { era: 3, bioma: 8, rota: 6, rotasLiberadas: 6, abatesPorRota: [0, 0, 0, 0, 0], avancoAutomatico: false })
@@ -68,7 +86,8 @@ describe('reset de Era', () => {
     expect(podeReiniciarEra(ERAS, jogoCom(membro('Gelusco', 49, 10)))).toBe(false)
     expect(podeReiniciarEra(ERAS, jogoCom(membro('Gelusco', 50, 10)))).toBe(true)
     expect(podeReiniciarEra(ERAS, jogoCom(membro('Gelusco', 100, 10, 1, 2), { era: 2 }))).toBe(true)
-    expect(podeReiniciarEra(ERAS, jogoCom(membro('Gelusco', 150, 10, 1, 3), { era: 3 }))).toBe(false)
+    expect(podeReiniciarEra(ERAS, jogoCom(membro('Gelusco', 150, 10, 1, 3), { era: 3 }))).toBe(true)
+    expect(podeReiniciarEra(ERAS, jogoCom(membro('Gelusco', 200, 10, 1, 4), { era: 4 }))).toBe(false)
     expect(() => reiniciarEra(CONFIGURACAO, jogoCom(membro('Gelusco', 49, 10)), 0)).toThrow(RangeError)
   })
 

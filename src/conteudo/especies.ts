@@ -104,6 +104,42 @@ export const ESPECIES: readonly DadosDeEspecie<Tipo>[] = [
   { nome: 'Raiante', tipos: ['Aurora'], bases: bases(52, 12, 12, 14, 12), tecnicas: ['Fulgor', 'Lança de Luz', 'Mordida'], evolucao: { especie: 'Zenital', nivel: 150 } },
   { nome: 'Alvorel', tipos: ['Aurora', 'Fera'], bases: bases(50, 15, 10, 8, 13), tecnicas: ['Lança de Luz', 'Investida', 'Mordida'] },
   { nome: 'Zenital', tipos: ['Aurora', 'Brisa'], bases: bases(58, 14, 13, 16, 12), tecnicas: ['Fulgor', 'Lança de Luz', 'Rajada'] },
+  // Planície Gelada
+  { nome: 'Friozim', tipos: ['Geada'], bases: bases(45, 10, 11, 11, 10), tecnicas: ['Lasca Gélida', 'Mordida'], evolucao: { especie: 'Friagem', nivel: 75 } },
+  { nome: 'Nevisco', tipos: ['Geada', 'Fera'], bases: bases(42, 13, 9, 8, 15), tecnicas: ['Lasca Gélida', 'Investida', 'Mordida'] },
+  { nome: 'Cristagelo', tipos: ['Geada', 'Cristal'], bases: bases(48, 10, 13, 13, 8), tecnicas: ['Sopro Frio', 'Estilhaço'] },
+  { nome: 'Morsudo', tipos: ['Geada', 'Maré'], bases: bases(58, 12, 13, 9, 6), tecnicas: ['Lasca Gélida', 'Jato de Lodo', 'Investida'] },
+  { nome: 'Friagem', tipos: ['Geada'], bases: bases(52, 12, 13, 13, 12), tecnicas: ['Sopro Frio', 'Lasca Gélida', 'Mordida'], evolucao: { especie: 'Invernal', nivel: 150 } },
+  { nome: 'Geadouro', tipos: ['Geada', 'Penumbra'], bases: bases(50, 12, 11, 16, 14), tecnicas: ['Sopro Frio', 'Pio Sombrio'] },
+  { nome: 'Invernal', tipos: ['Geada'], bases: bases(60, 15, 14, 14, 11), tecnicas: ['Nevasca', 'Avalanche', 'Lasca Gélida'] },
+  { nome: 'Permafrio', tipos: ['Geada', 'Rocha'], bases: bases(66, 16, 18, 12, 8), tecnicas: ['Avalanche', 'Desmoronar', 'Nevasca'] },
+  // Ruínas de Ferro
+  { nome: 'Parafim', tipos: ['Liga'], bases: bases(45, 11, 13, 9, 9), tecnicas: ['Martelada', 'Mordida'], evolucao: { especie: 'Parafusão', nivel: 75 } },
+  { nome: 'Engrenil', tipos: ['Liga', 'Faísca'], bases: bases(42, 10, 10, 13, 13), tecnicas: ['Centelha', 'Martelada'] },
+  { nome: 'Ferrugo', tipos: ['Liga', 'Rocha'], bases: bases(52, 11, 14, 8, 7), tecnicas: ['Martelada', 'Pedrisco'] },
+  { nome: 'Lâmino', tipos: ['Liga', 'Brisa'], bases: bases(45, 14, 11, 9, 14), tecnicas: ['Martelada', 'Lufada', 'Investida'] },
+  { nome: 'Parafusão', tipos: ['Liga'], bases: bases(55, 13, 16, 10, 8), tecnicas: ['Limalha', 'Martelada', 'Investida'], evolucao: { especie: 'Blindarca', nivel: 150 } },
+  { nome: 'Sentinela', tipos: ['Liga', 'Penumbra'], bases: bases(52, 13, 14, 13, 10), tecnicas: ['Limalha', 'Sombra Cortante'] },
+  { nome: 'Blindarca', tipos: ['Liga'], bases: bases(62, 15, 18, 11, 8), tecnicas: ['Prensa', 'Limalha', 'Martelada'] },
+  { nome: 'Colosferro', tipos: ['Liga', 'Astro'], bases: bases(66, 17, 17, 12, 8), tecnicas: ['Prensa', 'Gravidade', 'Martelada'] },
+  // Desfiladeiro do Eco
+  { nome: 'Ecoim', tipos: ['Eco'], bases: bases(45, 9, 10, 13, 10), tecnicas: ['Estalo', 'Mordida'], evolucao: { especie: 'Ecoante', nivel: 75 } },
+  { nome: 'Grilão', tipos: ['Eco', 'Fera'], bases: bases(42, 12, 9, 9, 15), tecnicas: ['Brado', 'Investida', 'Mordida'] },
+  { nome: 'Sinim', tipos: ['Eco', 'Liga'], bases: bases(48, 10, 13, 12, 9), tecnicas: ['Estalo', 'Limalha'] },
+  { nome: 'Morcegal', tipos: ['Eco', 'Penumbra'], bases: bases(44, 9, 10, 15, 15), tecnicas: ['Pio Sombrio', 'Estalo'] },
+  { nome: 'Ecoante', tipos: ['Eco'], bases: bases(52, 11, 12, 14, 13), tecnicas: ['Ressonância', 'Brado', 'Estalo'], evolucao: { especie: 'Retumbo', nivel: 150 } },
+  { nome: 'Trovoz', tipos: ['Eco', 'Faísca'], bases: bases(48, 10, 11, 17, 16), tecnicas: ['Ressonância', 'Centelha'] },
+  { nome: 'Retumbo', tipos: ['Eco'], bases: bases(58, 13, 13, 17, 13), tecnicas: ['Ressonância', 'Brado', 'Investida'] },
+  { nome: 'Sonarca', tipos: ['Eco', 'Brisa'], bases: bases(60, 13, 14, 18, 15), tecnicas: ['Ressonância', 'Ciclone', 'Brado'] },
+  // Cratera Estelar
+  { nome: 'Estelim', tipos: ['Astro'], bases: bases(45, 10, 10, 12, 10), tecnicas: ['Poeira Estelar', 'Mordida'], evolucao: { especie: 'Estelado', nivel: 75 } },
+  { nome: 'Cometo', tipos: ['Astro', 'Chama'], bases: bases(40, 12, 9, 11, 15), tecnicas: ['Poeira Estelar', 'Tição', 'Investida'] },
+  { nome: 'Meteorim', tipos: ['Astro', 'Rocha'], bases: bases(55, 12, 14, 7, 4), tecnicas: ['Pedrisco', 'Poeira Estelar'] },
+  { nome: 'Luarel', tipos: ['Astro', 'Penumbra'], bases: bases(45, 9, 11, 15, 13), tecnicas: ['Poeira Estelar', 'Pio Sombrio'] },
+  { nome: 'Estelado', tipos: ['Astro'], bases: bases(52, 12, 12, 14, 12), tecnicas: ['Gravidade', 'Poeira Estelar', 'Mordida'], evolucao: { especie: 'Constelar', nivel: 150 } },
+  { nome: 'Nebulim', tipos: ['Astro', 'Bruma'], bases: bases(48, 10, 11, 17, 16), tecnicas: ['Poeira Estelar', 'Cerração'] },
+  { nome: 'Constelar', tipos: ['Astro'], bases: bases(58, 14, 13, 16, 13), tecnicas: ['Gravidade', 'Meteoro', 'Poeira Estelar'] },
+  { nome: 'Eclipsor', tipos: ['Astro', 'Aurora'], bases: bases(62, 15, 14, 17, 12), tecnicas: ['Gravidade', 'Fulgor', 'Meteoro'] },
 ]
 
 export const INICIAIS = ['Gelusco', 'Rebitim', 'Zumbilo'] as const

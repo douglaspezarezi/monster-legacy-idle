@@ -30,8 +30,9 @@ describe('conteúdo', () => {
   it('iniciais e espécies dos biomas existem', () => {
     for (const nome of INICIAIS) expect(nomesDeEspecies).toContain(nome)
     for (const bioma of BIOMAS) {
-      // Os biomas das Eras 1 e 2 têm 5 rotas; os da Era 3, a rota 6 também.
-      expect(bioma.especiesPorRota).toHaveLength(bioma.era >= 3 ? ROTAS.length : 5)
+      // Os biomas das Eras 1 e 2 têm 5 rotas; os da Era 3, 6; os da Era 4, as 7.
+      expect(bioma.especiesPorRota).toHaveLength(Math.max(5, bioma.era + 3))
+      expect(bioma.especiesPorRota.length).toBeLessThanOrEqual(ROTAS.length)
       for (const especies of bioma.especiesPorRota) {
         expect(especies.length).toBeGreaterThan(0)
         for (const nome of especies) expect(nomesDeEspecies).toContain(nome)
