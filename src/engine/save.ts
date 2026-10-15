@@ -4,10 +4,7 @@ import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 import { SEM_REPOSICAO } from './jogo.ts'
 
-export const VERSAO_DO_SAVE = 7
-
-// Contadores de chefe que cada bioma guarda desde a versão 7, que trouxe a rota 6.
-const ROTAS_NA_VERSAO_7 = 6
+export const VERSAO_DO_SAVE = 8
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
@@ -27,23 +24,30 @@ const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Re
   // A versão 6 trouxe a reposição automática, desligada.
   5: (estado) => ({ ...estado, reposicao: SEM_REPOSICAO }),
   // A versão 7 trouxe a rota 6: os contadores de chefe de cada bioma ganham uma posição zerada.
-  6: (estado) => ({
+  6: (estado) => comContadores(estado, 6),
+  // A versão 8 trouxe a rota 7, do mesmo jeito.
+  7: (estado) => comContadores(estado, 7),
+}
+
+// Completa com zeros os contadores de chefe do bioma atual e dos guardados até o número de rotas.
+function comContadores(estado: Record<string, unknown>, rotas: number): Record<string, unknown> {
+  return {
     ...estado,
-    abatesPorRota: comRota6(estado.abatesPorRota),
+    abatesPorRota: completar(estado.abatesPorRota, rotas),
     outrosBiomas: ehObjeto(estado.outrosBiomas)
       ? Object.fromEntries(
           Object.entries(estado.outrosBiomas).map(([bioma, progresso]) => [
             bioma,
-            ehObjeto(progresso) ? { ...progresso, abatesPorRota: comRota6(progresso.abatesPorRota) } : progresso,
+            ehObjeto(progresso) ? { ...progresso, abatesPorRota: completar(progresso.abatesPorRota, rotas) } : progresso,
           ]),
         )
       : estado.outrosBiomas,
-  }),
+  }
 }
 
-function comRota6(abatesPorRota: unknown): unknown {
+function completar(abatesPorRota: unknown, rotas: number): unknown {
   if (!Array.isArray(abatesPorRota)) return abatesPorRota
-  return [...abatesPorRota, ...Array.from({ length: Math.max(0, ROTAS_NA_VERSAO_7 - abatesPorRota.length) }, () => 0)]
+  return [...abatesPorRota, ...Array.from({ length: Math.max(0, rotas - abatesPorRota.length) }, () => 0)]
 }
 
 function naEra1(membro: unknown): unknown {

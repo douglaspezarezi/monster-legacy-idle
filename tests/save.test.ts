@@ -52,8 +52,8 @@ describe('save', () => {
     expect(save.estado).toEqual(atual)
   })
 
-  it('migra o save da versão 6: os contadores de chefe de cada bioma ganham a rota 6', () => {
-    const atual = jogoCom(membro('Gelusco', 3, 5), { abatesPorRota: [4, 7, 0, 0, 0, 0], outrosBiomas: { 2: { rota: 2, rotasLiberadas: 2, abatesPorRota: [1, 2, 0, 0, 0, 0] } } })
+  it('migra o save da versão 6: os contadores de chefe de cada bioma ganham as rotas 6 e 7', () => {
+    const atual = jogoCom(membro('Gelusco', 3, 5), { abatesPorRota: [4, 7, 0, 0, 0, 0, 0], outrosBiomas: { 2: { rota: 2, rotasLiberadas: 2, abatesPorRota: [1, 2, 0, 0, 0, 0, 0] } } })
     const antigo = { ...atual, abatesPorRota: [4, 7, 0, 0, 0], outrosBiomas: { 2: { rota: 2, rotasLiberadas: 2, abatesPorRota: [1, 2, 0, 0, 0] } } }
     const save = desserializar<Tipo>(JSON.stringify({ versao: 6, salvoEm: 10, estado: antigo }), MODELO)
     expect(save.estado).toEqual(atual)
