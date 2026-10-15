@@ -29,7 +29,7 @@ Idle RPG de criaturas para navegador. O jogador forma criaturas, deixa-as caçan
 
 ## 4. Mundo e rotas
 
-O mundo tem 16 biomas, um por tipo, 4 por Era. Cada bioma tem 5 rotas.
+O mundo tem 16 biomas, um por tipo, 4 por Era. Os biomas das Eras 1 e 2 têm 5 rotas; os da Era 3 têm também a rota 6.
 
 Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem de tipo e os materiais que caem ali.
 
@@ -111,7 +111,7 @@ Simulação de 72 horas na Era 2, a partir do nível 1, com reposição automát
 - Com genes comuns, a desvantagem de tipo trava o inicial: Gelusco na Encosta Rubra e Rebitim na Chapada Trovão não chegam ao 100. Com genes raros, a Era 2 leva de 6 a 17 horas, mais rápida que a Era 1, porque os genes acumulados aceleram cada Era.
 - Espécies da Era 1 com o tipo que vence o bioma, mas bases e técnicas fracas (Seixote na Chapada, Saltico no Pântano), não foram mais rápidas que os iniciais.
 
-### Biomas da Era 3 [proposta]
+### Biomas da Era 3
 
 - Os biomas da Era 3 aparecem a partir da Era 3 e são os únicos com a **rota 6**. Os das Eras 1 e 2 continuam com 5 rotas; para passar do nível 100 é preciso caçar num bioma da Era 3.
 - Tipos: Brisa, Cristal, Bruma e Aurora. Ficam para a Era 4 Geada, Liga, Eco e Astro.
@@ -246,7 +246,7 @@ Técnicas novas da Era 2:
 | Descarga | Faísca | física | 85 | 7 s |
 | Sombra Cortante | Penumbra | física | 60 | 3 s |
 
-Técnicas novas da Era 3 **[proposta]**:
+Técnicas novas da Era 3:
 
 | Técnica | Tipo | Categoria | Poder | Recarga |
 | --- | --- | --- | --- | --- |
@@ -437,7 +437,7 @@ Espécies da Era 2. Em cada bioma, a espécie da rota 1 evolui no nível 75 para
 
 - **Linhagens da Era 2:** Brasa (Cinzelo, Fornalho, Brasino); Fumaça (Lavrudo, Pirilume); Faísca recebe Choquim, Trovejão, Zapeta; Metal recebe Magnetil; Manada recebe Trovisco, Rastejo, Lobreu; Enxame recebe Lodilho, Atoleiro, Mosquel; Raiz recebe Mofento; Gruta recebe Sombrito, Noitarão; Asa recebe Noctino, Vigília; Névoa nova (Fumarel, Nimbeiro, Brumoso, Breuzal).
 
-**Espécies da Era 3 [proposta].** Em cada bioma, a espécie da rota 1 forma uma linha de 3 formas: evolui no nível 75 para a espécie que é chefe da rota 5 e no 150 para o chefe da rota 6. As somas das bases seguem os iniciais: perto de 87, 102 e 114.
+**Espécies da Era 3.** Em cada bioma, a espécie da rota 1 forma uma linha de 3 formas: evolui no nível 75 para a espécie que é chefe da rota 5 e no 150 para o chefe da rota 6. As somas das bases seguem os iniciais: perto de 87, 102 e 114.
 
 | Espécie | Tipos | Base | Técnicas |
 | --- | --- | --- | --- |
@@ -541,8 +541,8 @@ O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% d
 
 ### Eras (prestígio)
 
-- **Tetos:** a Era 1 vai até o nível 50 e usa as rotas 1 a 3 de cada bioma. A Era 2 vai até o 100 e libera as rotas 4 e 5. As Eras 3 (150) e 4 (200) entram quando houver biomas para elas. Assim o teto de cada Era coincide com o topo de uma rota.
-- **Era 3 [proposta]:** vai até o nível 150 e libera a rota 6, que só os biomas da Era 3 têm (seção 4). Como o teto é 150, o limite suave não pesa na Era 3; a pendência do nível 150 ao 200 fica para a Era 4.
+- **Tetos:** a Era 1 vai até o nível 50 e usa as rotas 1 a 3 de cada bioma. A Era 2 vai até o 100 e libera as rotas 4 e 5. A Era 3 vai até o 150 e libera a rota 6. A Era 4 (200) entra quando houver biomas para ela. Assim o teto de cada Era coincide com o topo de uma rota.
+- **Era 3:** vai até o nível 150 e libera a rota 6, que só os biomas da Era 3 têm (seção 4). Como o teto é 150, o limite suave não pesa na Era 3; a pendência do nível 150 ao 200 fica para a Era 4.
 - **Sem nível próprio do Treinador:** a Era fecha quando a criatura ativa chega ao teto. Nenhuma criatura passa do teto da Era atual.
 - **Reset:** a criatura ativa volta ao nível 1 com os mesmos genes; as rotas liberadas voltam à rota 1 e os contadores de chefe zeram. Ficam ouro, itens, matrizes, equipamentos e a Forja. O Treinador ganha a marca da Era.
 - **Reserva:** mantém o nível. Uma criatura que ainda não passou pelo reset da Era atual, ao ser ativada, volta ao nível 1. As que nascem ou são capturadas na Era atual já contam como passadas.
@@ -698,9 +698,9 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F8 · Robustez | Uma aba por vez, tela de erro com o save, exportar e importar o save em arquivo, workflow atualizado | Duas abas abertas não corrompem o save e um save quebrado não deixa a tela em branco |
 | F9 · Evolução | Linhas de 2 e 3 formas, multiplicador por forma e formas dos iniciais | Uma criatura evolui ao chegar ao nível 75 na Era 2 |
 | F10 · Era 2 | Biomas Encosta Rubra, Chapada Trovão, Pântano Amargo e Bosque Sem Lua, 24 espécies e o nome Monstros | Um monstro chega ao nível 100 na Era 2 caçando nos biomas novos |
-| F11 · Era 3 **[proposta]** | Rota 6, biomas Cume dos Ventos, Veio Cristalino, Lagoa Velada e Planalto da Alvorada, 28 espécies e 6 técnicas | Um monstro chega ao nível 150 na Era 3 caçando nos biomas novos |
+| F11 · Era 3 | Rota 6, biomas Cume dos Ventos, Veio Cristalino, Lagoa Velada e Planalto da Alvorada, 28 espécies e 6 técnicas | Um monstro chega ao nível 150 na Era 3 caçando nos biomas novos |
 
 ## 17. Pendências
 
-1. Biomas, espécies e valores base da Era 4 (teto 200), com os tipos Geada, Liga, Eco e Astro, e se há mais Eras depois dela. A Era 3 está em proposta na seção 4.
+1. Biomas, espécies e valores base da Era 4 (teto 200), com os tipos Geada, Liga, Eco e Astro, e se há mais Eras depois dela. A Era 3 está na seção 4.
 2. Diferença entre os níveis 150 e 200 no limite suave (seção 7).
