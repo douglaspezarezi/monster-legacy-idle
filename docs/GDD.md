@@ -9,7 +9,7 @@ Idle RPG de criaturas para navegador. O jogador forma criaturas, deixa-as caçan
 - **Plataforma:** navegador, com interface pensada também para o celular.
 - **Fase 1 (lançamento):** jogo solo, com save local e, depois, save na nuvem.
 - **Fase 2 (online):** sistemas sociais e PvP da seção 12, só depois do lançamento solo e com servidor próprio.
-- **Título provisório:** Monster Legacy Idle. As criaturas se chamam "criaturas" no texto do jogo até haver um nome próprio.
+- **Título provisório:** Monster Legacy Idle. No texto do jogo, as criaturas se chamam **Monstros**. Neste documento e no código, o termo de trabalho continua "criatura".
 
 ## 2. Pilares
 
@@ -622,7 +622,6 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 
 1. 18 biomas para 16 tipos (seção 4): biomas mistos ou mudança na lista de tipos.
 2. Biomas e espécies da Era 2 em diante (a Era 1 tem os 4 biomas da seção 4).
-3. Nome das criaturas no jogo.
-4. Valores base das espécies dos demais biomas.
-5. Biomas das Eras 3 e 4 (tetos 150 e 200) e se há mais Eras depois delas.
-6. Diferença entre os níveis 150 e 200 no limite suave (seção 7).
+3. Valores base das espécies dos demais biomas.
+4. Biomas das Eras 3 e 4 (tetos 150 e 200) e se há mais Eras depois delas.
+5. Diferença entre os níveis 150 e 200 no limite suave (seção 7).

@@ -8,7 +8,7 @@ type Props = { readonly aoEscolher: (especie: string) => void }
 export function EscolhaDoInicial({ aoEscolher }: Props) {
   return (
     <section className="painel escolha">
-      <h2>Escolha sua primeira criatura</h2>
+      <h2>Escolha seu primeiro monstro</h2>
       <p>A caçada começa na Mata Funda, terra do tipo Brota.</p>
       <div className="iniciais">
         {INICIAIS.map((nome) => {

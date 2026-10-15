@@ -12,7 +12,7 @@ export function PainelDeEquipamentos({ estado, executar }: Props) {
   return (
     <section className="painel equipamentos">
       <h3>Equipamentos</h3>
-      <p>Os chefes de rota às vezes deixam uma peça. Equipamentos não mudam a força das criaturas.</p>
+      <p>Os chefes de rota às vezes deixam uma peça. Equipamentos não mudam a força dos monstros.</p>
       <ul className="lista">
         {ESPACOS.map((espaco) => {
           const peca = vestidos[espaco]

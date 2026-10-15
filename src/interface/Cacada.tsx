@@ -103,7 +103,7 @@ export function Cacada({ sessao, executar }: Props) {
         </header>
         {podeReiniciarEra(CONFIGURACAO.eras, estado) && (
           <p className="aviso">
-            {ativa.especie} chegou ao nível {era.teto}, o teto da Era {estado.era}. Reiniciar a Era leva a criatura ativa ao nível 1, com os
+            {ativa.especie} chegou ao nível {era.teto}, o teto da Era {estado.era}. Reiniciar a Era leva o monstro ativo ao nível 1, com os
             mesmos genes, e libera a Era {estado.era + 1}. Ouro, itens, reserva, equipamentos e Forja ficam.{' '}
             <button onClick={() => executar((e, t) => reiniciarEra(CONFIGURACAO, e, t))}>Reiniciar a Era</button>
           </p>
@@ -118,7 +118,7 @@ export function Cacada({ sessao, executar }: Props) {
         <div className="lutadores">
           <div className="lutador">
             <Retrato especie={ativa.especie} tipos={especieDo(CATALOGO, ativa.especie).tipos} prismatica={ativa.prismatica} />
-            <small>Sua criatura</small>
+            <small>Seu monstro</small>
             <strong>
               {rotuloDaCriatura(ativa)} · nível {ativa.nivel} de {era.teto}
             </strong>
@@ -305,7 +305,7 @@ export function Cacada({ sessao, executar }: Props) {
           </ul>
         )}
         {estado.reserva.length === 0 ? (
-          <p>Nenhuma criatura na reserva.</p>
+          <p>Nenhum monstro na reserva.</p>
         ) : (
           <ul className="lista">
             {estado.reserva.map((membro) => (
