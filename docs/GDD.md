@@ -86,7 +86,32 @@ Simulação de 36 horas em cada bioma, com o jogador repondo até 5 Tônicos de 
 | Campo Bravio | 35 | 29 | 39 |
 | Baía Turva | 39 | 33 | 26 |
 
-### Selvagens
+### Biomas da Era 2 **[proposta]**
+
+- **Pendência 1:** o mundo passa a ter 16 biomas, um por tipo, 4 por Era (Eras 1 a 4).
+- Os biomas da Era 2 aparecem a partir da Era 2, com as 5 rotas. Os da Era 1 continuam abertos.
+- Tipos: Chama, Faísca, Peçonha e Penumbra.
+
+| Rota | Encosta Rubra (Chama) | Chapada Trovão (Faísca) | Pântano Amargo (Peçonha) | Bosque Sem Lua (Penumbra) |
+| --- | --- | --- | --- | --- |
+| 1 | Cinzelo, Brasino | Choquim, Zapeta | Lodilho, Mosquel | Sombrito, Noctino |
+| 2 | Cinzelo, Brasino, Fumarel | Choquim, Zapeta, Magnetil | Lodilho, Mosquel, Mofento | Sombrito, Noctino, Vigília |
+| 3 | Brasino, Fumarel, Lavrudo | Zapeta, Magnetil, Trovisco | Mosquel, Mofento, Rastejo | Noctino, Vigília, Lobreu |
+| 4 | Fumarel, Lavrudo, Pirilume | Magnetil, Trovisco, Nimbeiro | Mofento, Rastejo, Brumoso | Vigília, Lobreu, Breuzal |
+| 5 | Lavrudo, Pirilume, Fornalho | Trovisco, Nimbeiro, Trovejão | Rastejo, Brumoso, Atoleiro | Lobreu, Breuzal, Noitarão |
+
+Simulação de 72 horas na Era 2, a partir do nível 1, com reposição automática (horas até o nível 100, mediana de 3 sementes; 99 = não chegou):
+
+| Bioma | Gelusco comum | Rebitim comum | Zumbilo comum | Gelusco raro | Rebitim raro | Zumbilo raro |
+| --- | --- | --- | --- | --- | --- | --- |
+| Encosta Rubra | 99 | 36 | 25 | 17 | 8 | 7 |
+| Chapada Trovão | 49 | 99 | 26 | 9 | 13 | 6 |
+| Pântano Amargo | 32 | 34 | 34 | 7 | 9 | 7 |
+| Bosque Sem Lua | 34 | 61 | 52 | 7 | 10 | 8 |
+
+- Com genes comuns, a desvantagem de tipo trava o inicial: Gelusco na Encosta Rubra e Rebitim na Chapada Trovão não chegam ao 100. Com genes raros, a Era 2 leva de 6 a 17 horas, mais rápida que a Era 1, porque os genes acumulados aceleram cada Era.
+- Espécies da Era 1 com o tipo que vence o bioma, mas bases e técnicas fracas (Seixote na Chapada, Saltico no Pântano), não foram mais rápidas que os iniciais.
+
 
 - O selvagem nasce num nível sorteado com chance igual entre o piso da faixa da rota e 2 níveis abaixo da criatura ativa, sem passar do teto da faixa. Se esse limite ficar abaixo do piso, o selvagem nasce no piso. O chefe não segue essa regra.
 - Raridade ao nascer: fraca 25%, comum 55%, incomum 15%, rara 4%, épica 0,9%, lendária 0,09%, mítica 0,01%.
@@ -178,6 +203,16 @@ Técnicas novas dos biomas da Era 1:
 | Cerração | Bruma | especial | 80 | 6 s |
 | Onda Funda | Maré | especial | 85 | 7 s |
 | Desmoronar | Rocha | física | 85 | 7 s |
+
+Técnicas novas da Era 2 **[proposta]**:
+
+| Técnica | Tipo | Categoria | Poder | Recarga |
+| --- | --- | --- | --- | --- |
+| Tição | Chama | física | 55 | 3 s |
+| Fornalha | Chama | especial | 85 | 7 s |
+| Clarão | Aurora | especial | 70 | 5 s |
+| Descarga | Faísca | física | 85 | 7 s |
+| Sombra Cortante | Penumbra | física | 60 | 3 s |
 
 ### Derrota durante a caçada
 
@@ -327,6 +362,37 @@ Espécies dos biomas novos da Era 1. As somas das bases seguem a Mata Funda: per
 | Geleiro | Geada, Maré | 50, 10, 12, 13, 10 | Sopro Frio, Lasca Gélida, Jato de Lodo |
 | Enguiço | Maré, Faísca | 40, 11, 9, 14, 16 | Centelha, Jato de Lodo, Mordida |
 | Abissão | Maré, Penumbra | 60, 12, 13, 12, 5 | Onda Funda, Pio Sombrio, Jato de Lodo |
+
+Espécies da Era 2 **[proposta]**. Em cada bioma, a espécie da rota 1 evolui no nível 75 para o chefe da rota 5: Cinzelo → Fornalho, Choquim → Trovejão, Lodilho → Atoleiro, Sombrito → Noitarão.
+
+| Espécie | Tipos | Base | Técnicas |
+| --- | --- | --- | --- |
+| Cinzelo | Chama | 45, 12, 10, 11, 9 | Tição, Mordida |
+| Brasino | Chama, Fera | 42, 13, 9, 8, 14 | Tição, Investida, Mordida |
+| Fumarel | Chama, Bruma | 45, 9, 10, 14, 13 | Fornalha, Cerração, Tição |
+| Lavrudo | Chama, Rocha | 55, 13, 15, 8, 7 | Tição, Pedrisco, Desmoronar |
+| Pirilume | Chama, Aurora | 42, 9, 10, 16, 15 | Fornalha, Clarão, Tição |
+| Fornalho | Chama | 60, 15, 13, 8, 6 | Fornalha, Tição, Investida |
+| Choquim | Faísca | 45, 10, 10, 12, 10 | Centelha, Mordida |
+| Zapeta | Faísca, Brisa | 40, 10, 9, 12, 15 | Centelha, Rajada |
+| Magnetil | Faísca, Liga | 50, 12, 14, 10, 7 | Descarga, Martelada, Limalha |
+| Trovisco | Faísca, Fera | 48, 14, 10, 10, 13 | Descarga, Investida, Mordida |
+| Nimbeiro | Faísca, Bruma | 45, 9, 10, 15, 13 | Centelha, Cerração, Rajada |
+| Trovejão | Faísca | 60, 14, 12, 10, 6 | Descarga, Centelha, Investida |
+| Lodilho | Peçonha | 45, 10, 11, 11, 10 | Ferrão, Mordida |
+| Mosquel | Peçonha, Brisa | 38, 11, 8, 12, 16 | Ferrão, Rajada |
+| Mofento | Peçonha, Brota | 50, 9, 12, 13, 8 | Névoa Tóxica, Esporos |
+| Rastejo | Peçonha, Fera | 48, 14, 10, 9, 13 | Ferrão, Investida, Mordida |
+| Brumoso | Peçonha, Bruma | 45, 9, 11, 15, 12 | Névoa Tóxica, Cerração |
+| Atoleiro | Peçonha, Maré | 62, 13, 14, 8, 5 | Névoa Tóxica, Jato de Lodo, Ferrão |
+| Sombrito | Penumbra | 45, 10, 10, 12, 10 | Pio Sombrio, Mordida |
+| Noctino | Penumbra, Brisa | 40, 10, 9, 12, 15 | Pio Sombrio, Rajada |
+| Vigília | Penumbra, Eco | 45, 9, 10, 15, 13 | Ressonância, Pio Sombrio, Estalo |
+| Lobreu | Penumbra, Fera | 50, 14, 11, 8, 12 | Sombra Cortante, Mordida, Investida |
+| Breuzal | Penumbra, Bruma | 48, 9, 11, 14, 11 | Cerração, Pio Sombrio |
+| Noitarão | Penumbra | 60, 14, 13, 10, 5 | Sombra Cortante, Pio Sombrio, Investida |
+
+- **Linhagens [proposta]:** Brasa (Cinzelo, Fornalho, Brasino); Fumaça (Lavrudo, Pirilume); Faísca recebe Choquim, Trovejão, Zapeta; Metal recebe Magnetil; Manada recebe Trovisco, Rastejo, Lobreu; Enxame recebe Lodilho, Atoleiro, Mosquel; Raiz recebe Mofento; Gruta recebe Sombrito, Noitarão; Asa recebe Noctino, Vigília; Névoa nova (Fumarel, Nimbeiro, Brumoso, Breuzal).
 
 ### Início do jogo
 
