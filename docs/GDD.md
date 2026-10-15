@@ -144,6 +144,40 @@ Simulação de 120 horas na Era 3, a partir do nível 1, com reposição automá
 - Com genes raros, a Era 3 leva de 7 a 20 horas, perto da Era 2 (6 a 17), mesmo com 50 níveis a mais: os genes acumulados aceleram cada Era.
 - A rota 6 pesa pouco no tempo. Com Vida ×8 ou XP base 1.200, o nível 150 atrasa só de 1 a 4 horas, porque genes raros vencem o selvagem antes de a Vida extra contar. Por isso a proposta mantém o padrão das rotas anteriores.
 
+### Biomas da Era 4 [proposta]
+
+- Os biomas da Era 4 aparecem a partir da Era 4 e são os únicos com a **rota 7**, além da rota 6. Para passar do nível 150 é preciso caçar num bioma da Era 4.
+- Tipos: Geada, Liga, Eco e Astro, os últimos 4 dos 16. A Era 4 é a última: o nível 200 é o máximo do jogo, e o que vem depois é o fim de jogo da seção 11.
+- Bioma favorável a cada inicial: Liga vence Geada (Rebitim na Planície Gelada); Eco vence Liga (Zumbilo nas Ruínas de Ferro); Penumbra, segundo tipo do Estrondor, vence Eco. O Gelusco não tem bioma favorável na Era 4: Liga e Astro vencem Geada. Ele conta com as capturas e com os biomas das Eras anteriores até o 150.
+
+| Rota | Faixa de nível | Abate médio | XP base | XP por hora | Queda de matriz | Vida e dano |
+| --- | --- | --- | --- | --- | --- | --- |
+| 7 | 151 a 200 | 20 s | 4.000 | 720.000 | 0,005% (mítica) | Vida ×8, Ataque e Foco ÷8 |
+
+- O chefe da rota 7 deixa cair equipamento mítico, como o da rota 6.
+
+| Rota | Planície Gelada (Geada) | Ruínas de Ferro (Liga) | Desfiladeiro do Eco (Eco) | Cratera Estelar (Astro) |
+| --- | --- | --- | --- | --- |
+| 1 | Friozim, Nevisco | Parafim, Engrenil | Ecoim, Grilão | Estelim, Cometo |
+| 2 | Friozim, Nevisco, Cristagelo | Parafim, Engrenil, Ferrugo | Ecoim, Grilão, Sinim | Estelim, Cometo, Meteorim |
+| 3 | Nevisco, Cristagelo, Morsudo | Engrenil, Ferrugo, Lâmino | Grilão, Sinim, Morcegal | Cometo, Meteorim, Luarel |
+| 4 | Cristagelo, Morsudo, Friagem | Ferrugo, Lâmino, Parafusão | Sinim, Morcegal, Ecoante | Meteorim, Luarel, Estelado |
+| 5 | Morsudo, Friagem, Geadouro | Lâmino, Parafusão, Sentinela | Morcegal, Ecoante, Trovoz | Luarel, Estelado, Nebulim |
+| 6 | Friagem, Geadouro, Invernal | Parafusão, Sentinela, Blindarca | Ecoante, Trovoz, Retumbo | Estelado, Nebulim, Constelar |
+| 7 | Geadouro, Invernal, Permafrio | Sentinela, Blindarca, Colosferro | Trovoz, Retumbo, Sonarca | Nebulim, Constelar, Eclipsor |
+
+Simulação de 200 horas na Era 4, a partir do nível 1, com reposição automática (horas até o nível 150 / até o 200, mediana de 3 sementes):
+
+| Bioma | Gelusco épico | Rebitim épico | Zumbilo épico | Gelusco lendário | Rebitim lendário | Zumbilo lendário |
+| --- | --- | --- | --- | --- | --- | --- |
+| Planície Gelada | 10 / 16 | 4 / 7 | 7 / 10 | 7 / 11 | 3 / 5 | 5 / 7 |
+| Ruínas de Ferro | 8 / 13 | 7 / 11 | 7 / 11 | 5 / 9 | 5 / 8 | 5 / 8 |
+| Desfiladeiro do Eco | 7 / 10 | 9 / 13 | 5 / 8 | 5 / 7 | 6 / 9 | 4 / 6 |
+| Cratera Estelar | 9 / 15 | 6 / 9 | 15 / 20 | 6 / 10 | 4 / 7 | 10 / 14 |
+
+- Com genes épicos, a Era 4 leva de 7 a 20 horas, perto das Eras 2 e 3. Do 150 ao 200 são de 3 a 6 horas: com o limite suave, o selvagem da rota 7 também cresce pouco por nível, e a luta não fica mais difícil.
+- O Zumbilo sofre na Cratera Estelar, porque Astro é imune a Eco.
+
 
 - O selvagem nasce num nível sorteado com chance igual entre o piso da faixa da rota e 2 níveis abaixo da criatura ativa, sem passar do teto da faixa. Se esse limite ficar abaixo do piso, o selvagem nasce no piso. O chefe não segue essa regra.
 - Raridade ao nascer: fraca 25%, comum 55%, incomum 15%, rara 4%, épica 0,9%, lendária 0,09%, mítica 0,01%.
@@ -256,6 +290,16 @@ Técnicas novas da Era 3:
 | Mortalha | Bruma | física | 85 | 7 s |
 | Lança de Luz | Aurora | física | 60 | 3 s |
 | Fulgor | Aurora | especial | 90 | 8 s |
+
+Técnicas novas da Era 4 **[proposta]**. Astro ainda não tinha técnica:
+
+| Técnica | Tipo | Categoria | Poder | Recarga |
+| --- | --- | --- | --- | --- |
+| Nevasca | Geada | especial | 90 | 8 s |
+| Brado | Eco | física | 60 | 3 s |
+| Poeira Estelar | Astro | especial | 55 | 3 s |
+| Meteoro | Astro | física | 85 | 7 s |
+| Gravidade | Astro | especial | 90 | 8 s |
 
 ### Derrota durante a caçada
 
@@ -473,6 +517,46 @@ Espécies da Era 2. Em cada bioma, a espécie da rota 1 evolui no nível 75 para
 - **Linhas:** Ventilho → Ventaval → Furacor; Lasquim → Lascardo → Lapidão; Neblim → Neblinor → Brumarca; Raiolim → Raiante → Zenital.
 - **Linhagens da Era 3:** Vento nova (Ventilho, Ventaval, Furacor, Pluminho); Lasca nova (Lasquim, Lascardo, Lapidão, Geodim, Facetor); Véu nova (Neblim, Neblinor, Brumarca, Garoel); Luz nova (Raiolim, Raiante, Zenital, Orvelim, Halim, Brilhote); Gelo recebe Saraivo; Pedra recebe Escarpim; Asa recebe Gaviel; Gruta recebe Espelhim; Névoa recebe Vultinho e Miragel; Raiz recebe Orvalim; Brasa recebe Soalheiro; Manada recebe Alvorel.
 
+**Espécies da Era 4 [proposta].** Cada bioma tem uma linha de 3 formas, como na Era 3: a espécie da rota 1 evolui no nível 75 para o chefe da rota 5 e no 150 para o chefe da rota 6. O chefe da rota 7 tem uma forma só e soma 120.
+
+| Espécie | Tipos | Base | Técnicas |
+| --- | --- | --- | --- |
+| Friozim | Geada | 45, 10, 11, 11, 10 | Lasca Gélida, Mordida |
+| Nevisco | Geada, Fera | 42, 13, 9, 8, 15 | Lasca Gélida, Investida, Mordida |
+| Cristagelo | Geada, Cristal | 48, 10, 13, 13, 8 | Sopro Frio, Estilhaço |
+| Morsudo | Geada, Maré | 58, 12, 13, 9, 6 | Lasca Gélida, Jato de Lodo, Investida |
+| Friagem | Geada | 52, 12, 13, 13, 12 | Sopro Frio, Lasca Gélida, Mordida |
+| Geadouro | Geada, Penumbra | 50, 12, 11, 16, 14 | Sopro Frio, Pio Sombrio |
+| Invernal | Geada | 60, 15, 14, 14, 11 | Nevasca, Avalanche, Lasca Gélida |
+| Permafrio | Geada, Rocha | 66, 16, 18, 12, 8 | Avalanche, Desmoronar, Nevasca |
+| Parafim | Liga | 45, 11, 13, 9, 9 | Martelada, Mordida |
+| Engrenil | Liga, Faísca | 42, 10, 10, 13, 13 | Centelha, Martelada |
+| Ferrugo | Liga, Rocha | 52, 11, 14, 8, 7 | Martelada, Pedrisco |
+| Lâmino | Liga, Brisa | 45, 14, 11, 9, 14 | Martelada, Lufada, Investida |
+| Parafusão | Liga | 55, 13, 16, 10, 8 | Limalha, Martelada, Investida |
+| Sentinela | Liga, Penumbra | 52, 13, 14, 13, 10 | Limalha, Sombra Cortante |
+| Blindarca | Liga | 62, 15, 18, 11, 8 | Prensa, Limalha, Martelada |
+| Colosferro | Liga, Astro | 66, 17, 17, 12, 8 | Prensa, Gravidade, Martelada |
+| Ecoim | Eco | 45, 9, 10, 13, 10 | Estalo, Mordida |
+| Grilão | Eco, Fera | 42, 12, 9, 9, 15 | Brado, Investida, Mordida |
+| Sinim | Eco, Liga | 48, 10, 13, 12, 9 | Estalo, Limalha |
+| Morcegal | Eco, Penumbra | 44, 9, 10, 15, 15 | Pio Sombrio, Estalo |
+| Ecoante | Eco | 52, 11, 12, 14, 13 | Ressonância, Brado, Estalo |
+| Trovoz | Eco, Faísca | 48, 10, 11, 17, 16 | Ressonância, Centelha |
+| Retumbo | Eco | 58, 13, 13, 17, 13 | Ressonância, Brado, Investida |
+| Sonarca | Eco, Brisa | 60, 13, 14, 18, 15 | Ressonância, Ciclone, Brado |
+| Estelim | Astro | 45, 10, 10, 12, 10 | Poeira Estelar, Mordida |
+| Cometo | Astro, Chama | 40, 12, 9, 11, 15 | Poeira Estelar, Tição, Investida |
+| Meteorim | Astro, Rocha | 55, 12, 14, 7, 4 | Pedrisco, Poeira Estelar |
+| Luarel | Astro, Penumbra | 45, 9, 11, 15, 13 | Poeira Estelar, Pio Sombrio |
+| Estelado | Astro | 52, 12, 12, 14, 12 | Gravidade, Poeira Estelar, Mordida |
+| Nebulim | Astro, Bruma | 48, 10, 11, 17, 16 | Poeira Estelar, Cerração |
+| Constelar | Astro | 58, 14, 13, 16, 13 | Gravidade, Meteoro, Poeira Estelar |
+| Eclipsor | Astro, Aurora | 62, 15, 14, 17, 12 | Gravidade, Fulgor, Meteoro |
+
+- **Linhas:** Friozim → Friagem → Invernal; Parafim → Parafusão → Blindarca; Ecoim → Ecoante → Retumbo; Estelim → Estelado → Constelar.
+- **Linhagens da Era 4:** Coro nova (Ecoim, Ecoante, Retumbo, Sinim, Sonarca); Estrela nova (Estelim, Estelado, Constelar, Luarel, Eclipsor); Gelo recebe Friozim, Friagem, Invernal e Nevisco; Metal recebe Parafim, Parafusão, Blindarca, Ferrugo, Sentinela e Colosferro; Lasca recebe Cristagelo; Concha recebe Morsudo; Gruta recebe Geadouro; Pedra recebe Permafrio e Meteorim; Faísca recebe Engrenil e Trovoz; Vento recebe Lâmino; Manada recebe Grilão; Asa recebe Morcegal; Brasa recebe Cometo; Névoa recebe Nebulim.
+
 ### Início do jogo
 
 - O jogador escolhe um dos três iniciais. Ele começa no nível 1, com raridade comum e genes sorteados nessa faixa.
@@ -501,6 +585,8 @@ Espécies da Era 2. Em cada bioma, a espécie da rota 1 evolui no nível 75 para
 ### Limite suave
 
 O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% do normal. **[a definir: o texto original dizia que o nível 200 fica cerca de 12% acima do 150, mas pela fórmula a diferença é de no máximo 8,4% (12,5 níveis de ganho sobre 149), menos ainda com base alta. Ou o texto vira "cerca de 8%", ou o ganho depois do 150 sobe para cerca de 36%.]** A diferença no topo vem de genes, raridade e escolha de tipos.
+
+**Limite suave [proposta]:** manter o ganho de 25% depois do 150, que já está no motor, e corrigir o texto para "o nível 200 fica cerca de 8% acima do 150". Na simulação da Era 4, o 150 ao 200 leva de 3 a 6 horas com genes épicos; subir o ganho para 36% não muda esse tempo, porque o selvagem da rota 7 cresce na mesma proporção. A escolha só muda o tamanho da diferença no topo.
 
 ### Evolução
 
@@ -543,6 +629,7 @@ O nível máximo é 200. Depois do nível 150, o ganho por nível cai para 25% d
 
 - **Tetos:** a Era 1 vai até o nível 50 e usa as rotas 1 a 3 de cada bioma. A Era 2 vai até o 100 e libera as rotas 4 e 5. A Era 3 vai até o 150 e libera a rota 6. A Era 4 (200) entra quando houver biomas para ela. Assim o teto de cada Era coincide com o topo de uma rota.
 - **Era 3:** vai até o nível 150 e libera a rota 6, que só os biomas da Era 3 têm (seção 4). Como o teto é 150, o limite suave não pesa na Era 3; a pendência do nível 150 ao 200 fica para a Era 4.
+- **Era 4 [proposta]:** vai até o nível 200 e libera a rota 7, que só os biomas da Era 4 têm. É a última Era: no nível 200 não há reset.
 - **Sem nível próprio do Treinador:** a Era fecha quando a criatura ativa chega ao teto. Nenhuma criatura passa do teto da Era atual.
 - **Reset:** a criatura ativa volta ao nível 1 com os mesmos genes; as rotas liberadas voltam à rota 1 e os contadores de chefe zeram. Ficam ouro, itens, matrizes, equipamentos e a Forja. O Treinador ganha a marca da Era.
 - **Reserva:** mantém o nível. Uma criatura que ainda não passou pelo reset da Era atual, ao ser ativada, volta ao nível 1. As que nascem ou são capturadas na Era atual já contam como passadas.
@@ -699,8 +786,9 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F9 · Evolução | Linhas de 2 e 3 formas, multiplicador por forma e formas dos iniciais | Uma criatura evolui ao chegar ao nível 75 na Era 2 |
 | F10 · Era 2 | Biomas Encosta Rubra, Chapada Trovão, Pântano Amargo e Bosque Sem Lua, 24 espécies e o nome Monstros | Um monstro chega ao nível 100 na Era 2 caçando nos biomas novos |
 | F11 · Era 3 | Rota 6, biomas Cume dos Ventos, Veio Cristalino, Lagoa Velada e Planalto da Alvorada, 28 espécies e 6 técnicas | Um monstro chega ao nível 150 na Era 3 caçando nos biomas novos |
+| F12 · Era 4 **[proposta]** | Rota 7, biomas Planície Gelada, Ruínas de Ferro, Desfiladeiro do Eco e Cratera Estelar, 32 espécies e 5 técnicas | Um monstro chega ao nível 200 na Era 4 caçando nos biomas novos |
 
 ## 17. Pendências
 
-1. Biomas, espécies e valores base da Era 4 (teto 200), com os tipos Geada, Liga, Eco e Astro, e se há mais Eras depois dela. A Era 3 está na seção 4.
-2. Diferença entre os níveis 150 e 200 no limite suave (seção 7).
+1. Se há conteúdo de nível depois da Era 4. A Era 4 está em proposta na seção 4.
+2. Diferença entre os níveis 150 e 200 no limite suave (seção 7). Há proposta na seção 7.
