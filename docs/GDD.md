@@ -550,6 +550,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F6 · Lançamento solo | Biomas da Era 1, arte provisória e balanceamento | Versão de navegador publicada |
 | F7 · Pós-lançamento | Save na nuvem e arte final | Progresso mantido entre dispositivos |
 | F8 · Robustez | Uma aba por vez, tela de erro com o save, exportar e importar o save em arquivo, workflow atualizado | Duas abas abertas não corrompem o save e um save quebrado não deixa a tela em branco |
+| F9 · Evolução | Linhas de 2 e 3 formas, multiplicador por forma e formas dos iniciais | Uma criatura evolui ao chegar ao nível 75 na Era 2 |
 
 ## 17. Pendências
 
