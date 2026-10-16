@@ -748,6 +748,36 @@ Técnicas exclusivas do Despertar, uma por tipo, todas com poder 100 e recarga d
 | Bruma | Véu Cinzento | especial |
 | Astro | Chuva Cósmica | física |
 
+### Ilhas Lendárias no F14 [proposta]
+
+- **Chave da Ilha:** cada abate na rota 5 de qualquer bioma tem 0,05% de chance de render 1 Chave. Com 600 a 1.000 abates por hora, sai uma Chave a cada 2 a 3 horas de caçada na rota 5.
+- **Quando abrem:** na Era 4. Entrar gasta 1 Chave, mesmo se a criatura perder no primeiro andar.
+- **Quatro ilhas**, uma por tipo da Era 4, com 10 andares de um guardião cada:
+
+| Ilha | Andares 1 a 3 | 4 a 6 | 7 a 9 | Andar 10 |
+| --- | --- | --- | --- | --- |
+| Ilha da Geada | Friagem | Geadouro | Invernal | Permafrio |
+| Ilha do Ferro | Parafusão | Sentinela | Blindarca | Colosferro |
+| Ilha do Eco | Ecoante | Trovoz | Retumbo | Sonarca |
+| Ilha da Estrela | Estelado | Nebulim | Constelar | Eclipsor |
+
+- **Guardião:** o do andar n tem nível 150 + 5n (155 a 200), raridade épica, e lendária no andar 10. Vida ×4, Ataque e Foco ÷2.
+- **Como se joga:** a criatura ativa enfrenta os andares em sequência, na hora, sem passar tempo de jogo. A Vida não volta entre andares; os Tônicos de Cura do inventário são usados pelo gatilho de sempre. Perder expulsa da ilha, sem perda de XP e sem Fadiga. Os guardiões não dão XP nem podem ser capturados. A luta em andamento na caçada acaba, e a criatura volta para ela com a vida cheia.
+- **Prêmios:** 30 Fragmentos por andar vencido, ficando com o que já ganhou se perder. Vencer o andar 10 dá uma matriz da espécie do guardião final, lendária, com 10% de chance de ser mítica.
+
+Simulação de 200 entradas por caso, criatura no nível 200, com até 5 Tônicos de Cura (chance de vencer os 10 andares / andares vencidos em média; "D" = desperta):
+
+| Ilha | Glaciarca épica | Couraçor épico | Estrondor épico | Glaciarca épica D | Couraçor épico D | Estrondor épico D | Glaciarca lendária D | Couraçor lendário D | Estrondor lendário D |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Geada | 0% / 3,5 | 21% / 8,7 | 0% / 6,1 | 0% / 6,7 | 100% / 10 | 58% / 9,5 | 100% / 10 | 100% / 10 | 100% / 10 |
+| Ferro | 0% / 3,5 | 0% / 3,3 | 0% / 9,0 | 0% / 6,8 | 0% / 5,7 | 94% / 9,9 | 99% / 10 | 96% / 10 | 100% / 10 |
+| Eco | 0% / 6,4 | 0% / 2,7 | 1% / 7,9 | 96% / 9,9 | 0% / 4,9 | 99% / 10 | 100% / 10 | 96% / 9,9 | 100% / 10 |
+| Estrela | 0% / 1,6 | 0% / 3,7 | 0% / 1,2 | 0% / 4,2 | 0% / 6,6 | 0% / 1,9 | 0% / 8,3 | 100% / 10 | 0% / 5,9 |
+
+- Sem Despertar, a criatura épica quase nunca chega ao fim, mas costuma vencer de 3 a 9 andares e leva Fragmentos. Desperta e com o tipo certo, termina; lendária e desperta, termina quase todas.
+- A Ilha da Estrela é a mais difícil para os iniciais: Astro vence Geada, Rocha e Eco e é imune a Eco. Ela pede um monstro de Fera ou Bruma, que vencem Astro.
+- Testado também: Vida ×3 sem dividir o dano deixa quase todas as ilhas impossíveis; dividir o dano por 4, como nas rotas, deixa quase todas fáceis demais.
+
 ## 12. Fase online (depois do lançamento solo)
 
 Ficam para a fase 2, com servidor e regras próprias:
@@ -824,6 +854,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F11 · Era 3 | Rota 6, biomas Cume dos Ventos, Veio Cristalino, Lagoa Velada e Planalto da Alvorada, 28 espécies e 6 técnicas | Um monstro chega ao nível 150 na Era 3 caçando nos biomas novos |
 | F12 · Era 4 | Rota 7, biomas Planície Gelada, Ruínas de Ferro, Desfiladeiro do Eco e Cratera Estelar, 32 espécies e 5 técnicas | Um monstro chega ao nível 200 na Era 4 caçando nos biomas novos |
 | F13 · Despertar | Mina com Fragmentos, Essências nas rotas 5 a 7 e Despertar com técnica exclusiva por tipo | Uma criatura desperta e caça com a técnica exclusiva |
+| F14 · Ilhas Lendárias **[proposta]** | Chaves na rota 5, quatro ilhas de 10 andares, Fragmentos por andar e matriz lendária ou mítica no fim | Uma criatura vence o andar 10 de uma ilha |
 
 ## 17. Pendências
 
