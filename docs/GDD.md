@@ -686,6 +686,13 @@ As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a 
 - A criatura no posto continua na reserva, mas não pode ser a ativa nem cruzar enquanto trabalha. Sair do posto é livre.
 - O ouro produzido entra direto no inventário.
 
+### Mina no F13 [proposta]
+
+- A Mina entra com o Despertar, que é o primeiro uso dos Fragmentos. A Pesca continua esperando um uso para os materiais aquáticos.
+- 3 vagas. Cada criatura produz 10 Fragmentos por hora × o multiplicador da raridade × a afinidade, também com o jogo fechado, dentro do limite de 24 horas, como a Forja.
+- **Afinidade:** +25% com Rocha, Cristal ou Liga; −50% com um tipo que vence um deles (Maré, Brota, Astro, Penumbra, Faísca e Eco), pela mesma regra da Forja.
+- Uma criatura trabalha num posto por vez. Com 3 criaturas raras de afinidade certa, a Mina rende cerca de 49 Fragmentos por hora, e os 300 de um Despertar saem em cerca de 6 horas; com 3 incomuns sem afinidade, em cerca de 9 horas.
+
 ## 10. Cruzamento
 
 1. Os dois pais pagam uma taxa de ouro ou Diamantes e deixam a conta para sempre (sacrifício).
@@ -711,6 +718,35 @@ O documento original listava seis sistemas de transformação que reproduziam os
 
 - **Despertar:** com fragmentos da Mina e materiais do bioma, a criatura desperta uma vez. Ganha um visual novo, uma técnica exclusiva e +15% nos atributos. Um Despertar por criatura.
 - **Ilhas Lendárias:** masmorras solo que pedem chaves raras da rota 5. Perder expulsa da ilha; chegar ao último andar dá matrizes de raridade lendária e mítica.
+
+### Despertar no F13 [proposta]
+
+- **Quem desperta:** a criatura ativa ou da reserva com nível 150 ou mais, fora de posto de trabalho. Uma vez por criatura. Na prática, no teto da Era 3 ou na Era 4.
+- **Custo:** 300 Fragmentos da Mina e 10 Essências do primeiro tipo da espécie. Um Glaciarca (Geada, Brisa) usa Essência de Geada.
+- **Essências:** cada bioma deixa cair a Essência do tipo dele. Cada abate nas rotas 5, 6 e 7 tem 0,2% de chance de render 1 Essência; o chefe não tem chance extra. Na simulação, uma criatura de genes épicos a lendários faz de 460 a 1.500 abates por hora nessas rotas, o que dá de 1 a 3 Essências por hora e de 4 a 10 horas para juntar 10.
+- **Efeito:** ×1,15 em todos os atributos, somado aos multiplicadores de forma e prismático; uma técnica exclusiva do primeiro tipo da espécie, que entra em primeiro lugar na fila e tira a última se a fila tiver 4; e uma moldura dourada no retrato provisório.
+- **Permanência:** o Despertar fica com a criatura no reset de Era e na evolução; a técnica exclusiva segue o primeiro tipo da forma atual. O filhote de cruzamento não herda o Despertar.
+
+Técnicas exclusivas do Despertar, uma por tipo, todas com poder 100 e recarga de 9 s:
+
+| Tipo | Técnica | Categoria |
+| --- | --- | --- |
+| Chama | Coração de Brasa | especial |
+| Maré | Ressaca Funda | especial |
+| Brota | Floresta Viva | especial |
+| Rocha | Falha Sísmica | física |
+| Brisa | Olho do Furacão | especial |
+| Geada | Coração de Gelo | especial |
+| Faísca | Corrente Viva | especial |
+| Liga | Bigorna | física |
+| Peçonha | Praga | especial |
+| Penumbra | Breu Total | especial |
+| Aurora | Amanhecer | especial |
+| Eco | Eco Ancestral | especial |
+| Cristal | Lâmina de Quartzo | física |
+| Fera | Estouro da Manada | física |
+| Bruma | Véu Cinzento | especial |
+| Astro | Chuva Cósmica | física |
 
 ## 12. Fase online (depois do lançamento solo)
 
@@ -787,6 +823,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F10 · Era 2 | Biomas Encosta Rubra, Chapada Trovão, Pântano Amargo e Bosque Sem Lua, 24 espécies e o nome Monstros | Um monstro chega ao nível 100 na Era 2 caçando nos biomas novos |
 | F11 · Era 3 | Rota 6, biomas Cume dos Ventos, Veio Cristalino, Lagoa Velada e Planalto da Alvorada, 28 espécies e 6 técnicas | Um monstro chega ao nível 150 na Era 3 caçando nos biomas novos |
 | F12 · Era 4 | Rota 7, biomas Planície Gelada, Ruínas de Ferro, Desfiladeiro do Eco e Cratera Estelar, 32 espécies e 5 técnicas | Um monstro chega ao nível 200 na Era 4 caçando nos biomas novos |
+| F13 · Despertar **[proposta]** | Mina com Fragmentos, Essências nas rotas 5 a 7 e Despertar com técnica exclusiva por tipo | Uma criatura desperta e caça com a técnica exclusiva |
 
 ## 17. Pendências
 
