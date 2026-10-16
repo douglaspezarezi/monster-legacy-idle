@@ -7,15 +7,15 @@ import { BIOMAS } from './biomas.ts'
 import { ERAS } from './eras.ts'
 import { ESPECIES } from './especies.ts'
 import { LINHAGENS } from './linhagens.ts'
-import { FORJA } from './postos.ts'
+import { FORJA, MINA } from './postos.ts'
 import { ROTAS } from './rotas.ts'
-import { TECNICAS } from './tecnicas.ts'
+import { TECNICAS, TECNICAS_DO_DESPERTAR } from './tecnicas.ts'
 import type { Tipo } from './tipos.ts'
 import { DADOS_DOS_TIPOS } from './tipos.ts'
 
 export const INTERVALO_ENTRE_SELVAGENS_MS = 1000
 
-export const CATALOGO: Catalogo<Tipo> = { especies: porNome(ESPECIES), tecnicas: porNome(TECNICAS) }
+export const CATALOGO: Catalogo<Tipo> = { especies: porNome(ESPECIES), tecnicas: porNome(TECNICAS), tecnicasDoDespertar: TECNICAS_DO_DESPERTAR }
 
 export const CONFIGURACAO: ConfiguracaoDoJogo<Tipo> = {
   tabela: criarTabelaDeTipos(DADOS_DOS_TIPOS),
@@ -25,5 +25,6 @@ export const CONFIGURACAO: ConfiguracaoDoJogo<Tipo> = {
   intervaloEntreSelvagensMs: INTERVALO_ENTRE_SELVAGENS_MS,
   eras: ERAS,
   forja: FORJA,
+  mina: MINA,
   linhagens: LINHAGENS,
 }

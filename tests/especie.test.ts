@@ -3,7 +3,7 @@ import { ESPECIES } from '../src/conteudo/especies.ts'
 import { TECNICAS } from '../src/conteudo/tecnicas.ts'
 import { especieDo, porNome, somaDasBases, tecnicasDa } from '../src/engine/especie.ts'
 
-const catalogo = { especies: porNome(ESPECIES), tecnicas: porNome(TECNICAS) }
+const catalogo = { especies: porNome(ESPECIES), tecnicas: porNome(TECNICAS), tecnicasDoDespertar: {} }
 
 describe('catálogo de espécies', () => {
   it('acha a espécie e as técnicas na ordem de prioridade', () => {

@@ -36,6 +36,7 @@ export type Volta = {
   readonly creditadoMs: number
   readonly resumo: Resumo
   readonly ouroDaForja: number
+  readonly fragmentosDaMina: number
 }
 
 // O comando recebe o estado, o instante simulado e o gerador da sessão.
@@ -54,7 +55,7 @@ function carregar(texto: string, agora: number, gerador: Gerador): { readonly se
   const fora = creditarTempoFora(CONFIGURACAO, save.estado, save.salvoEm, agora, gerador)
   const volta =
     fora.creditadoMs >= MINIMO_PARA_RESUMO_MS
-      ? { foraMs: agora - save.salvoEm, creditadoMs: fora.creditadoMs, resumo: resumir(fora.eventos), ouroDaForja: fora.ouroDaForja }
+      ? { foraMs: agora - save.salvoEm, creditadoMs: fora.creditadoMs, resumo: resumir(fora.eventos), ouroDaForja: fora.ouroDaForja, fragmentosDaMina: fora.fragmentosDaMina }
       : null
   return { sessao: { estado: fora.estado, agora, registros: [] }, volta }
 }

@@ -24,6 +24,8 @@ export function ResumoDaVolta({ volta, aoFechar }: Props) {
         <dd>{resumo.ouro}</dd>
         <dt>Ouro da Forja</dt>
         <dd>{volta.ouroDaForja}</dd>
+        <dt>Fragmentos da Mina</dt>
+        <dd>{volta.fragmentosDaMina}</dd>
         <dt>Capturas</dt>
         <dd>{resumo.capturas}</dd>
         <dt>Matrizes</dt>
@@ -32,6 +34,8 @@ export function ResumoDaVolta({ volta, aoFechar }: Props) {
         <dd>{resumo.derrotas}</dd>
         <dt>Equipamentos</dt>
         <dd>{resumo.equipamentos}</dd>
+        <dt>Essências</dt>
+        <dd>{resumo.essencias}</dd>
       </dl>
       <button onClick={aoFechar}>Continuar</button>
     </section>

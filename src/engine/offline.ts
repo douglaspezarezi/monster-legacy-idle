@@ -33,6 +33,7 @@ export type TempoFora<Tipo extends string> = {
   readonly estado: EstadoDoJogo<Tipo>
   readonly eventos: readonly Evento[]
   readonly ouroDaForja: number
+  readonly fragmentosDaMina: number
   readonly creditadoMs: number
 }
 
@@ -45,7 +46,7 @@ export function creditarTempoFora<Tipo extends string>(
   gerador: Gerador,
 ): TempoFora<Tipo> {
   const fora = agora - salvoEm
-  if (fora <= 0) return { estado, eventos: [], ouroDaForja: 0, creditadoMs: 0 }
+  if (fora <= 0) return { estado, eventos: [], ouroDaForja: 0, fragmentosDaMina: 0, creditadoMs: 0 }
   const creditadoMs = Math.min(fora, LIMITE_DO_TEMPO_FORA_MS)
   const deslocado = deslocarTempo(estado, fora - creditadoMs)
   const resultado = avancarJogo(configuracao, deslocado, agora - creditadoMs, agora, gerador)
@@ -61,10 +62,11 @@ export type Resumo = {
   readonly matrizes: number
   readonly derrotas: number
   readonly equipamentos: number
+  readonly essencias: number
 }
 
 export function resumir(eventos: readonly Evento[]): Resumo {
-  const resumo = { abates: 0, xp: 0, ouro: 0, niveis: 0, capturas: 0, matrizes: 0, derrotas: 0, equipamentos: 0 }
+  const resumo = { abates: 0, xp: 0, ouro: 0, niveis: 0, capturas: 0, matrizes: 0, derrotas: 0, equipamentos: 0, essencias: 0 }
   for (const evento of eventos) {
     if (evento.tipo === 'abate') {
       resumo.abates++
@@ -75,6 +77,7 @@ export function resumir(eventos: readonly Evento[]): Resumo {
     else if (evento.tipo === 'matriz') resumo.matrizes++
     else if (evento.tipo === 'derrota') resumo.derrotas++
     else if (evento.tipo === 'equipamento') resumo.equipamentos++
+    else if (evento.tipo === 'essencia') resumo.essencias++
   }
   return resumo
 }

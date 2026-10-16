@@ -1,10 +1,10 @@
 // Save versionado do estado do jogo (GDD, seção 5). Onde guardar o texto fica com a tela.
-import { FORJA_VAZIA } from './base.ts'
+import { FORJA_VAZIA, MINA_VAZIA } from './base.ts'
 import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 import { SEM_REPOSICAO } from './jogo.ts'
 
-export const VERSAO_DO_SAVE = 8
+export const VERSAO_DO_SAVE = 9
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
@@ -27,6 +27,12 @@ const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Re
   6: (estado) => comContadores(estado, 6),
   // A versão 8 trouxe a rota 7, do mesmo jeito.
   7: (estado) => comContadores(estado, 7),
+  // A versão 9 trouxe a Mina, os Fragmentos e as Essências, todos vazios.
+  8: (estado) => ({
+    ...estado,
+    mina: MINA_VAZIA,
+    inventario: ehObjeto(estado.inventario) ? { ...estado.inventario, fragmentos: 0, essencias: {} } : estado.inventario,
+  }),
 }
 
 // Completa com zeros os contadores de chefe do bioma atual e dos guardados até o número de rotas.

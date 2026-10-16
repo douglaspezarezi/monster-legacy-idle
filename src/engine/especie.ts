@@ -16,6 +16,8 @@ export type DadosDeEspecie<Tipo extends string> = {
 export type Catalogo<Tipo extends string> = {
   readonly especies: Readonly<Record<string, DadosDeEspecie<Tipo>>>
   readonly tecnicas: Readonly<Record<string, Tecnica<Tipo>>>
+  // Técnica exclusiva do Despertar para cada tipo.
+  readonly tecnicasDoDespertar: Readonly<Partial<Record<Tipo, string>>>
 }
 
 export function porNome<T extends { readonly nome: string }>(itens: readonly T[]): Readonly<Record<string, T>> {

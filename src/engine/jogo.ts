@@ -1,7 +1,7 @@
 // Estado do jogo no F2 e comandos do jogador (GDD, seções 4, 5, 7 e 13).
 import type { Gerador } from './aleatorio.ts'
-import type { Forja } from './base.ts'
-import { FORJA_VAZIA } from './base.ts'
+import type { Forja, Mina } from './base.ts'
+import { FORJA_VAZIA, MINA_VAZIA, trabalhando } from './base.ts'
 import type { Equipamentos } from './equipamentos.ts'
 import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
 import type { FiltroDeCaptura } from './captura.ts'
@@ -23,6 +23,10 @@ export type Inventario = {
   readonly tonicosDeCura: number
   readonly tonicosDeRetorno: number
   readonly matrizes: readonly Matriz[]
+  // Produzidos pela Mina; pagam o Despertar.
+  readonly fragmentos: number
+  // Essências por tipo, que caem nas rotas 5 a 7 do bioma do tipo.
+  readonly essencias: Readonly<Record<string, number>>
 }
 
 export type Encontro<Tipo extends string> = {
@@ -63,6 +67,7 @@ export type EstadoDoJogo<Tipo extends string> = {
   readonly encontro: Encontro<Tipo> | null
   readonly proximoSelvagemEm: number
   readonly forja: Forja
+  readonly mina: Mina
   readonly equipamentos: Equipamentos
   // Estoque mínimo de cada item que a Loja repõe sozinha; 0 desliga.
   readonly reposicao: Readonly<Record<ItemDaLoja, number>>
@@ -74,6 +79,8 @@ export const INVENTARIO_INICIAL: Inventario = {
   tonicosDeCura: 5,
   tonicosDeRetorno: 5,
   matrizes: [],
+  fragmentos: 0,
+  essencias: {},
 }
 
 export const GATILHO_DE_CURA_INICIAL = 0.3
@@ -129,6 +136,7 @@ export function novoJogo<Tipo extends string>(
     encontro: null,
     proximoSelvagemEm: agora,
     forja: FORJA_VAZIA,
+    mina: MINA_VAZIA,
     equipamentos: SEM_EQUIPAMENTOS,
     reposicao: SEM_REPOSICAO,
   }
@@ -140,7 +148,7 @@ export function vidaAtual<Tipo extends string>(estado: EstadoDoJogo<Tipo>): numb
 }
 
 // Encerra a luta em andamento sem XP e sem derrota; o próximo selvagem vem na hora.
-function semEncontro<Tipo extends string>(estado: EstadoDoJogo<Tipo>, agora: number): EstadoDoJogo<Tipo> {
+export function semEncontro<Tipo extends string>(estado: EstadoDoJogo<Tipo>, agora: number): EstadoDoJogo<Tipo> {
   return { ...estado, vidaDaAtiva: vidaAtual(estado), encontro: null, proximoSelvagemEm: agora }
 }
 
@@ -183,7 +191,7 @@ export function trocarAtiva<Tipo extends string>(
   const naReserva = estado.reserva.find((m) => m.id === id)
   if (!naReserva) throw new RangeError(`criatura fora da reserva: ${id}`)
   const entra = naReserva.era < estado.era ? { ...voltarAoNivel1(catalogo, naReserva), era: estado.era } : naReserva
-  if (estado.forja.trabalhadores.includes(id)) throw new RangeError(`criatura trabalhando na Forja: ${id}`)
+  if (trabalhando(estado, id)) throw new RangeError(`criatura num posto de trabalho: ${id}`)
   const reserva = estado.reserva.map((m) => (m.id === id ? estado.ativa : m))
   return { ...semEncontro(estado, agora), ativa: entra, reserva, vidaDaAtiva: vidaMaxima(catalogo, entra) }
 }

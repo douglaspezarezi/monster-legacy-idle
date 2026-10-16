@@ -25,7 +25,7 @@ describe('início do jogo', () => {
     expect(jogo.ativa).toMatchObject({ id: 1, especie: 'Rebitim', nivel: 1, xpNoNivel: 0, prismatica: false })
     expect(raridadeDosGenes(jogo.ativa.genes)).toBe('comum')
     expect(jogo.vidaDaAtiva).toBe(vidaMaxima(CATALOGO, jogo.ativa))
-    expect(jogo.inventario).toEqual({ ouro: 200, capsulas: 10, tonicosDeCura: 5, tonicosDeRetorno: 5, matrizes: [] })
+    expect(jogo.inventario).toEqual({ ouro: 200, capsulas: 10, tonicosDeCura: 5, tonicosDeRetorno: 5, matrizes: [], fragmentos: 0, essencias: {} })
     expect(jogo).toMatchObject({ rota: 1, rotasLiberadas: 1, gatilhoDeCura: 0.3, reserva: [], pausada: false })
   })
 })

@@ -5,13 +5,15 @@ type Props = {
   readonly especie: string
   readonly tipos: readonly Tipo[]
   readonly prismatica?: boolean
+  readonly desperta?: boolean
   readonly tamanho?: number
 }
 
-export function Retrato({ especie, tipos, prismatica = false, tamanho = 64 }: Props) {
+export function Retrato({ especie, tipos, prismatica = false, desperta = false, tamanho = 64 }: Props) {
+  const classes = ['retrato', prismatica && 'prismatico', desperta && 'desperto'].filter(Boolean).join(' ')
   return (
     <svg
-      className={prismatica ? 'retrato prismatico' : 'retrato'}
+      className={classes}
       width={tamanho}
       height={tamanho}
       viewBox={`0 0 ${LADO} ${LADO}`}

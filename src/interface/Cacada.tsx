@@ -1,17 +1,18 @@
 // Tela da caçada: desenha o estado e envia comandos ao motor.
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 import { CATALOGO, CONFIGURACAO } from '../conteudo/jogo.ts'
 import { BIOMAS } from '../conteudo/biomas.ts'
-import { colocarNaForja, ouroPorHoraDaForja, tirarDaForja } from '../engine/base.ts'
+import { colocarNaForja, colocarNaMina, fragmentosPorHoraDaMina, ouroPorHoraDaForja, tirarDaForja, tirarDaMina } from '../engine/base.ts'
 import { ABATES_PARA_O_CHEFE } from '../engine/cacada.ts'
 import { dadosDaEra, podeReiniciarEra, reiniciarEra } from '../engine/era.ts'
 import { ESPACOS_NA_RESERVA } from '../engine/captura.ts'
 import type { Combatente } from '../engine/combate.ts'
 import type { Criatura } from '../engine/criatura.ts'
+import { ESSENCIAS_DO_DESPERTAR, FRAGMENTOS_DO_DESPERTAR, NIVEL_DO_DESPERTAR, despertar, impedimentoDoDespertar, tipoDaEssencia } from '../engine/despertar.ts'
 import { especieDo } from '../engine/especie.ts'
 import type { Raridade } from '../engine/genes.ts'
 import { FAIXAS_DE_RARIDADE, raridadeDosGenes } from '../engine/genes.ts'
-import type { ItemDaLoja, Membro } from '../engine/jogo.ts'
+import type { EstadoDoJogo, ItemDaLoja, Membro } from '../engine/jogo.ts'
 import {
   PRECOS,
   abrirMatrizDoInventario,
@@ -41,7 +42,25 @@ const ITENS: readonly ItemDaLoja[] = ['capsula', 'tonicoDeCura', 'tonicoDeRetorn
 
 function rotuloDaCriatura(criatura: Criatura): string {
   const raridade = NOME_DA_RARIDADE[raridadeDosGenes(criatura.genes)]
-  return `${criatura.especie} ${raridade}${criatura.prismatica ? ' prismática' : ''}`
+  return `${criatura.especie} ${raridade}${criatura.prismatica ? ' prismática' : ''}${criatura.despertada ? ' desperta' : ''}`
+}
+
+// Só aparece para quem chegou ao nível do Despertar e ainda não despertou; o título diz o que falta.
+type PropsDoDespertar = { readonly estado: EstadoDoJogo<Tipo>; readonly membro: Membro; readonly executar: (comando: Comando) => void }
+
+function BotaoDeDespertar({ estado, membro, executar }: PropsDoDespertar) {
+  if (membro.despertada || membro.nivel < NIVEL_DO_DESPERTAR) return null
+  const impedimento = impedimentoDoDespertar(CATALOGO, estado, membro.id)
+  const tipo = tipoDaEssencia(CATALOGO, membro.especie)
+  return (
+    <button
+      disabled={impedimento !== null}
+      title={impedimento ?? `Gasta ${FRAGMENTOS_DO_DESPERTAR} Fragmentos e ${ESSENCIAS_DO_DESPERTAR} Essências de ${tipo}`}
+      onClick={() => executar((e, t) => despertar(CATALOGO, e, membro.id, t))}
+    >
+      Despertar
+    </button>
+  )
 }
 
 function Barra({ valor, maximo, classe }: { readonly valor: number; readonly maximo: number; readonly classe: string }) {
@@ -59,7 +78,7 @@ function Barra({ valor, maximo, classe }: { readonly valor: number; readonly max
 function Lutador({ titulo, criatura, combatente }: { readonly titulo: string; readonly criatura: Criatura; readonly combatente: Combatente<Tipo> }) {
   return (
     <div className="lutador">
-      <Retrato especie={criatura.especie} tipos={combatente.tipos} prismatica={criatura.prismatica} />
+      <Retrato especie={criatura.especie} tipos={combatente.tipos} prismatica={criatura.prismatica} desperta={criatura.despertada} />
       <small>{titulo}</small>
       <strong>
         {rotuloDaCriatura(criatura)} · nível {criatura.nivel}
@@ -82,9 +101,13 @@ export function Cacada({ sessao, executar }: Props) {
   const especiesDoFiltro = [...new Set([...bioma.especiesPorRota.flat(), ...estado.filtroDeCaptura.especies])]
   const [selecionados, setSelecionados] = useState<readonly number[]>([])
   const naForja = (id: number) => estado.forja.trabalhadores.includes(id)
+  const naMina = (id: number) => estado.mina.trabalhadores.includes(id)
+  const ocupada = (id: number) => naForja(id) || naMina(id)
   // Some da seleção quem saiu da reserva ou foi trabalhar.
-  const pais = selecionados.flatMap((id) => estado.reserva.filter((m) => m.id === id && !naForja(id)))
+  const pais = selecionados.flatMap((id) => estado.reserva.filter((m) => m.id === id && !ocupada(id)))
   const forjaCheia = estado.forja.trabalhadores.length >= CONFIGURACAO.forja.vagas
+  const minaCheia = estado.mina.trabalhadores.length >= CONFIGURACAO.mina.vagas
+  const essencias = Object.entries(inventario.essencias).filter(([, quantidade]) => quantidade > 0)
 
   function alternarPai(membro: Membro) {
     setSelecionados(pais.some((p) => p.id === membro.id) ? pais.filter((p) => p.id !== membro.id).map((p) => p.id) : [...pais.map((p) => p.id), membro.id].slice(-2))
@@ -104,7 +127,7 @@ export function Cacada({ sessao, executar }: Props) {
         {podeReiniciarEra(CONFIGURACAO.eras, estado) && (
           <p className="aviso">
             {ativa.especie} chegou ao nível {era.teto}, o teto da Era {estado.era}. Reiniciar a Era leva o monstro ativo ao nível 1, com os
-            mesmos genes, e libera a Era {estado.era + 1}. Ouro, itens, reserva, equipamentos e Forja ficam.{' '}
+            mesmos genes, e libera a Era {estado.era + 1}. Ouro, itens, reserva, equipamentos, Forja, Mina e Despertar ficam.{' '}
             <button onClick={() => executar((e, t) => reiniciarEra(CONFIGURACAO, e, t))}>Reiniciar a Era</button>
           </p>
         )}
@@ -117,7 +140,7 @@ export function Cacada({ sessao, executar }: Props) {
         )}
         <div className="lutadores">
           <div className="lutador">
-            <Retrato especie={ativa.especie} tipos={especieDo(CATALOGO, ativa.especie).tipos} prismatica={ativa.prismatica} />
+            <Retrato especie={ativa.especie} tipos={especieDo(CATALOGO, ativa.especie).tipos} prismatica={ativa.prismatica} desperta={ativa.despertada} />
             <small>Seu monstro</small>
             <strong>
               {rotuloDaCriatura(ativa)} · nível {ativa.nivel} de {era.teto}
@@ -125,6 +148,7 @@ export function Cacada({ sessao, executar }: Props) {
             <span className="tipos">{especieDo(CATALOGO, ativa.especie).tipos.join(' / ')}</span>
             <Barra valor={vidaAtual(estado)} maximo={maximaDaAtiva} classe="vida" />
             <Barra valor={ativa.xpNoNivel} maximo={xpParaSubir(ativa.nivel)} classe="xp" />
+            <BotaoDeDespertar estado={estado} membro={ativa} executar={executar} />
           </div>
           {encontro ? (
             <Lutador titulo={encontro.chefe ? 'Chefe' : 'Selvagem'} criatura={encontro.selvagem} combatente={encontro.luta.selvagem} />
@@ -195,6 +219,14 @@ export function Cacada({ sessao, executar }: Props) {
           <dd>{inventario.tonicosDeCura}</dd>
           <dt>Tônicos de Retorno</dt>
           <dd>{inventario.tonicosDeRetorno}</dd>
+          <dt>Fragmentos</dt>
+          <dd>{inventario.fragmentos}</dd>
+          {essencias.map(([tipo, quantidade]) => (
+            <Fragment key={tipo}>
+              <dt>Essências de {tipo}</dt>
+              <dd>{quantidade}</dd>
+            </Fragment>
+          ))}
         </dl>
         <h4>Loja da Cidade</h4>
         <p className="dica">Em “mín.”, a Loja repõe sozinha até esse estoque, também com o jogo fechado.</p>
@@ -313,26 +345,41 @@ export function Cacada({ sessao, executar }: Props) {
           <ul className="lista">
             {estado.reserva.map((membro) => (
               <li key={membro.id} className={pais.some((p) => p.id === membro.id) ? 'selecionado' : ''}>
-                <Retrato especie={membro.especie} tipos={especieDo(CATALOGO, membro.especie).tipos} prismatica={membro.prismatica} tamanho={32} />
+                <Retrato
+                  especie={membro.especie}
+                  tipos={especieDo(CATALOGO, membro.especie).tipos}
+                  prismatica={membro.prismatica}
+                  desperta={membro.despertada}
+                  tamanho={32}
+                />
                 <div className="membro">
                   <span>
                     {rotuloDaCriatura(membro)} · nível {membro.nivel}
                     {naForja(membro.id) && ' · na Forja'}
+                    {naMina(membro.id) && ' · na Mina'}
                   </span>
                   <small>{descreverGenes(membro.genes)}</small>
                 </div>
                 <div className="acoes">
-                  <button disabled={naForja(membro.id)} onClick={() => executar((e, t) => trocarAtiva(e, CATALOGO, membro.id, t))}>
+                  <button disabled={ocupada(membro.id)} onClick={() => executar((e, t) => trocarAtiva(e, CATALOGO, membro.id, t))}>
                     Ativar
                   </button>
                   {naForja(membro.id) ? (
                     <button onClick={() => executar((e) => tirarDaForja(e, membro.id))}>Sair da Forja</button>
+                  ) : naMina(membro.id) ? (
+                    <button onClick={() => executar((e) => tirarDaMina(e, membro.id))}>Sair da Mina</button>
                   ) : (
-                    <button disabled={forjaCheia} onClick={() => executar((e) => colocarNaForja(CONFIGURACAO, e, membro.id))}>
-                      Forja
-                    </button>
+                    <>
+                      <button disabled={forjaCheia} onClick={() => executar((e) => colocarNaForja(CONFIGURACAO, e, membro.id))}>
+                        Forja
+                      </button>
+                      <button disabled={minaCheia} onClick={() => executar((e) => colocarNaMina(CONFIGURACAO, e, membro.id))}>
+                        Mina
+                      </button>
+                    </>
                   )}
-                  <button disabled={naForja(membro.id)} onClick={() => alternarPai(membro)}>
+                  <BotaoDeDespertar estado={estado} membro={membro} executar={executar} />
+                  <button disabled={ocupada(membro.id)} onClick={() => alternarPai(membro)}>
                     {pais.some((p) => p.id === membro.id) ? 'Desmarcar' : 'Cruzar'}
                   </button>
                 </div>
@@ -349,6 +396,14 @@ export function Cacada({ sessao, executar }: Props) {
         <p>
           Produz {Math.floor(ouroPorHoraDaForja(CONFIGURACAO, estado))} de ouro por hora, também com o jogo fechado. Tipos Chama e Faísca
           rendem +25%; Maré, Rocha e Bruma, −50%.
+        </p>
+        <h3>
+          Mina ({estado.mina.trabalhadores.length}/{CONFIGURACAO.mina.vagas})
+        </h3>
+        <p>
+          Produz {Math.floor(fragmentosPorHoraDaMina(CONFIGURACAO, estado))} Fragmentos por hora, também com o jogo fechado. Tipos Rocha,
+          Cristal e Liga rendem +25%; Maré, Brota, Astro, Penumbra, Faísca e Eco, −50%. O Despertar, a partir do nível {NIVEL_DO_DESPERTAR}, gasta{' '}
+          {FRAGMENTOS_DO_DESPERTAR} Fragmentos e {ESSENCIAS_DO_DESPERTAR} Essências do primeiro tipo do monstro, que caem nas rotas 5 a 7.
         </p>
         <h3>Cruzamento</h3>
         {pais.length === 2 ? (

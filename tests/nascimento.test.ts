@@ -18,7 +18,7 @@ import {
   sortearRaridadeDoSelvagem,
 } from '../src/engine/nascimento.ts'
 
-const catalogo = { especies: porNome(ESPECIES), tecnicas: porNome(TECNICAS) }
+const catalogo = { especies: porNome(ESPECIES), tecnicas: porNome(TECNICAS), tecnicasDoDespertar: {} }
 
 describe('nascimento de criaturas', () => {
   it('as chances de raridade do selvagem somam 100%', () => {

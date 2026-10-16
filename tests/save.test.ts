@@ -59,6 +59,14 @@ describe('save', () => {
     expect(save.estado).toEqual(atual)
   })
 
+  it('migra o save da versão 8: Mina vazia, sem Fragmentos nem Essências', () => {
+    const atual = jogoCom(membro('Gelusco', 3, 5))
+    const { mina: _, ...semMina } = atual
+    const { fragmentos: __, essencias: ___, ...inventario } = atual.inventario
+    const save = desserializar<Tipo>(JSON.stringify({ versao: 8, salvoEm: 10, estado: { ...semMina, inventario } }), MODELO)
+    expect(save.estado).toEqual(atual)
+  })
+
   it('recusa save da versão atual com campo faltando', () => {
     const { bioma: _, ...semBioma } = jogoCom(membro('Gelusco', 3, 5))
     const texto = JSON.stringify({ versao: VERSAO_DO_SAVE, salvoEm: 0, estado: semBioma })

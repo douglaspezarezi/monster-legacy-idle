@@ -33,7 +33,7 @@ describe('tempo fora do jogo', () => {
 
   it('sem tempo fora não muda nada', () => {
     const estado = jogoCom(forte)
-    expect(creditarTempoFora(CONFIGURACAO, estado, 1000, 1000, criarGerador(1))).toEqual({ estado, eventos: [], ouroDaForja: 0, creditadoMs: 0 })
+    expect(creditarTempoFora(CONFIGURACAO, estado, 1000, 1000, criarGerador(1))).toEqual({ estado, eventos: [], ouroDaForja: 0, fragmentosDaMina: 0, creditadoMs: 0 })
     expect(creditarTempoFora(CONFIGURACAO, estado, 1000, 500, criarGerador(1)).creditadoMs).toBe(0)
   })
 
@@ -68,6 +68,6 @@ describe('resumo da volta', () => {
       { tipo: 'derrota', instante: 4, especie: 'Brotelho', chefe: true, pausou: false },
       { tipo: 'equipamento', instante: 5, equipamento: { espaco: 'cinto', raridade: 'comum' } },
     ]
-    expect(resumir(eventos)).toEqual({ abates: 2, xp: 20, ouro: 10, niveis: 1, capturas: 1, matrizes: 1, derrotas: 1, equipamentos: 1 })
+    expect(resumir(eventos)).toEqual({ abates: 2, xp: 20, ouro: 10, niveis: 1, capturas: 1, matrizes: 1, derrotas: 1, equipamentos: 1, essencias: 0 })
   })
 })

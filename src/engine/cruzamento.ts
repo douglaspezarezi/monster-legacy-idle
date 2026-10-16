@@ -9,6 +9,7 @@ import type { Catalogo } from './especie.ts'
 import { primeiraForma } from './evolucao.ts'
 import { CHANCE_PRISMATICA } from './nascimento.ts'
 import { reduzir } from './equipamentos.ts'
+import { trabalhando } from './base.ts'
 
 export const TAXA_DE_CRUZAMENTO = 300
 export const GENES_HERDADOS = 3
@@ -70,7 +71,7 @@ export function cruzar<Tipo extends string>(
   const a = estado.reserva.find((m) => m.id === paiA)
   const b = estado.reserva.find((m) => m.id === paiB)
   if (!a || !b) throw new RangeError('os pais precisam estar na reserva')
-  if (estado.forja.trabalhadores.includes(paiA) || estado.forja.trabalhadores.includes(paiB)) {
+  if (trabalhando(estado, paiA) || trabalhando(estado, paiB)) {
     throw new RangeError('criatura trabalhando não cruza')
   }
   if (!mesmaLinhagem(linhagens, a.especie, b.especie)) throw new RangeError(`linhagens diferentes: ${a.especie} e ${b.especie}`)

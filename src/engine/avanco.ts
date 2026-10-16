@@ -14,9 +14,10 @@ export type Avanco<Tipo extends string> = {
   readonly estado: EstadoDoJogo<Tipo>
   readonly eventos: readonly Evento[]
   readonly ouroDaForja: number
+  readonly fragmentosDaMina: number
 }
 
-// A Forja produz mesmo com a caçada pausada.
+// A Forja e a Mina produzem mesmo com a caçada pausada.
 export function avancarJogo<Tipo extends string>(
   configuracao: ConfiguracaoDoJogo<Tipo>,
   estado: EstadoDoJogo<Tipo>,
@@ -26,5 +27,5 @@ export function avancarJogo<Tipo extends string>(
 ): Avanco<Tipo> {
   const base = produzir(configuracao, estado, inicio, fim)
   const cacada = simularCacada(configuracao, base.estado, inicio, fim, gerador)
-  return { ...cacada, ouroDaForja: base.ouro }
+  return { ...cacada, ouroDaForja: base.ouro, fragmentosDaMina: base.fragmentos }
 }

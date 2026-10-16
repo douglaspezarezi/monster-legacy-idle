@@ -290,6 +290,13 @@ dd {
   filter: hue-rotate(160deg) saturate(1.4);
 }
 
+/* Moldura dourada do Despertar. */
+.retrato.desperto {
+  outline: 2px solid var(--aviso);
+  outline-offset: 1px;
+  border-radius: 2px;
+}
+
 .membro {
   flex: 1;
 }

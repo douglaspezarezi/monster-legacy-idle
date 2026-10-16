@@ -27,6 +27,8 @@ export type DadosDeRota = {
   readonly multiplicadorDeVida: number
   readonly quedaDeMatriz: { readonly chance: number; readonly raridade: Raridade }
   readonly raridadeDoEquipamento: Raridade
+  // Chance de cada abate render 1 Essência do tipo do bioma; 0 nas rotas sem Essência.
+  readonly chanceDeEssencia: number
 }
 
 export const ABATES_PARA_O_CHEFE = 100
@@ -58,6 +60,7 @@ export type Evento =
   | { readonly tipo: 'captura'; readonly instante: number; readonly especie: string; readonly raridade: Raridade; readonly sucesso: boolean }
   | { readonly tipo: 'rota-liberada'; readonly instante: number; readonly bioma: string; readonly rota: number }
   | { readonly tipo: 'equipamento'; readonly instante: number; readonly equipamento: Equipamento }
+  | { readonly tipo: 'essencia'; readonly instante: number; readonly tipoDaEssencia: string }
   | { readonly tipo: 'evolucao'; readonly instante: number; readonly de: string; readonly para: string }
 
 export type ResultadoDaCacada<Tipo extends string> = {
@@ -117,6 +120,13 @@ function vencer<Tipo extends string>(
     const matriz = { especie: encontro.selvagem.especie, raridade: rota.quedaDeMatriz.raridade }
     inventario = { ...inventario, matrizes: [...inventario.matrizes, matriz] }
     eventos.push({ tipo: 'matriz', instante: agora, matriz })
+  }
+
+  // Só sorteia nas rotas com Essência, para não mudar a sequência do gerador nas outras.
+  if (rota.chanceDeEssencia > 0 && gerador() < rota.chanceDeEssencia) {
+    const tipo = configuracao.biomas[estado.bioma].tipo
+    inventario = { ...inventario, essencias: { ...inventario.essencias, [tipo]: (inventario.essencias[tipo] ?? 0) + 1 } }
+    eventos.push({ tipo: 'essencia', instante: agora, tipoDaEssencia: tipo })
   }
 
   // O chefe não pode ser capturado; com a reserva cheia ou sem Cápsula, nada é tentado.

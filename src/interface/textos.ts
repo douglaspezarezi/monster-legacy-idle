@@ -61,6 +61,8 @@ export function descreverEvento(evento: Evento): string {
       return `O chefe deixou um equipamento: ${NOME_DO_ESPACO[evento.equipamento.espaco]} ${NOME_DA_RARIDADE[evento.equipamento.raridade]}`
     case 'evolucao':
       return `${evento.de} evoluiu para ${evento.para}!`
+    case 'essencia':
+      return `Caiu uma Essência de ${evento.tipoDaEssencia}`
   }
 }
 
