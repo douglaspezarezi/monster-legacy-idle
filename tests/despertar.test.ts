@@ -58,6 +58,17 @@ describe('Despertar', () => {
     expect(depois.tecnicas.map((t) => t.nome)).toEqual(['Coração de Gelo', 'Avalanche', 'Sopro Frio', 'Lasca Gélida'])
   })
 
+  it('a criatura desperta caça mais rápido com a técnica exclusiva', () => {
+    // Planície Gelada, rota 7, por 1 hora: Coração de Gelo no topo da fila e atributos ×1,15.
+    const abates = (estado: EstadoDoJogo<Tipo>) =>
+      simularCacada(CONFIGURACAO, { ...estado, bioma: 12, rota: 7, rotasLiberadas: 7, avancoAutomatico: false }, 0, 60 * MINUTO, criarGerador(3))
+        .eventos.filter((e) => e.tipo === 'abate').length
+    const comum = abates(pronto())
+    const desperta = abates(despertar(CATALOGO, pronto(), 1, 0))
+    expect(comum).toBeGreaterThan(0)
+    expect(desperta).toBeGreaterThan(comum)
+  })
+
   it('a ativa desperta com a vida cheia e a luta em andamento acaba', () => {
     const emLuta = simularCacada(CONFIGURACAO, pronto({ bioma: 12, rota: 6, rotasLiberadas: 6, avancoAutomatico: false }), 0, 500, criarGerador(1)).estado
     expect(emLuta.encontro).not.toBeNull()
