@@ -839,6 +839,23 @@ Ficam para a fase 2, com servidor e regras próprias:
 - Guildas, com chefe de guilda e guerra de defesas.
 - Chat e correio.
 
+### Segurança da fase online
+
+Vem do documento "Gamer Shield" do usuário, aprovado em 23/10/2026 como requisito da fase online. Nada disto vale para o jogo solo, que roda no navegador: lá a trapaça não prejudica outro jogador. O que já vale no solo está no fim desta seção.
+
+- **Servidor dono do estado:** na fase online, o navegador só desenha o estado e envia comandos. Tempo, sorteios, recompensas e economia são calculados no servidor, e o que o jogador muda na memória do navegador é descartado. O motor já não lê relógio nem sorteia por conta própria, então pode rodar no servidor quase sem mudança. Este é o primeiro marco da fase online, com proposta e custos aqui antes de qualquer código.
+- **Rede:** site e API atrás do proxy do Cloudflare, com domínio próprio, limite de requisições nas rotas críticas e Turnstile invisível na entrada.
+- **Login:** só por Google, Discord, Microsoft e Apple, sem formulário de e-mail e senha. Antes de gravar ou comparar o e-mail, o servidor o normaliza: tudo em minúsculas, sem o que vem depois de "+" e, no Gmail, sem pontos.
+- **Contas por aparelho:** o servidor guarda um identificador estável do aparelho (ANDROID_ID, IDFV ou impressão digital do navegador) e compara o histórico de aparelhos, não o IP, para não punir quem divide a rede. Com até 2 contas no mesmo aparelho, o acesso é livre; com 3, a conta fica em observação; com 4 ou mais, ela é marcada para contenção silenciosa. A impressão digital é dado pessoal pela LGPD: entra só com política de privacidade e aviso ao jogador.
+- **Contenção silenciosa:** a conta marcada continua jogando na própria tela, mas o servidor descarta as trocas com outros jogadores e as transações que afetam a economia comum.
+- **Cliques automáticos:** intervalos abaixo de 100 ms contam como cliques inválidos. Uma variação abaixo de 5 ms nos últimos 10 intervalos indica macro e leva à contenção silenciosa.
+- **Pedágio de progresso:** chat, mercado entre jogadores e troca só abrem depois de 48 horas de conta e de um nível mínimo **[a definir]**.
+- **Aplicação web:** sessão em cookie HttpOnly, Secure e SameSite=Strict; texto de jogadores, como chat e ranking, sempre escapado; o jogo não abre dentro de iframe de terceiros, pelo cabeçalho X-Frame-Options: DENY.
+- **Tempo fora:** o documento pede teto de 12 horas no servidor. No solo o teto continua em 24 horas (seção 5); o teto da fase online fica **[a definir]**.
+- **Ofuscação do código:** fica de fora enquanto o repositório for público, porque não esconderia nada.
+
+**Já vale no jogo solo:** o jogo se recusa a abrir dentro de um iframe de outro site e mostra um link para o endereço oficial. Isso é feito em JavaScript, porque o GitHub Pages não envia o cabeçalho X-Frame-Options.
+
 ## 13. Economia e monetização
 
 ### Recursos
