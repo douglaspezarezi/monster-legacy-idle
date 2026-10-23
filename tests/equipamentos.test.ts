@@ -143,10 +143,12 @@ describe('espaços do F16', () => {
   it('Joias aumentam as quedas de matriz, Essência e Chave', () => {
     const base = jogoCom(membro('Rebitaço', 95, 18, 1, 2), { era: 2, bioma: 4, rota: 5, rotasLiberadas: 5, avancoAutomatico: false })
     const cacando = { ...base, inventario: { ...base.inventario, ouro: 1e6 }, reposicao: { capsula: 0, tonicoDeCura: 20, tonicoDeRetorno: 5 } }
+    // Chances altas na rota 5, para uma hora de caçada bastar.
+    const rotas = CONFIGURACAO.rotas.map((rota, i) => (i === 4 ? { ...rota, quedaDeMatriz: { ...rota.quedaDeMatriz, chance: 0.02 }, chanceDeEssencia: 0.02, chanceDeChave: 0.02 } : rota))
     const quedas = (estado: EstadoDoJogo<Tipo>) => {
       let total = 0
       for (let semente = 1; semente <= 3; semente++) {
-        const r = simularCacada(CONFIGURACAO, estado, 0, 24 * HORA, criarGerador(semente))
+        const r = simularCacada({ ...CONFIGURACAO, rotas }, estado, 0, HORA, criarGerador(semente))
         total += r.eventos.filter((e) => e.tipo === 'matriz' || e.tipo === 'essencia' || e.tipo === 'chave').length
       }
       return total

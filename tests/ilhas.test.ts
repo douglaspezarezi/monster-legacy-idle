@@ -116,14 +116,17 @@ describe('Ilhas Lendárias', () => {
 })
 
 describe('Chaves da Ilha', () => {
-  it('caem na rota 5, em cerca de 0,05% dos abates', () => {
+  it('caem na rota 5, em 0,05% dos abates', () => {
+    expect(CONFIGURACAO.rotas.map((r) => r.chanceDeChave)).toEqual([0, 0, 0, 0, 0.0005, 0, 0])
+    // Chance alta na rota 5, para uma hora de caçada bastar.
+    const rotas = CONFIGURACAO.rotas.map((rota, i) => (i === 4 ? { ...rota, chanceDeChave: 0.02 } : rota))
     const estado = jogoCom(membro('Rebitaço', 95, 18, 1, 2), { era: 2, bioma: 4, rota: 5, rotasLiberadas: 5, avancoAutomatico: false })
     const comTonicos = { ...estado, inventario: { ...estado.inventario, ouro: 1e6 }, reposicao: { capsula: 0, tonicoDeCura: 20, tonicoDeRetorno: 5 } }
-    const r = simularCacada(CONFIGURACAO, comTonicos, 0, 24 * 60 * MINUTO, criarGerador(5))
+    const r = simularCacada({ ...CONFIGURACAO, rotas }, comTonicos, 0, 60 * MINUTO, criarGerador(5))
     const abates = r.eventos.filter((e) => e.tipo === 'abate').length
     const chaves = r.eventos.filter((e) => e.tipo === 'chave').length
-    expect(chaves).toBeGreaterThan(0)
-    expect(chaves).toBeLessThan(abates * 0.0015)
+    expect(chaves).toBeGreaterThan(abates * 0.01)
+    expect(chaves).toBeLessThan(abates * 0.03)
     expect(r.estado.inventario.chaves).toBe(chaves)
   })
 
