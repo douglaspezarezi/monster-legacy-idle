@@ -27,7 +27,7 @@ Idle RPG de criaturas para navegador. O jogador forma criaturas, deixa-as caçan
 - **Interface editável:** no modo de edição, cada janela ganha borda tracejada e pode ser arrastada e escalada de 50% a 150%; o layout fica salvo.
 - **Áudio:** música e efeitos com volumes independentes; a opacidade do vidro vai de 35% a 100%.
 
-### Cena da caçada no F17 [proposta]
+### Cena da caçada no F17
 
 - **O que aparece:** acima do painel da luta, uma cena em pixel art mostra o monstro ativo andando pelo bioma da caçada. Quando o selvagem aparece, ele entra pela direita e os dois lutam. O painel atual, com nomes, barras e botões, continua abaixo da cena.
 - **Só desenho:** a cena lê o estado que o motor já devolve, como o encontro, a vida dos dois lados e se a caçada está pausada. Nenhuma regra muda, e o motor não ganha código de tela.
@@ -907,7 +907,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F14 · Ilhas Lendárias | Chaves na rota 5, quatro ilhas de 10 andares, Fragmentos por andar e matriz lendária ou mítica no fim | Uma criatura vence o andar 10 de uma ilha |
 | F15 · Mercado da Cidade | Estoque diário de 6 matrizes por preço fixo em ouro, aberto na Era 4 | Uma matriz comprada no Mercado vira criatura na reserva |
 | F16 · Equipamentos | Luvas, Joias, Insígnia e Brasão; Cinto também na Mina | Uma peça de cada espaço novo vestida muda o que a caçada rende |
-| F17 · Cena da caçada **[proposta]** | Cena em Canvas com o bioma, o monstro andando e a luta com o selvagem, em pixel art provisória, e modo leve | Na caçada, o monstro anda pelo bioma, o selvagem aparece e os golpes aparecem na cena |
+| F17 · Cena da caçada | Cena em Canvas com o bioma, o monstro andando e a luta com o selvagem, em pixel art provisória, e modo leve | Na caçada, o monstro anda pelo bioma, o selvagem aparece e os golpes aparecem na cena |
 
 ## 17. Pendências
 
