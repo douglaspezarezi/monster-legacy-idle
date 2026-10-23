@@ -63,7 +63,7 @@ Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem 
 - **Mapa-múndi de caçadas:** mostra os biomas, trancados por Era (seção 7). Um indicador acende a rota com maior XP por hora para a criatura ativa, lendo nível, tipos e técnicas.
 - **Avanço de rota:** chave na interface entre avanço automático (vence o chefe e passa à rota seguinte) e farm travado na rota.
 
-### Mapa-múndi no F18 [proposta]
+### Mapa-múndi no F18
 
 - **O que muda na tela:** o mapa entra no lugar dos botões de bioma. Ele tem 4 faixas, uma por Era, com os 4 biomas de cada Era. Cada bioma aparece num cartão com a miniatura do cenário dele, igual ao da cena da caçada, mais o nome, o tipo e as rotas liberadas.
 - **Biomas trancados:** os de Eras futuras aparecem acinzentados, com "Abre na Era N". O bioma da caçada fica destacado, com o monstro ativo desenhado no cartão.
@@ -928,7 +928,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F15 · Mercado da Cidade | Estoque diário de 6 matrizes por preço fixo em ouro, aberto na Era 4 | Uma matriz comprada no Mercado vira criatura na reserva |
 | F16 · Equipamentos | Luvas, Joias, Insígnia e Brasão; Cinto também na Mina | Uma peça de cada espaço novo vestida muda o que a caçada rende |
 | F17 · Cena da caçada | Cena em Canvas com o bioma, o monstro andando e a luta com o selvagem, em pixel art provisória, e modo leve | Na caçada, o monstro anda pelo bioma, o selvagem aparece e os golpes aparecem na cena |
-| F18 · Mapa-múndi **[proposta]** | Mapa dos 16 biomas por Era, com miniaturas, trancas e estimativa de XP por hora com a melhor rota marcada | O mapa aponta a melhor rota do monstro ativo e troca de bioma ao tocar |
+| F18 · Mapa-múndi | Mapa dos 16 biomas por Era, com miniaturas, trancas e estimativa de XP por hora com a melhor rota marcada | O mapa aponta a melhor rota do monstro ativo e troca de bioma ao tocar |
 
 ## 17. Pendências
 
