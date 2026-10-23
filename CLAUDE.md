@@ -4,7 +4,7 @@ Idle RPG de criaturas para navegador, em TypeScript, Vite e React. Fase 1 é sol
 
 O design está em `docs/GDD.md`. Antes de implementar uma regra de jogo, leia a seção correspondente; itens marcados **[proposta]** ainda não foram aprovados e não devem virar código. Se o código e o GDD divergirem, pare e pergunte.
 
-**Marco atual: F14 · Ilhas Lendárias.** A arte final do F7 segue pendente com o usuário. Os marcos e critérios estão na seção 16 do GDD. Atualize esta linha ao concluir um marco e não comece o seguinte sem o critério do atual atendido.
+**Marco atual: nenhum; o F14 · Ilhas Lendárias foi concluído e o próximo marco ainda não foi definido.** A arte final do F7 segue pendente com o usuário. Os marcos e critérios estão na seção 16 do GDD. Atualize esta linha ao concluir um marco e não comece o seguinte sem o critério do atual atendido.
 
 ## Comandos
 
