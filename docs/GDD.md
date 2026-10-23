@@ -811,6 +811,26 @@ Ficam para a fase 2, com servidor e regras próprias:
 
 Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cidade** vende matrizes específicas por preço fixo e alto, com estoque que gira a cada dia. O jogador vê exatamente o que compra, sem sorteio.
 
+### Mercado da Cidade no F15 [proposta]
+
+- **Por que agora:** da Era 2 em diante o ouro perde o uso. Os gastos são Tônicos (25) e cruzamento (300), e a caçada rende muito mais. Simulação de 2 horas, 10 criaturas por caso, com reposição de Tônicos:
+
+| Caso | Ouro por hora (mín. / mediana / máx.) |
+| --- | --- |
+| Era 2, rota 5, Rebitaço raro no nível 100 | 187 mil / 280 mil / 331 mil |
+| Era 2, rota 5, Rebitaço épico no nível 100 | 329 mil / 405 mil / 439 mil |
+| Era 3, rota 6, Couraçor épico no nível 150 | 960 mil / 1,13 milhão / 1,20 milhão |
+| Era 4, rota 7, Couraçor épico no nível 200 | 1,69 milhão / 2,06 milhões / 2,25 milhões |
+| Era 4, rota 7, Couraçor lendário desperto | 2,35 milhões / 2,78 milhões / 2,95 milhões |
+| Era 4, rota 7, Glaciarca épica na Cratera Estelar (tipo errado) | 598 mil / 762 mil / 895 mil |
+
+- **Quando abre:** na Era 4, como o resto do fim de jogo. O ouro das Eras anteriores fica guardado, porque o reset não mexe nele.
+- **Estoque do dia:** 6 matrizes, 3 épicas, 2 lendárias e 1 mítica. Cada espécie é sorteada com chance igual entre todas as que aparecem nas rotas dos 16 biomas. As 6 são diferentes entre si.
+- **Preço fixo por raridade:** épica 1 milhão, lendária 5 milhões e mítica 20 milhões de ouro. Cada oferta pode ser comprada uma vez, e a matriz vai para o inventário.
+- **Troca do estoque:** à meia-noite de Brasília. O estoque do dia é sorteado na primeira vez que o jogo passa por esse dia e fica no save, então quem volta depois de uma semana fora vê só o estoque de hoje.
+- **Conta para o jogador:** com 2 milhões por hora na rota 7, a épica sai em meia hora de caçada, a lendária em 2,5 horas e a mítica em 10. Comprar o estoque inteiro (33 milhões) leva cerca de 16 horas, então o Mercado nunca fica sem uso. Para comparar, pelas chances de queda e pelos cerca de 1.000 abates por hora da simulação, a rota 7 deixa cair uma matriz mítica de espécie sorteada a cada 20 horas, e a rota 5 uma lendária a cada 5 a 8 horas. O Mercado custa um pouco mais, mas deixa escolher a espécie.
+- **Alternativas descartadas:** com preços de 2, 10 e 50 milhões, a mítica custaria 25 horas de caçada, mais do que esperar a queda da rota 7. Abrir na Era 2 deixaria comprar uma épica com cerca de 3 horas de ouro da rota 5, o que tira o peso da captura nessa Era.
+
 ### Monetização
 
 - Venda direta apenas de itens visuais: auras de sprite, molduras de perfil e rastros de partículas.
@@ -855,7 +875,8 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F12 · Era 4 | Rota 7, biomas Planície Gelada, Ruínas de Ferro, Desfiladeiro do Eco e Cratera Estelar, 32 espécies e 5 técnicas | Um monstro chega ao nível 200 na Era 4 caçando nos biomas novos |
 | F13 · Despertar | Mina com Fragmentos, Essências nas rotas 5 a 7 e Despertar com técnica exclusiva por tipo | Uma criatura desperta e caça com a técnica exclusiva |
 | F14 · Ilhas Lendárias | Chaves na rota 5, quatro ilhas de 10 andares, Fragmentos por andar e matriz lendária ou mítica no fim | Uma criatura vence o andar 10 de uma ilha |
+| F15 · Mercado da Cidade **[proposta]** | Estoque diário de 6 matrizes por preço fixo em ouro, aberto na Era 4 | Uma matriz comprada no Mercado vira criatura na reserva |
 
 ## 17. Pendências
 
-1. Se há conteúdo de nível depois da Era 4.
+1. Se há conteúdo de nível depois da Era 4. **[proposta]** Não: o nível 200 continua o máximo, e o fim de jogo fica em Despertar, Ilhas Lendárias e Mercado da Cidade.
