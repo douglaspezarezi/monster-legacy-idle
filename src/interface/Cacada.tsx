@@ -33,6 +33,7 @@ import type { Tipo } from '../conteudo/tipos.ts'
 import { PainelDasIlhas } from './PainelDasIlhas.tsx'
 import { PainelDeCruzamento } from './PainelDeCruzamento.tsx'
 import { PainelDeEquipamentos } from './PainelDeEquipamentos.tsx'
+import { PainelDoMercado } from './PainelDoMercado.tsx'
 import { Retrato } from './Retrato.tsx'
 import { NOME_DA_RARIDADE, NOME_DO_ITEM, descreverGenes, formatarTempo } from './textos.ts'
 import type { Comando, Sessao } from './useJogo.ts'
@@ -423,6 +424,8 @@ export function Cacada({ sessao, executar }: Props) {
       </section>
 
       <PainelDasIlhas estado={estado} executar={executar} />
+
+      <PainelDoMercado estado={estado} agora={agora} executar={executar} />
 
       <PainelDeEquipamentos estado={estado} executar={executar} />
 
