@@ -4,6 +4,7 @@ import { INICIAIS } from '../conteudo/especies.ts'
 import { CONFIGURACAO } from '../conteudo/jogo.ts'
 import type { Tipo } from '../conteudo/tipos.ts'
 import type { Gerador } from '../engine/aleatorio.ts'
+import type { Evento } from '../engine/cacada.ts'
 import { criarGerador } from '../engine/aleatorio.ts'
 import { avancarJogo } from '../engine/avanco.ts'
 import type { EstadoDoJogo } from '../engine/jogo.ts'
@@ -27,6 +28,8 @@ export type Sessao = {
   // Instante até onde o motor já simulou.
   readonly agora: number
   readonly registros: readonly Registro[]
+  // Eventos do último passo do motor, para a cena animar.
+  readonly eventos: readonly Evento[]
 }
 
 export type SaveExportado = { readonly texto: string; readonly salvoEm: number; readonly versao: number }
@@ -57,7 +60,7 @@ function carregar(texto: string, agora: number, gerador: Gerador): { readonly se
     fora.creditadoMs >= MINIMO_PARA_RESUMO_MS
       ? { foraMs: agora - save.salvoEm, creditadoMs: fora.creditadoMs, resumo: resumir(fora.eventos), ouroDaForja: fora.ouroDaForja, fragmentosDaMina: fora.fragmentosDaMina }
       : null
-  return { sessao: { estado: fora.estado, agora, registros: [] }, volta }
+  return { sessao: { estado: fora.estado, agora, registros: [], eventos: [] }, volta }
 }
 
 export type ResumoDoSave = {
@@ -110,7 +113,7 @@ export function useJogo() {
   const comecar = useCallback(
     (especieInicial: string) => {
       const agora = Date.now()
-      const nova = { estado: novoJogo(CONFIGURACAO.catalogo, CONFIGURACAO.rotas.length, especieInicial, agora, gerador.current), agora, registros: [] }
+      const nova = { estado: novoJogo(CONFIGURACAO.catalogo, CONFIGURACAO.rotas.length, especieInicial, agora, gerador.current), agora, registros: [], eventos: [] }
       aplicar(nova)
       gravarSessao(nova)
     },
@@ -155,7 +158,7 @@ export function useJogo() {
       const { estado, eventos } = avancarJogo(CONFIGURACAO, s.estado, s.agora, agora, gerador.current)
       const novos = eventos.map((evento) => ({ id: proximoRegistro.current++, instante: evento.instante, texto: descreverEvento(evento) }))
       const registros = novos.length ? [...novos.reverse(), ...s.registros].slice(0, REGISTROS_GUARDADOS) : s.registros
-      aplicar({ estado, agora, registros })
+      aplicar({ estado, agora, registros, eventos })
     }, PASSO_MS)
 
     const guardar = () => {

@@ -94,6 +94,19 @@ button:disabled {
   flex-wrap: wrap;
 }
 
+.cena {
+  display: flex;
+  justify-content: center;
+  margin: 0.5rem 0;
+}
+
+.cena canvas {
+  image-rendering: pixelated;
+  border-radius: 4px;
+  border: 1px solid var(--borda);
+  max-width: 100%;
+}
+
 .lutadores {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
