@@ -762,6 +762,29 @@ As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a 
 - O filhote nasce na hora, no nível 1, com as técnicas da espécie. Ovos com tempo de chocar, Pedra do Destino, técnicas herdadas e Pergaminhos ficam para depois do F4.
 - Na simulação de 10 cruzamentos seguidos com os melhores pais, a melhor soma de genes sobe de cerca de 64 para 80 (de incomum para rara ou épica). Com os 3 atributos sorteados, cai para cerca de 57.
 
+### Cruzamento completo no F19 [proposta]
+
+- **Técnica aprendida:** cada criatura pode ter, além das técnicas da espécie, 1 técnica aprendida. Ela entra em primeiro lugar na fila, ou em segundo se a criatura despertou (a técnica do Despertar continua no topo), e tira a última se a fila passar de 4. Trocar a aprendida apaga a anterior, e esquecê-la é livre. A técnica do Despertar não pode ser aprendida.
+- **Qualquer espécie aprende qualquer técnica.** Isso substitui a "lista de espécies compatíveis" do item 6 acima. O ganho vem justamente de cobrir um tipo que a espécie não tem, e uma lista por espécie, com 117 espécies e 39 técnicas, viraria uma tabela enorme sem regra clara.
+- **Pergaminho:** item de uso único que ensina uma técnica. Cada vitória sobre um chefe de rota tem 5% de chance de deixar um Pergaminho, de uma técnica sorteada entre as do tipo do bioma. Com 6 a 10 chefes por hora nas rotas 5 a 7, sai um Pergaminho a cada 2 a 3 horas. É preciso caçar no bioma de um tipo para levar a técnica dele a outro monstro.
+- **Técnica herdada:** no cruzamento, o jogador pode escolher 1 técnica da fila de um dos pais (da espécie ou a aprendida, menos a do Despertar) para o filhote nascer sabendo, como técnica aprendida. É o jeito de passar uma técnica de uma espécie para outra da mesma linhagem sem gastar Pergaminho.
+- **Pedra do Destino:** gasta no cruzamento, faz o filhote herdar 4 atributos em vez de 3. Vencer o andar 10 de uma Ilha Lendária dá 1 Pedra, além da matriz.
+- **Save:** o inventário ganha Pergaminhos e Pedras do Destino, e a criatura ganha o campo da técnica aprendida. O save passa à versão 12.
+
+Simulação de uma técnica aprendida de outro tipo, com genes 15, média de 5 sementes:
+
+| Monstro e rota | Técnica | Em 1º na fila | No fim da fila |
+| --- | --- | --- | --- |
+| Couraçor 200, Cratera Estelar, rota 7 | Investida (Fera) | +51% | +28% |
+| Couraçor 200, Cratera Estelar, rota 7 | Mortalha (Bruma) | +54% | +26% |
+| Estrondor 200, Cratera Estelar, rota 7 | Mortalha (Bruma) | +62% | +32% |
+| Glaciarca 200, Ruínas de Ferro, rota 7 | Fornalha (Chama) | +26% | +19% |
+| Rebitaço 95, Encosta Rubra, rota 5 | Onda Funda (Maré) | +38% | +5% |
+| Gelusco 45, Serra Partida, rota 3 | Jato de Lodo (Maré) | +12% | +1% |
+
+- Uma técnica do mesmo tipo no fim da fila quase não muda nada (de +1% a +4%), porque o monstro usa a primeira técnica pronta. Por isso a aprendida entra no topo.
+- **Pedra do Destino:** em 300 simulações de 10 cruzamentos seguidos, partindo de 6 criaturas incomuns e cruzando sempre as duas melhores, a melhor soma de genes chega a 80 (de 69 a 92) herdando 3 atributos e a 90 (de 81 a 96) herdando 4. A Pedra leva da faixa rara ou épica para a épica ou lendária.
+
 ## 11. Fim de jogo
 
 O documento original listava seis sistemas de transformação que reproduziam os de uma franquia; todos saíram (seção 14). No lugar entra um sistema próprio, a partir do nível 150:
@@ -946,6 +969,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F16 · Equipamentos | Luvas, Joias, Insígnia e Brasão; Cinto também na Mina | Uma peça de cada espaço novo vestida muda o que a caçada rende |
 | F17 · Cena da caçada | Cena em Canvas com o bioma, o monstro andando e a luta com o selvagem, em pixel art provisória, e modo leve | Na caçada, o monstro anda pelo bioma, o selvagem aparece e os golpes aparecem na cena |
 | F18 · Mapa-múndi | Mapa dos 16 biomas por Era, com miniaturas, trancas e estimativa de XP por hora com a melhor rota marcada | O mapa aponta a melhor rota do monstro ativo e troca de bioma ao tocar |
+| F19 · Cruzamento completo **[proposta]** | Técnica aprendida no topo da fila, Pergaminhos dos chefes, técnica herdada no cruzamento e Pedra do Destino das Ilhas | Um monstro aprende uma técnica de outro tipo por Pergaminho ou cruzamento e rende mais num bioma onde antes rendia menos |
 
 ## 17. Pendências
 
