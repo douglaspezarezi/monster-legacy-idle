@@ -664,7 +664,7 @@ Nenhum equipamento aumenta força, vida ou ataque das criaturas. Eles só aceler
 - **Efeito por raridade:** 5%, 10%, 15%, 20% e 25%.
 - Uma peça por espaço; as outras ficam no inventário. Trocar é livre. Os equipamentos atravessam o reset de Era.
 
-### Equipamentos no F16 [proposta]
+### Equipamentos no F16
 
 - **Entram 4 espaços** cujos sistemas já existem, com o mesmo efeito por raridade (5% a 25%):
   - **Luvas:** as chances de selvagem raro, épico, lendário e mítico sobem nessa proporção; a diferença sai da chance de fraco. Com 25%, o raro vai de 4% para 5% e o épico de 0,9% para 1,125%; o fraco cai de 25% para cerca de 23,8%.
@@ -888,7 +888,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F13 · Despertar | Mina com Fragmentos, Essências nas rotas 5 a 7 e Despertar com técnica exclusiva por tipo | Uma criatura desperta e caça com a técnica exclusiva |
 | F14 · Ilhas Lendárias | Chaves na rota 5, quatro ilhas de 10 andares, Fragmentos por andar e matriz lendária ou mítica no fim | Uma criatura vence o andar 10 de uma ilha |
 | F15 · Mercado da Cidade | Estoque diário de 6 matrizes por preço fixo em ouro, aberto na Era 4 | Uma matriz comprada no Mercado vira criatura na reserva |
-| F16 · Equipamentos **[proposta]** | Luvas, Joias, Insígnia e Brasão; Cinto também na Mina | Uma peça de cada espaço novo vestida muda o que a caçada rende |
+| F16 · Equipamentos | Luvas, Joias, Insígnia e Brasão; Cinto também na Mina | Uma peça de cada espaço novo vestida muda o que a caçada rende |
 
 ## 17. Pendências
 
