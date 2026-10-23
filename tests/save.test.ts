@@ -74,6 +74,13 @@ describe('save', () => {
     expect(save.estado).toEqual(atual)
   })
 
+  it('migra o save da versão 10: Mercado sem estoque', () => {
+    const atual = jogoCom(membro('Gelusco', 3, 5))
+    const { mercado: _, ...antigo } = atual
+    const save = desserializar<Tipo>(JSON.stringify({ versao: 10, salvoEm: 10, estado: antigo }), MODELO)
+    expect(save.estado).toEqual(atual)
+  })
+
   it('recusa save da versão atual com campo faltando', () => {
     const { bioma: _, ...semBioma } = jogoCom(membro('Gelusco', 3, 5))
     const texto = JSON.stringify({ versao: VERSAO_DO_SAVE, salvoEm: 0, estado: semBioma })

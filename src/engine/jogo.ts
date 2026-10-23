@@ -10,6 +10,8 @@ import type { Luta } from './combate.ts'
 import type { Criatura } from './criatura.ts'
 import { combatenteDe } from './criatura.ts'
 import type { Catalogo } from './especie.ts'
+import type { Mercado } from './mercado.ts'
+import { MERCADO_VAZIO } from './mercado.ts'
 import type { Matriz } from './nascimento.ts'
 import { abrirMatriz, criarInicial } from './nascimento.ts'
 import { voltarAoNivel1 } from './evolucao.ts'
@@ -73,6 +75,8 @@ export type EstadoDoJogo<Tipo extends string> = {
   readonly equipamentos: Equipamentos
   // Estoque mínimo de cada item que a Loja repõe sozinha; 0 desliga.
   readonly reposicao: Readonly<Record<ItemDaLoja, number>>
+  // Estoque do dia do Mercado da Cidade, que abre na Era 4.
+  readonly mercado: Mercado
 }
 
 export const INVENTARIO_INICIAL: Inventario = {
@@ -142,6 +146,7 @@ export function novoJogo<Tipo extends string>(
     mina: MINA_VAZIA,
     equipamentos: SEM_EQUIPAMENTOS,
     reposicao: SEM_REPOSICAO,
+    mercado: MERCADO_VAZIO,
   }
 }
 

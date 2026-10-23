@@ -3,8 +3,9 @@ import { FORJA_VAZIA, MINA_VAZIA } from './base.ts'
 import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 import { SEM_REPOSICAO } from './jogo.ts'
+import { MERCADO_VAZIO } from './mercado.ts'
 
-export const VERSAO_DO_SAVE = 10
+export const VERSAO_DO_SAVE = 11
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
@@ -35,6 +36,8 @@ const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Re
   }),
   // A versão 10 trouxe as Chaves da Ilha, nenhuma.
   9: (estado) => ({ ...estado, inventario: ehObjeto(estado.inventario) ? { ...estado.inventario, chaves: 0 } : estado.inventario }),
+  // A versão 11 trouxe o Mercado da Cidade, ainda sem estoque.
+  10: (estado) => ({ ...estado, mercado: MERCADO_VAZIO }),
 }
 
 // Completa com zeros os contadores de chefe do bioma atual e dos guardados até o número de rotas.
