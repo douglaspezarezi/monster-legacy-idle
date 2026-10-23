@@ -3,7 +3,7 @@ import type { Gerador } from './aleatorio.ts'
 import type { Forja, Mina } from './base.ts'
 import { FORJA_VAZIA, MINA_VAZIA, trabalhando } from './base.ts'
 import type { Equipamentos } from './equipamentos.ts'
-import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
+import { SEM_EQUIPAMENTOS, aumentar } from './equipamentos.ts'
 import type { FiltroDeCaptura } from './captura.ts'
 import { ESPACOS_NA_RESERVA, FILTRO_VAZIO } from './captura.ts'
 import type { Luta } from './combate.ts'
@@ -13,7 +13,7 @@ import type { Catalogo } from './especie.ts'
 import type { Mercado } from './mercado.ts'
 import { MERCADO_VAZIO } from './mercado.ts'
 import type { Matriz } from './nascimento.ts'
-import { abrirMatriz, criarInicial } from './nascimento.ts'
+import { CHANCE_PRISMATICA, abrirMatriz, criarInicial } from './nascimento.ts'
 import { voltarAoNivel1 } from './evolucao.ts'
 
 // Era em que a criatura passou pelo reset; abaixo da Era atual, ela volta ao nível 1 ao ser ativada.
@@ -242,7 +242,7 @@ export function abrirMatrizDoInventario<Tipo extends string>(
   const matrizes = estado.inventario.matrizes.filter((_, i) => i !== indice)
   return {
     ...estado,
-    reserva: [...estado.reserva, { ...abrirMatriz(gerador, matriz), id: estado.proximoId, era: estado.era }],
+    reserva: [...estado.reserva, { ...abrirMatriz(gerador, matriz, aumentar(CHANCE_PRISMATICA, estado, 'brasao')), id: estado.proximoId, era: estado.era }],
     proximoId: estado.proximoId + 1,
     inventario: { ...estado.inventario, matrizes },
   }

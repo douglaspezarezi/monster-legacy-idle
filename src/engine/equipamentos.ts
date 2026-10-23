@@ -2,7 +2,7 @@
 import type { Raridade } from './genes.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 
-export const ESPACOS = ['cabeca', 'peito', 'pernas', 'armaPrincipal', 'armaSecundaria', 'cinto'] as const
+export const ESPACOS = ['cabeca', 'peito', 'pernas', 'armaPrincipal', 'armaSecundaria', 'cinto', 'luvas', 'joias', 'insignia', 'brasao'] as const
 export type Espaco = (typeof ESPACOS)[number]
 
 export type Equipamento = {

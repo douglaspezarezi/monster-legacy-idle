@@ -8,7 +8,7 @@ import type { EstadoDoJogo } from './jogo.ts'
 import type { Catalogo } from './especie.ts'
 import { primeiraForma } from './evolucao.ts'
 import { CHANCE_PRISMATICA } from './nascimento.ts'
-import { reduzir } from './equipamentos.ts'
+import { aumentar, reduzir } from './equipamentos.ts'
 import { trabalhando } from './base.ts'
 
 export const TAXA_DE_CRUZAMENTO = 300
@@ -44,9 +44,16 @@ export function genesDoFilhote(paiA: Genes, paiB: Genes, herdados: readonly Atri
   return genes
 }
 
-export function nascerDoCruzamento(paiA: Criatura, paiB: Criatura, especie: string, herdados: readonly Atributo[], gerador: Gerador): Criatura {
+export function nascerDoCruzamento(
+  paiA: Criatura,
+  paiB: Criatura,
+  especie: string,
+  herdados: readonly Atributo[],
+  gerador: Gerador,
+  chancePrismatica = CHANCE_PRISMATICA,
+): Criatura {
   const genes = genesDoFilhote(paiA.genes, paiB.genes, herdados, gerador)
-  const prismatica = podeSerPrismatica(raridadeDosGenes(genes)) && gerador() < CHANCE_PRISMATICA
+  const prismatica = podeSerPrismatica(raridadeDosGenes(genes)) && gerador() < chancePrismatica
   return { especie, genes, prismatica, nivel: 1, xpNoNivel: 0 }
 }
 
@@ -84,7 +91,7 @@ export function cruzar<Tipo extends string>(
 
   // O filhote nasce na primeira forma da linha do pai escolhido.
   const especie = primeiraForma(catalogo, especieDe === paiA ? a.especie : b.especie)
-  const filhote = { ...nascerDoCruzamento(a, b, especie, herdados, gerador), id: estado.proximoId, era: estado.era }
+  const filhote = { ...nascerDoCruzamento(a, b, especie, herdados, gerador, aumentar(CHANCE_PRISMATICA, estado, 'brasao')), id: estado.proximoId, era: estado.era }
   return {
     ...estado,
     reserva: [...estado.reserva.filter((m) => m.id !== paiA && m.id !== paiB), filhote],

@@ -27,9 +27,17 @@ export const CHANCE_PRISMATICA = 0.02
 export const RARIDADE_DO_CHEFE: Raridade = 'rara'
 export const RARIDADE_DO_INICIAL: Raridade = 'comum'
 
-export function sortearRaridadeDoSelvagem(gerador: Gerador): Raridade {
+// As raridades a partir de rara ganham o bônus, em pontos percentuais da chance de cada uma; a diferença sai da fraca.
+const RARIDADES_COM_BONUS: readonly Raridade[] = ['rara', 'epica', 'lendaria', 'mitica']
+
+export function chancesDeRaridadeDoSelvagem(bonus = 0): (readonly [Raridade, number])[] {
+  const extra = CHANCES_DE_RARIDADE_DO_SELVAGEM.reduce((soma, [r, c]) => soma + (RARIDADES_COM_BONUS.includes(r) ? (c * bonus) / 100 : 0), 0)
+  return CHANCES_DE_RARIDADE_DO_SELVAGEM.map(([r, c]) => [r, RARIDADES_COM_BONUS.includes(r) ? (c * (100 + bonus)) / 100 : r === 'fraca' ? c - extra : c])
+}
+
+export function sortearRaridadeDoSelvagem(gerador: Gerador, bonus = 0): Raridade {
   let sorteio = gerador()
-  for (const [raridade, chance] of CHANCES_DE_RARIDADE_DO_SELVAGEM) {
+  for (const [raridade, chance] of chancesDeRaridadeDoSelvagem(bonus)) {
     if (sorteio < chance) return raridade
     sorteio -= chance
   }
@@ -38,9 +46,15 @@ export function sortearRaridadeDoSelvagem(gerador: Gerador): Raridade {
 }
 
 // Só sorteia quando a raridade permite a variação prismática.
-export function criarCriatura(gerador: Gerador, especie: string, raridade: Raridade, nivel: number): Criatura {
+export function criarCriatura(
+  gerador: Gerador,
+  especie: string,
+  raridade: Raridade,
+  nivel: number,
+  chancePrismatica = CHANCE_PRISMATICA,
+): Criatura {
   const genes = sortearGenes(gerador, raridade)
-  const prismatica = podeSerPrismatica(raridade) && gerador() < CHANCE_PRISMATICA
+  const prismatica = podeSerPrismatica(raridade) && gerador() < chancePrismatica
   return { especie, genes, prismatica, nivel, xpNoNivel: 0 }
 }
 
@@ -57,10 +71,13 @@ export function gerarSelvagem(
   gerador: Gerador,
   especies: readonly string[],
   faixaDeNivel: readonly [number, number],
+  // Das Luvas, em pontos percentuais.
+  bonusDeRaridade = 0,
+  chancePrismatica = CHANCE_PRISMATICA,
 ): Criatura {
   const especie = especies[inteiroEntre(gerador, 0, especies.length - 1)]
   const nivel = inteiroEntre(gerador, faixaDeNivel[0], faixaDeNivel[1])
-  return criarCriatura(gerador, especie, sortearRaridadeDoSelvagem(gerador), nivel)
+  return criarCriatura(gerador, especie, sortearRaridadeDoSelvagem(gerador, bonusDeRaridade), nivel, chancePrismatica)
 }
 
 // A espécie da rota com maior soma de valores base; no empate, a primeira da lista.
@@ -81,8 +98,8 @@ export function gerarChefe(
   return criarCriatura(gerador, especieDoChefe(catalogo, especies), RARIDADE_DO_CHEFE, faixaDeNivel[1])
 }
 
-export function abrirMatriz(gerador: Gerador, matriz: Matriz): Criatura {
-  return criarCriatura(gerador, matriz.especie, matriz.raridade, 1)
+export function abrirMatriz(gerador: Gerador, matriz: Matriz, chancePrismatica = CHANCE_PRISMATICA): Criatura {
+  return criarCriatura(gerador, matriz.especie, matriz.raridade, 1, chancePrismatica)
 }
 
 export function criarInicial(gerador: Gerador, especie: string): Criatura {

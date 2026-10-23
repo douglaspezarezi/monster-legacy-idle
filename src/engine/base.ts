@@ -64,13 +64,13 @@ function producaoPorHora<Tipo extends string>(
   return total
 }
 
-// O Cinto aumenta só a Forja.
+// O Cinto aumenta a Forja e a Mina.
 export function ouroPorHoraDaForja<Tipo extends string>(configuracao: ConfiguracaoDaBase<Tipo>, estado: EstadoDoJogo<Tipo>): number {
   return aumentar(producaoPorHora(configuracao, estado, configuracao.forja, estado.forja.trabalhadores), estado, 'cinto')
 }
 
 export function fragmentosPorHoraDaMina<Tipo extends string>(configuracao: ConfiguracaoDaBase<Tipo>, estado: EstadoDoJogo<Tipo>): number {
-  return producaoPorHora(configuracao, estado, configuracao.mina, estado.mina.trabalhadores)
+  return aumentar(producaoPorHora(configuracao, estado, configuracao.mina, estado.mina.trabalhadores), estado, 'cinto')
 }
 
 // O que fecha uma unidade inteira entra no inventário; a fração fica guardada para o próximo período.

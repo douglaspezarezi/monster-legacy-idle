@@ -10,12 +10,12 @@ import { raridadeDosGenes } from './genes.ts'
 import type { Encontro, EstadoDoJogo } from './jogo.ts'
 import { repor, vidaMaxima } from './jogo.ts'
 import type { Matriz } from './nascimento.ts'
-import { faixaDoSelvagem, gerarChefe, gerarSelvagem } from './nascimento.ts'
+import { CHANCE_PRISMATICA, faixaDoSelvagem, gerarChefe, gerarSelvagem } from './nascimento.ts'
 import type { TabelaDeTipos } from './multiplicador-de-tipo.ts'
 import { ganharXp } from './nivel.ts'
 import { evoluir } from './evolucao.ts'
 import type { Equipamento } from './equipamentos.ts'
-import { CHANCE_DE_EQUIPAMENTO_DO_CHEFE, ESPACOS, aumentar, reduzir } from './equipamentos.ts'
+import { CHANCE_DE_EQUIPAMENTO_DO_CHEFE, ESPACOS, aumentar, bonus, reduzir } from './equipamentos.ts'
 import { inteiroEntre } from './aleatorio.ts'
 import type { DadosDeEra } from './era.ts'
 import { dadosDaEra } from './era.ts'
@@ -34,6 +34,11 @@ export type DadosDeRota = {
 }
 
 export const ABATES_PARA_O_CHEFE = 100
+
+// A Insígnia reduz os abates até o chefe, arredondando para cima.
+export function abatesParaOChefe<Tipo extends string>(estado: EstadoDoJogo<Tipo>): number {
+  return Math.ceil(reduzir(ABATES_PARA_O_CHEFE, estado, 'insignia'))
+}
 
 export type DadosDeBioma<Tipo extends string> = {
   readonly nome: string
@@ -79,10 +84,16 @@ function encontrar<Tipo extends string>(
 ): Encontro<Tipo> {
   const rota = configuracao.rotas[estado.rota - 1]
   const especies = configuracao.biomas[estado.bioma].especiesPorRota[estado.rota - 1]
-  const chefe = estado.abatesPorRota[estado.rota - 1] >= ABATES_PARA_O_CHEFE
+  const chefe = (estado.abatesPorRota[estado.rota - 1] ?? 0) >= abatesParaOChefe(estado)
   const selvagem = chefe
     ? gerarChefe(configuracao.catalogo, gerador, especies, rota.faixaDeNivel)
-    : gerarSelvagem(gerador, especies, faixaDoSelvagem(rota.faixaDeNivel, estado.ativa.nivel))
+    : gerarSelvagem(
+        gerador,
+        especies,
+        faixaDoSelvagem(rota.faixaDeNivel, estado.ativa.nivel),
+        bonus(estado, 'luvas'),
+        aumentar(CHANCE_PRISMATICA, estado, 'brasao'),
+      )
   const jogador = { ...combatenteDe(configuracao.catalogo, estado.ativa), vida: estado.vidaDaAtiva }
   const luta = iniciarLuta(jogador, combatenteDe(configuracao.catalogo, selvagem, rota.multiplicadorDeVida), inicio)
   return { selvagem, chefe, luta }
@@ -119,20 +130,21 @@ function vencer<Tipo extends string>(
   inventario = { ...inventario, ouro: inventario.ouro + ouro }
 
   // A matriz é da espécie do selvagem abatido; a Fadiga não muda a queda.
-  if (gerador() < rota.quedaDeMatriz.chance) {
+  // As Joias aumentam as quedas de matriz, Essência e Chave.
+  if (gerador() < aumentar(rota.quedaDeMatriz.chance, estado, 'joias')) {
     const matriz = { especie: encontro.selvagem.especie, raridade: rota.quedaDeMatriz.raridade }
     inventario = { ...inventario, matrizes: [...inventario.matrizes, matriz] }
     eventos.push({ tipo: 'matriz', instante: agora, matriz })
   }
 
   // Só sorteia nas rotas com Essência, para não mudar a sequência do gerador nas outras.
-  if (rota.chanceDeEssencia > 0 && gerador() < rota.chanceDeEssencia) {
+  if (rota.chanceDeEssencia > 0 && gerador() < aumentar(rota.chanceDeEssencia, estado, 'joias')) {
     const tipo = configuracao.biomas[estado.bioma].tipo
     inventario = { ...inventario, essencias: { ...inventario.essencias, [tipo]: (inventario.essencias[tipo] ?? 0) + 1 } }
     eventos.push({ tipo: 'essencia', instante: agora, tipoDaEssencia: tipo })
   }
 
-  if (rota.chanceDeChave > 0 && gerador() < rota.chanceDeChave) {
+  if (rota.chanceDeChave > 0 && gerador() < aumentar(rota.chanceDeChave, estado, 'joias')) {
     inventario = { ...inventario, chaves: inventario.chaves + 1 }
     eventos.push({ tipo: 'chave', instante: agora })
   }
