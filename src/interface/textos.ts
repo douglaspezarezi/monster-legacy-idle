@@ -76,6 +76,13 @@ export function descreverEvento(evento: Evento): string {
   }
 }
 
+// Compacto, para caber nos cartões do mapa e nos botões de rota.
+export function formatarXp(xp: number): string {
+  if (xp >= 1_000_000) return `${(xp / 1_000_000).toLocaleString('pt-BR', { maximumFractionDigits: 1 })} mi`
+  if (xp >= 1_000) return `${Math.round(xp / 1_000).toLocaleString('pt-BR')} mil`
+  return Math.round(xp).toLocaleString('pt-BR')
+}
+
 export function formatarTempo(ms: number): string {
   const segundos = Math.max(0, Math.ceil(ms / 1000))
   return `${Math.floor(segundos / 60)}:${String(segundos % 60).padStart(2, '0')}`

@@ -94,6 +94,68 @@ button:disabled {
   flex-wrap: wrap;
 }
 
+.mapa {
+  grid-column: 1 / -1;
+}
+
+.mapa header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.era-do-mapa h4 {
+  margin: 0.75rem 0 0.4rem;
+}
+
+.eras-do-mapa {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 460px), 1fr));
+  column-gap: 1.2rem;
+}
+
+.biomas-do-mapa {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .biomas-do-mapa {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.cartao-do-bioma {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  text-align: left;
+  padding: 0.4rem;
+}
+
+.cartao-do-bioma canvas {
+  width: 100%;
+  image-rendering: pixelated;
+  border-radius: 3px;
+}
+
+.cartao-do-bioma.trancado canvas {
+  filter: grayscale(1) brightness(0.6);
+}
+
+.cartao-do-bioma.escolhida {
+  border-color: var(--destaque);
+  background: rgb(127 209 163 / 0.12);
+}
+
+.cartao-do-bioma.melhor {
+  border-color: var(--aviso);
+}
+
 .cena {
   display: flex;
   justify-content: center;
@@ -165,6 +227,7 @@ button:disabled {
 
 .botoes {
   display: flex;
+  flex-wrap: wrap;
   gap: 0.4rem;
   margin-bottom: 0.8rem;
 }

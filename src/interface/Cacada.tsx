@@ -21,7 +21,6 @@ import {
   definirAvancoAutomatico,
   definirFiltroDeCaptura,
   definirGatilhoDeCura,
-  escolherBioma,
   escolherRota,
   retomarCacada,
   trocarAtiva,
@@ -33,11 +32,13 @@ import type { Tipo } from '../conteudo/tipos.ts'
 import { guardar, lerGuardado } from './arquivo.ts'
 import { Cena } from './Cena.tsx'
 import { PainelDasIlhas } from './PainelDasIlhas.tsx'
+import { PainelDoMapa } from './PainelDoMapa.tsx'
+import { useEstimativas } from './useEstimativas.ts'
 import { PainelDeCruzamento } from './PainelDeCruzamento.tsx'
 import { PainelDeEquipamentos } from './PainelDeEquipamentos.tsx'
 import { PainelDoMercado } from './PainelDoMercado.tsx'
 import { Retrato } from './Retrato.tsx'
-import { NOME_DA_RARIDADE, NOME_DO_ITEM, descreverGenes, formatarTempo } from './textos.ts'
+import { NOME_DA_RARIDADE, NOME_DO_ITEM, descreverGenes, formatarTempo, formatarXp } from './textos.ts'
 import type { Comando, Sessao } from './useJogo.ts'
 
 type Props = { readonly sessao: Sessao; readonly executar: (comando: Comando) => void }
@@ -98,6 +99,7 @@ function Lutador({ titulo, criatura, combatente }: { readonly titulo: string; re
 
 export function Cacada({ sessao, executar }: Props) {
   const { estado, agora, registros, eventos } = sessao
+  const estimativas = useEstimativas(estado)
   const [modoLeve, setModoLeve] = useState(() => lerGuardado(CHAVE_DO_MODO_LEVE) === 'sim')
   const { ativa, inventario, encontro } = estado
   const maximaDaAtiva = vidaMaxima(CATALOGO, ativa)
@@ -179,27 +181,15 @@ export function Cacada({ sessao, executar }: Props) {
         </div>
       </section>
 
+      <PainelDoMapa estado={estado} estimativas={estimativas} executar={executar} />
+
       <section className="painel rotas">
-        <h3>Biomas</h3>
-        <div className="botoes biomas">
-          {BIOMAS.map((b, i) => (
-            <button
-              key={b.nome}
-              className={i === estado.bioma ? 'escolhida' : ''}
-              disabled={b.era > estado.era}
-              title={b.era > estado.era ? `Abre na Era ${b.era}` : undefined}
-              onClick={() => executar((e, t) => escolherBioma(e, BIOMAS, i, t))}
-            >
-              {b.nome}
-              <small>{b.tipo}</small>
-            </button>
-          ))}
-        </div>
-        <h3>Rotas</h3>
+        <h3>Rotas de {bioma.nome}</h3>
         <div className="botoes">
           {/* Os biomas das Eras 1 e 2 não têm a rota 6. */}
           {CONFIGURACAO.rotas.slice(0, bioma.especiesPorRota.length).map((rota, i) => {
             const numero = i + 1
+            const estimativa = estimativas.calculando ? undefined : estimativas.lista.find((e) => e.bioma === estado.bioma && e.rota === numero)
             return (
               <button
                 key={numero}
@@ -212,6 +202,7 @@ export function Cacada({ sessao, executar }: Props) {
                 <small>
                   {rota.faixaDeNivel[0]}–{rota.faixaDeNivel[1]}
                 </small>
+                {estimativa && <small>{formatarXp(estimativa.xpPorHora)} XP/h</small>}
               </button>
             )
           })}
