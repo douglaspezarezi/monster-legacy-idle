@@ -28,6 +28,10 @@ export const NOME_DO_ESPACO: Readonly<Record<Espaco, string>> = {
   armaPrincipal: 'Arma principal',
   armaSecundaria: 'Arma secundária',
   cinto: 'Cinto',
+  luvas: 'Luvas',
+  joias: 'Joias',
+  insignia: 'Insígnia',
+  brasao: 'Brasão',
 }
 
 export const EFEITO_DO_ESPACO: Readonly<Record<Espaco, string>> = {
@@ -36,7 +40,11 @@ export const EFEITO_DO_ESPACO: Readonly<Record<Espaco, string>> = {
   pernas: 'menos espera entre selvagens',
   armaPrincipal: 'na chance de captura',
   armaSecundaria: 'de desconto no cruzamento',
-  cinto: 'na produção da Forja',
+  cinto: 'na produção da Forja e da Mina',
+  luvas: 'nas chances de selvagens raros ou melhores',
+  joias: 'nas quedas de matriz, Essência e Chave',
+  insignia: 'menos abates até o chefe',
+  brasao: 'na chance de prismática',
 }
 
 export function descreverEvento(evento: Evento): string {

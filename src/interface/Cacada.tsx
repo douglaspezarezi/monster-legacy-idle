@@ -3,7 +3,7 @@ import { Fragment, useState } from 'react'
 import { CATALOGO, CONFIGURACAO } from '../conteudo/jogo.ts'
 import { BIOMAS } from '../conteudo/biomas.ts'
 import { colocarNaForja, colocarNaMina, fragmentosPorHoraDaMina, ouroPorHoraDaForja, tirarDaForja, tirarDaMina } from '../engine/base.ts'
-import { ABATES_PARA_O_CHEFE } from '../engine/cacada.ts'
+import { abatesParaOChefe } from '../engine/cacada.ts'
 import { dadosDaEra, podeReiniciarEra, reiniciarEra } from '../engine/era.ts'
 import { ESPACOS_NA_RESERVA } from '../engine/captura.ts'
 import type { Combatente } from '../engine/combate.ts'
@@ -123,7 +123,7 @@ export function Cacada({ sessao, executar }: Props) {
             Era {estado.era} · {bioma.nome} · Rota {estado.rota}
           </h2>
           <span>
-            {encontro?.chefe ? 'Chefe da rota!' : `Chefe em ${ABATES_PARA_O_CHEFE - abates} abates`}
+            {encontro?.chefe ? 'Chefe da rota!' : `Chefe em ${Math.max(0, abatesParaOChefe(estado) - abates)} abates`}
           </span>
         </header>
         {podeReiniciarEra(CONFIGURACAO.eras, estado) && (
