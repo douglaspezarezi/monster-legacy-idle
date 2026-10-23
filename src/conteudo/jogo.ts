@@ -6,6 +6,7 @@ import { criarTabelaDeTipos } from '../engine/multiplicador-de-tipo.ts'
 import { BIOMAS } from './biomas.ts'
 import { ERAS } from './eras.ts'
 import { ESPECIES } from './especies.ts'
+import { ILHAS } from './ilhas.ts'
 import { LINHAGENS } from './linhagens.ts'
 import { FORJA, MINA } from './postos.ts'
 import { ROTAS } from './rotas.ts'
@@ -27,4 +28,5 @@ export const CONFIGURACAO: ConfiguracaoDoJogo<Tipo> = {
   forja: FORJA,
   mina: MINA,
   linhagens: LINHAGENS,
+  ilhas: ILHAS,
 }

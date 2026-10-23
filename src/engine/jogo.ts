@@ -27,6 +27,8 @@ export type Inventario = {
   readonly fragmentos: number
   // Essências por tipo, que caem nas rotas 5 a 7 do bioma do tipo.
   readonly essencias: Readonly<Record<string, number>>
+  // Chaves da Ilha, que caem na rota 5 e abrem as Ilhas Lendárias.
+  readonly chaves: number
 }
 
 export type Encontro<Tipo extends string> = {
@@ -81,6 +83,7 @@ export const INVENTARIO_INICIAL: Inventario = {
   matrizes: [],
   fragmentos: 0,
   essencias: {},
+  chaves: 0,
 }
 
 export const GATILHO_DE_CURA_INICIAL = 0.3

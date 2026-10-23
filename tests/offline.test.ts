@@ -68,6 +68,6 @@ describe('resumo da volta', () => {
       { tipo: 'derrota', instante: 4, especie: 'Brotelho', chefe: true, pausou: false },
       { tipo: 'equipamento', instante: 5, equipamento: { espaco: 'cinto', raridade: 'comum' } },
     ]
-    expect(resumir(eventos)).toEqual({ abates: 2, xp: 20, ouro: 10, niveis: 1, capturas: 1, matrizes: 1, derrotas: 1, equipamentos: 1, essencias: 0 })
+    expect(resumir(eventos)).toEqual({ abates: 2, xp: 20, ouro: 10, niveis: 1, capturas: 1, matrizes: 1, derrotas: 1, equipamentos: 1, essencias: 0, chaves: 0 })
   })
 })

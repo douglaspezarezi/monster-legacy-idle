@@ -4,7 +4,7 @@ import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 import { SEM_REPOSICAO } from './jogo.ts'
 
-export const VERSAO_DO_SAVE = 9
+export const VERSAO_DO_SAVE = 10
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
@@ -33,6 +33,8 @@ const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Re
     mina: MINA_VAZIA,
     inventario: ehObjeto(estado.inventario) ? { ...estado.inventario, fragmentos: 0, essencias: {} } : estado.inventario,
   }),
+  // A versão 10 trouxe as Chaves da Ilha, nenhuma.
+  9: (estado) => ({ ...estado, inventario: ehObjeto(estado.inventario) ? { ...estado.inventario, chaves: 0 } : estado.inventario }),
 }
 
 // Completa com zeros os contadores de chefe do bioma atual e dos guardados até o número de rotas.

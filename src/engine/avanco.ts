@@ -5,10 +5,11 @@ import { produzir } from './base.ts'
 import type { ConfiguracaoDaCacada, Evento } from './cacada.ts'
 import { simularCacada } from './cacada.ts'
 import type { Linhagem } from './cruzamento.ts'
+import type { DadosDeIlha } from './ilhas.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 
 export type ConfiguracaoDoJogo<Tipo extends string> = ConfiguracaoDaCacada<Tipo> &
-  ConfiguracaoDaBase<Tipo> & { readonly linhagens: readonly Linhagem[] }
+  ConfiguracaoDaBase<Tipo> & { readonly linhagens: readonly Linhagem[]; readonly ilhas: readonly DadosDeIlha[] }
 
 export type Avanco<Tipo extends string> = {
   readonly estado: EstadoDoJogo<Tipo>
