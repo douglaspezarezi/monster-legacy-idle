@@ -811,7 +811,7 @@ Ficam para a fase 2, com servidor e regras próprias:
 
 Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cidade** vende matrizes específicas por preço fixo e alto, com estoque que gira a cada dia. O jogador vê exatamente o que compra, sem sorteio.
 
-### Mercado da Cidade no F15 [proposta]
+### Mercado da Cidade no F15
 
 - **Por que agora:** da Era 2 em diante o ouro perde o uso. Os gastos são Tônicos (25) e cruzamento (300), e a caçada rende muito mais. Simulação de 2 horas, 10 criaturas por caso, com reposição de Tônicos:
 
@@ -875,8 +875,8 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F12 · Era 4 | Rota 7, biomas Planície Gelada, Ruínas de Ferro, Desfiladeiro do Eco e Cratera Estelar, 32 espécies e 5 técnicas | Um monstro chega ao nível 200 na Era 4 caçando nos biomas novos |
 | F13 · Despertar | Mina com Fragmentos, Essências nas rotas 5 a 7 e Despertar com técnica exclusiva por tipo | Uma criatura desperta e caça com a técnica exclusiva |
 | F14 · Ilhas Lendárias | Chaves na rota 5, quatro ilhas de 10 andares, Fragmentos por andar e matriz lendária ou mítica no fim | Uma criatura vence o andar 10 de uma ilha |
-| F15 · Mercado da Cidade **[proposta]** | Estoque diário de 6 matrizes por preço fixo em ouro, aberto na Era 4 | Uma matriz comprada no Mercado vira criatura na reserva |
+| F15 · Mercado da Cidade | Estoque diário de 6 matrizes por preço fixo em ouro, aberto na Era 4 | Uma matriz comprada no Mercado vira criatura na reserva |
 
 ## 17. Pendências
 
-1. Se há conteúdo de nível depois da Era 4. **[proposta]** Não: o nível 200 continua o máximo, e o fim de jogo fica em Despertar, Ilhas Lendárias e Mercado da Cidade.
+1. Se há conteúdo de nível depois da Era 4. Não: o nível 200 continua o máximo, e o fim de jogo fica em Despertar, Ilhas Lendárias e Mercado da Cidade.
