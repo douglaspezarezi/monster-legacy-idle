@@ -30,6 +30,7 @@ import {
 } from '../engine/jogo.ts'
 import { xpParaSubir } from '../engine/nivel.ts'
 import type { Tipo } from '../conteudo/tipos.ts'
+import { PainelDasIlhas } from './PainelDasIlhas.tsx'
 import { PainelDeCruzamento } from './PainelDeCruzamento.tsx'
 import { PainelDeEquipamentos } from './PainelDeEquipamentos.tsx'
 import { Retrato } from './Retrato.tsx'
@@ -221,6 +222,8 @@ export function Cacada({ sessao, executar }: Props) {
           <dd>{inventario.tonicosDeRetorno}</dd>
           <dt>Fragmentos</dt>
           <dd>{inventario.fragmentos}</dd>
+          <dt>Chaves da Ilha</dt>
+          <dd>{inventario.chaves}</dd>
           {essencias.map(([tipo, quantidade]) => (
             <Fragment key={tipo}>
               <dt>Essências de {tipo}</dt>
@@ -418,6 +421,8 @@ export function Cacada({ sessao, executar }: Props) {
           <p>Marque dois pais da mesma linhagem na reserva ({pais.length}/2).</p>
         )}
       </section>
+
+      <PainelDasIlhas estado={estado} executar={executar} />
 
       <PainelDeEquipamentos estado={estado} executar={executar} />
 

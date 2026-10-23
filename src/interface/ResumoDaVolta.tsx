@@ -36,6 +36,8 @@ export function ResumoDaVolta({ volta, aoFechar }: Props) {
         <dd>{resumo.equipamentos}</dd>
         <dt>Essências</dt>
         <dd>{resumo.essencias}</dd>
+        <dt>Chaves da Ilha</dt>
+        <dd>{resumo.chaves}</dd>
       </dl>
       <button onClick={aoFechar}>Continuar</button>
     </section>

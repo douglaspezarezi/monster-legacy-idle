@@ -63,6 +63,8 @@ export function descreverEvento(evento: Evento): string {
       return `${evento.de} evoluiu para ${evento.para}!`
     case 'essencia':
       return `Caiu uma Essência de ${evento.tipoDaEssencia}`
+    case 'chave':
+      return 'Caiu uma Chave da Ilha'
   }
 }
 
