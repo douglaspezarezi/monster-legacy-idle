@@ -63,6 +63,26 @@ Rotas de mesmo número rendem igual em qualquer bioma: o que muda é a vantagem 
 - **Mapa-múndi de caçadas:** mostra os biomas, trancados por Era (seção 7). Um indicador acende a rota com maior XP por hora para a criatura ativa, lendo nível, tipos e técnicas.
 - **Avanço de rota:** chave na interface entre avanço automático (vence o chefe e passa à rota seguinte) e farm travado na rota.
 
+### Mapa-múndi no F18 [proposta]
+
+- **O que muda na tela:** o mapa entra no lugar dos botões de bioma. Ele tem 4 faixas, uma por Era, com os 4 biomas de cada Era. Cada bioma aparece num cartão com a miniatura do cenário dele, igual ao da cena da caçada, mais o nome, o tipo e as rotas liberadas.
+- **Biomas trancados:** os de Eras futuras aparecem acinzentados, com "Abre na Era N". O bioma da caçada fica destacado, com o monstro ativo desenhado no cartão.
+- **Uso:** tocar num cartão troca de bioma, como os botões de hoje. As rotas continuam nos botões abaixo do mapa, agora com o XP por hora estimado em cada uma.
+- **Indicador de melhor rota:** para cada rota liberada dos biomas abertos, o motor simula 5 minutos de caçada do monstro ativo, com nível, tipos, técnicas, equipamentos e Tônicos atuais e um gerador de semente fixa. Daí sai o XP por hora estimado. A rota com mais XP por hora ganha uma marca no mapa e uma linha de texto, por exemplo "Melhor rota para Couraçor: Planície Gelada, rota 7, cerca de 3,4 milhões de XP por hora".
+- **A simulação não muda o jogo:** ela roda numa cópia do estado, sem gastar itens nem mexer no gerador da caçada.
+- **Quando recalcula:** quando o monstro ativo muda, sobe de nível, evolui ou desperta, quando a Era muda ou quando um equipamento é trocado. No máximo uma vez por minuto, porque no começo do jogo o nível sobe a cada poucos abates.
+- **Desempenho:** simular todas as rotas de uma vez custa até cerca de 0,35 s no fim de jogo (92 rotas). Medido no Mac de desenvolvimento:
+
+| Caso | Rotas abertas | 5 min por rota | 10 min por rota |
+| --- | --- | --- | --- |
+| Gelusco no nível 20, Era 1 | 12 | 22 ms | 49 ms |
+| Rebitaço no nível 90, Era 2 | 40 | 102 ms | 211 ms |
+| Couraçor no nível 200, Era 4 | 92 | 353 ms | 648 ms |
+
+  Por isso a conta é feita uma rota por vez, entre os quadros da tela. O mapa mostra "calculando…" até terminar, e a tela não trava.
+- **Por que vale:** no mesmo caso, o Couraçor rende 3,36 milhões de XP por hora na rota 7 da Planície Gelada, 2,06 milhões na Cratera Estelar e 1,97 milhão nas Ruínas de Ferro. Escolher pelo tipo dá até 60% a mais, e é isso que o pilar 3 pede.
+- **Fica para depois:** o mapa desenhado como um continente com caminhos entre os biomas, que pede arte final.
+
 ### Primeiro bioma: Mata Funda (Brota)
 
 | Rota | Espécies (chance igual) |
@@ -908,6 +928,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F15 · Mercado da Cidade | Estoque diário de 6 matrizes por preço fixo em ouro, aberto na Era 4 | Uma matriz comprada no Mercado vira criatura na reserva |
 | F16 · Equipamentos | Luvas, Joias, Insígnia e Brasão; Cinto também na Mina | Uma peça de cada espaço novo vestida muda o que a caçada rende |
 | F17 · Cena da caçada | Cena em Canvas com o bioma, o monstro andando e a luta com o selvagem, em pixel art provisória, e modo leve | Na caçada, o monstro anda pelo bioma, o selvagem aparece e os golpes aparecem na cena |
+| F18 · Mapa-múndi **[proposta]** | Mapa dos 16 biomas por Era, com miniaturas, trancas e estimativa de XP por hora com a melhor rota marcada | O mapa aponta a melhor rota do monstro ativo e troca de bioma ao tocar |
 
 ## 17. Pendências
 
