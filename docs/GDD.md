@@ -664,6 +664,18 @@ Nenhum equipamento aumenta força, vida ou ataque das criaturas. Eles só aceler
 - **Efeito por raridade:** 5%, 10%, 15%, 20% e 25%.
 - Uma peça por espaço; as outras ficam no inventário. Trocar é livre. Os equipamentos atravessam o reset de Era.
 
+### Equipamentos no F16 [proposta]
+
+- **Entram 4 espaços** cujos sistemas já existem, com o mesmo efeito por raridade (5% a 25%):
+  - **Luvas:** as chances de selvagem raro, épico, lendário e mítico sobem nessa proporção; a diferença sai da chance de fraco. Com 25%, o raro vai de 4% para 5% e o épico de 0,9% para 1,125%; o fraco cai de 25% para cerca de 23,8%.
+  - **Joias:** as chances de matriz, Essência e Chave da Ilha sobem nessa proporção. Com 25%, a Chave vai de 0,05% para 0,0625% dos abates na rota 5: de uma Chave a cada 2 a 3 horas para uma a cada 1,6 a 2,4 horas.
+  - **Insígnia:** o chefe aparece com menos abates: 100 × (1 − efeito), arredondado para cima. Com 25%, a cada 75 abates. O chefe dá a peça de equipamento, então a Insígnia também acelera a coleta das outras peças.
+  - **Brasão:** a chance de prismática sobe nessa proporção, no selvagem, na matriz aberta e no filhote de cruzamento. Com 25%, vai de 2% para 2,5%.
+- **Cinto:** passa a valer também na Mina, como diz a tabela acima ("extração mais rápida nos postos de trabalho"). Hoje só vale na Forja.
+- **Ficam de fora:** Mochila, porque o inventário não tem limite, e Companheiro de ombro, porque a coleta com o jogo fechado já é automática.
+- **Fonte:** a mesma do F5. O chefe tem 10% de chance de deixar uma peça, agora com espaço sorteado entre 10 em vez de 6. Na rota 7, com cerca de 1.000 abates por hora, saem 10 chefes e 1 peça por hora, e cada espaço recebe uma peça a cada 10 horas, em vez de 6. Com a Insígnia de 25%, a cada 7,5 horas.
+- **Força:** nenhum dos novos espaços muda a força das criaturas.
+
 ## 9. Base e postos de trabalho
 
 As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a produção: +25% no posto certo e até −50% no posto oposto.
@@ -876,6 +888,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F13 · Despertar | Mina com Fragmentos, Essências nas rotas 5 a 7 e Despertar com técnica exclusiva por tipo | Uma criatura desperta e caça com a técnica exclusiva |
 | F14 · Ilhas Lendárias | Chaves na rota 5, quatro ilhas de 10 andares, Fragmentos por andar e matriz lendária ou mítica no fim | Uma criatura vence o andar 10 de uma ilha |
 | F15 · Mercado da Cidade | Estoque diário de 6 matrizes por preço fixo em ouro, aberto na Era 4 | Uma matriz comprada no Mercado vira criatura na reserva |
+| F16 · Equipamentos **[proposta]** | Luvas, Joias, Insígnia e Brasão; Cinto também na Mina | Uma peça de cada espaço novo vestida muda o que a caçada rende |
 
 ## 17. Pendências
 
