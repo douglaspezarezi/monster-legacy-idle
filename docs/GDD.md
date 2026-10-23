@@ -748,7 +748,7 @@ Técnicas exclusivas do Despertar, uma por tipo, todas com poder 100 e recarga d
 | Bruma | Véu Cinzento | especial |
 | Astro | Chuva Cósmica | física |
 
-### Ilhas Lendárias no F14 [proposta]
+### Ilhas Lendárias no F14
 
 - **Chave da Ilha:** cada abate na rota 5 de qualquer bioma tem 0,05% de chance de render 1 Chave. Com 600 a 1.000 abates por hora, sai uma Chave a cada 2 a 3 horas de caçada na rota 5.
 - **Quando abrem:** na Era 4. Entrar gasta 1 Chave, mesmo se a criatura perder no primeiro andar.
@@ -762,7 +762,7 @@ Técnicas exclusivas do Despertar, uma por tipo, todas com poder 100 e recarga d
 | Ilha da Estrela | Estelado | Nebulim | Constelar | Eclipsor |
 
 - **Guardião:** o do andar n tem nível 150 + 5n (155 a 200), raridade épica, e lendária no andar 10. Vida ×4, Ataque e Foco ÷2.
-- **Como se joga:** a criatura ativa enfrenta os andares em sequência, na hora, sem passar tempo de jogo. A Vida não volta entre andares; os Tônicos de Cura do inventário são usados pelo gatilho de sempre. Perder expulsa da ilha, sem perda de XP e sem Fadiga. Os guardiões não dão XP nem podem ser capturados. A luta em andamento na caçada acaba, e a criatura volta para ela com a vida cheia.
+- **Como se joga:** a criatura ativa entra com a vida cheia e enfrenta os andares em sequência, na hora, sem passar tempo de jogo. A Vida não volta entre andares; os Tônicos de Cura do inventário são usados pelo gatilho de sempre. Perder expulsa da ilha, sem perda de XP e sem Fadiga. Os guardiões não dão XP nem podem ser capturados. A luta em andamento na caçada acaba, e a criatura volta para ela com a vida cheia.
 - **Prêmios:** 30 Fragmentos por andar vencido, ficando com o que já ganhou se perder. Vencer o andar 10 dá uma matriz da espécie do guardião final, lendária, com 10% de chance de ser mítica.
 
 Simulação de 200 entradas por caso, criatura no nível 200, com até 5 Tônicos de Cura (chance de vencer os 10 andares / andares vencidos em média; "D" = desperta):
@@ -854,7 +854,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F11 · Era 3 | Rota 6, biomas Cume dos Ventos, Veio Cristalino, Lagoa Velada e Planalto da Alvorada, 28 espécies e 6 técnicas | Um monstro chega ao nível 150 na Era 3 caçando nos biomas novos |
 | F12 · Era 4 | Rota 7, biomas Planície Gelada, Ruínas de Ferro, Desfiladeiro do Eco e Cratera Estelar, 32 espécies e 5 técnicas | Um monstro chega ao nível 200 na Era 4 caçando nos biomas novos |
 | F13 · Despertar | Mina com Fragmentos, Essências nas rotas 5 a 7 e Despertar com técnica exclusiva por tipo | Uma criatura desperta e caça com a técnica exclusiva |
-| F14 · Ilhas Lendárias **[proposta]** | Chaves na rota 5, quatro ilhas de 10 andares, Fragmentos por andar e matriz lendária ou mítica no fim | Uma criatura vence o andar 10 de uma ilha |
+| F14 · Ilhas Lendárias | Chaves na rota 5, quatro ilhas de 10 andares, Fragmentos por andar e matriz lendária ou mítica no fim | Uma criatura vence o andar 10 de uma ilha |
 
 ## 17. Pendências
 
