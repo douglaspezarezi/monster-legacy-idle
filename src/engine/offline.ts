@@ -64,10 +64,11 @@ export type Resumo = {
   readonly equipamentos: number
   readonly essencias: number
   readonly chaves: number
+  readonly pergaminhos: number
 }
 
 export function resumir(eventos: readonly Evento[]): Resumo {
-  const resumo = { abates: 0, xp: 0, ouro: 0, niveis: 0, capturas: 0, matrizes: 0, derrotas: 0, equipamentos: 0, essencias: 0, chaves: 0 }
+  const resumo = { abates: 0, xp: 0, ouro: 0, niveis: 0, capturas: 0, matrizes: 0, derrotas: 0, equipamentos: 0, essencias: 0, chaves: 0, pergaminhos: 0 }
   for (const evento of eventos) {
     if (evento.tipo === 'abate') {
       resumo.abates++
@@ -80,6 +81,7 @@ export function resumir(eventos: readonly Evento[]): Resumo {
     else if (evento.tipo === 'equipamento') resumo.equipamentos++
     else if (evento.tipo === 'essencia') resumo.essencias++
     else if (evento.tipo === 'chave') resumo.chaves++
+    else if (evento.tipo === 'pergaminho') resumo.pergaminhos++
   }
   return resumo
 }

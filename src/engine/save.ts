@@ -5,7 +5,7 @@ import type { EstadoDoJogo } from './jogo.ts'
 import { SEM_REPOSICAO } from './jogo.ts'
 import { MERCADO_VAZIO } from './mercado.ts'
 
-export const VERSAO_DO_SAVE = 11
+export const VERSAO_DO_SAVE = 12
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
@@ -38,6 +38,11 @@ const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Re
   9: (estado) => ({ ...estado, inventario: ehObjeto(estado.inventario) ? { ...estado.inventario, chaves: 0 } : estado.inventario }),
   // A versão 11 trouxe o Mercado da Cidade, ainda sem estoque.
   10: (estado) => ({ ...estado, mercado: MERCADO_VAZIO }),
+  // A versão 12 trouxe os Pergaminhos e as Pedras do Destino, nenhum.
+  11: (estado) => ({
+    ...estado,
+    inventario: ehObjeto(estado.inventario) ? { ...estado.inventario, pergaminhos: {}, pedrasDoDestino: 0 } : estado.inventario,
+  }),
 }
 
 // Completa com zeros os contadores de chefe do bioma atual e dos guardados até o número de rotas.

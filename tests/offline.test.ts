@@ -57,7 +57,7 @@ describe('tempo fora do jogo', () => {
 })
 
 describe('resumo da volta', () => {
-  it('soma abates, XP, ouro, níveis, capturas que deram certo, matrizes, derrotas e equipamentos', () => {
+  it('soma abates, XP, ouro, níveis, capturas que deram certo, matrizes, derrotas, equipamentos e Pergaminhos', () => {
     const eventos: Evento[] = [
       { tipo: 'abate', instante: 1, especie: 'Brotelho', chefe: false, xp: 10, ouro: 5 },
       { tipo: 'abate', instante: 2, especie: 'Formigaço', chefe: false, xp: 10, ouro: 5 },
@@ -67,7 +67,8 @@ describe('resumo da volta', () => {
       { tipo: 'matriz', instante: 3, matriz: { especie: 'Brotelho', raridade: 'comum' } },
       { tipo: 'derrota', instante: 4, especie: 'Brotelho', chefe: true, pausou: false },
       { tipo: 'equipamento', instante: 5, equipamento: { espaco: 'cinto', raridade: 'comum' } },
+      { tipo: 'pergaminho', instante: 5, tecnica: 'Mordida' },
     ]
-    expect(resumir(eventos)).toEqual({ abates: 2, xp: 20, ouro: 10, niveis: 1, capturas: 1, matrizes: 1, derrotas: 1, equipamentos: 1, essencias: 0, chaves: 0 })
+    expect(resumir(eventos)).toEqual({ abates: 2, xp: 20, ouro: 10, niveis: 1, capturas: 1, matrizes: 1, derrotas: 1, equipamentos: 1, essencias: 0, chaves: 0, pergaminhos: 1 })
   })
 })

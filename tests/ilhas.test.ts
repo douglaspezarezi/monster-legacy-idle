@@ -93,6 +93,11 @@ describe('Ilhas Lendárias', () => {
     expect(r.estado.inventario.matrizes).toEqual([r.matriz])
   })
 
+  it('vencer o andar 10 dá uma Pedra do Destino; parar antes, nenhuma', () => {
+    expect(explorarIlha(CONFIGURACAO, naIlha(forte), 0, 0, criarGerador(2)).estado.inventario.pedrasDoDestino).toBe(1)
+    expect(explorarIlha(CONFIGURACAO, naIlha(fraco), 0, 0, criarGerador(1)).estado.inventario.pedrasDoDestino).toBe(0)
+  })
+
   it('a matriz final sai mítica em cerca de 10% das vitórias', () => {
     let miticas = 0
     const vezes = 300

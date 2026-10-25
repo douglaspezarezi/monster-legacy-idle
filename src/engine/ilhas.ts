@@ -58,7 +58,7 @@ export type ResultadoDaIlha<Tipo extends string> = {
   readonly andaresVencidos: number
   readonly fragmentos: number
   readonly tonicosDeCuraUsados: number
-  // Só quando vence o último andar.
+  // Só quando vence o último andar, que também dá uma Pedra do Destino.
   readonly matriz: Matriz | null
 }
 
@@ -107,6 +107,7 @@ export function explorarIlha<Tipo extends string>(
     fragmentos: estado.inventario.fragmentos + fragmentos,
     tonicosDeCura: estado.inventario.tonicosDeCura - tonicosDeCuraUsados,
     matrizes: matriz ? [...estado.inventario.matrizes, matriz] : estado.inventario.matrizes,
+    pedrasDoDestino: estado.inventario.pedrasDoDestino + (venceu ? 1 : 0),
   }
   return {
     estado: { ...semEncontro(estado, agora), inventario, vidaDaAtiva: vidaMaxima(configuracao.catalogo, estado.ativa) },

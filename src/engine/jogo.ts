@@ -31,6 +31,10 @@ export type Inventario = {
   readonly essencias: Readonly<Record<string, number>>
   // Chaves da Ilha, que caem na rota 5 e abrem as Ilhas Lendárias.
   readonly chaves: number
+  // Pergaminhos por técnica, que caem dos chefes de rota.
+  readonly pergaminhos: Readonly<Record<string, number>>
+  // Vencer o andar 10 de uma Ilha dá uma; o cruzamento gasta.
+  readonly pedrasDoDestino: number
 }
 
 export type Encontro<Tipo extends string> = {
@@ -88,6 +92,8 @@ export const INVENTARIO_INICIAL: Inventario = {
   fragmentos: 0,
   essencias: {},
   chaves: 0,
+  pergaminhos: {},
+  pedrasDoDestino: 0,
 }
 
 export const GATILHO_DE_CURA_INICIAL = 0.3

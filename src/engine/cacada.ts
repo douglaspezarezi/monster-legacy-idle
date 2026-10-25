@@ -19,6 +19,7 @@ import { CHANCE_DE_EQUIPAMENTO_DO_CHEFE, ESPACOS, aumentar, bonus, reduzir } fro
 import { inteiroEntre } from './aleatorio.ts'
 import type { DadosDeEra } from './era.ts'
 import { dadosDaEra } from './era.ts'
+import { CHANCE_DE_PERGAMINHO, tecnicasDoPergaminho } from './aprendizado.ts'
 
 export type DadosDeRota = {
   readonly faixaDeNivel: readonly [minimo: number, maximo: number]
@@ -69,6 +70,7 @@ export type Evento =
   | { readonly tipo: 'equipamento'; readonly instante: number; readonly equipamento: Equipamento }
   | { readonly tipo: 'essencia'; readonly instante: number; readonly tipoDaEssencia: string }
   | { readonly tipo: 'chave'; readonly instante: number }
+  | { readonly tipo: 'pergaminho'; readonly instante: number; readonly tecnica: string }
   | { readonly tipo: 'evolucao'; readonly instante: number; readonly de: string; readonly para: string }
 
 export type ResultadoDaCacada<Tipo extends string> = {
@@ -174,6 +176,15 @@ function vencer<Tipo extends string>(
       const equipamento = { espaco: ESPACOS[inteiroEntre(gerador, 0, ESPACOS.length - 1)], raridade: rota.raridadeDoEquipamento }
       equipamentos = { ...equipamentos, guardados: [...equipamentos.guardados, equipamento] }
       eventos.push({ tipo: 'equipamento', instante: agora, equipamento })
+    }
+    // O Pergaminho ensina uma técnica do tipo do bioma.
+    if (gerador() < CHANCE_DE_PERGAMINHO) {
+      const opcoes = tecnicasDoPergaminho(configuracao.catalogo, configuracao.biomas[estado.bioma].tipo)
+      if (opcoes.length > 0) {
+        const tecnica = opcoes[inteiroEntre(gerador, 0, opcoes.length - 1)]
+        inventario = { ...inventario, pergaminhos: { ...inventario.pergaminhos, [tecnica]: (inventario.pergaminhos[tecnica] ?? 0) + 1 } }
+        eventos.push({ tipo: 'pergaminho', instante: agora, tecnica })
+      }
     }
     abatesPorRota = comAbates(estado.abatesPorRota, numeroDaRota, 0)
     // A Era e o bioma limitam as rotas: os biomas das Eras 1 e 2 não têm a rota 6.

@@ -1,12 +1,13 @@
 // Atributos finais de uma criatura a partir da espécie, dos genes e do nível (GDD, seção 7).
 import type { Combatente } from './combate.ts'
 import type { Catalogo } from './especie.ts'
-import { especieDo, tecnicasDa } from './especie.ts'
+import { especieDo } from './especie.ts'
 import type { Atributo, Genes } from './genes.ts'
 import { ATRIBUTOS, multiplicadorDeRaridade } from './genes.ts'
 import { valorDoAtributo } from './atributos.ts'
 import { multiplicadorDaForma } from './evolucao.ts'
-import { MULTIPLICADOR_DO_DESPERTAR, tecnicasDespertas } from './despertar.ts'
+import { MULTIPLICADOR_DO_DESPERTAR } from './despertar.ts'
+import { filaDeTecnicas } from './aprendizado.ts'
 
 export type Atributos = Readonly<Record<Atributo, number>>
 
@@ -29,6 +30,8 @@ export type Criatura = {
   readonly xpNoNivel: number
   // Só criaturas do jogador despertam; os selvagens não têm o campo.
   readonly despertada?: boolean
+  // Técnica de Pergaminho ou herdada no cruzamento; fica no topo da fila.
+  readonly tecnicaAprendida?: string
 }
 
 // Com a vida cheia. O multiplicador de Vida vale para selvagens e chefes (GDD, seção 4).
@@ -47,6 +50,5 @@ export function combatenteDe<Tipo extends string>(
     ataque: calculados.ataque / multiplicadorDeVida,
     foco: calculados.foco / multiplicadorDeVida,
   }
-  const tecnicas = criatura.despertada ? tecnicasDespertas(catalogo, especie, tecnicasDa(catalogo, especie)) : tecnicasDa(catalogo, especie)
-  return { especie: especie.nome, tipos: especie.tipos, atributos, tecnicas, vida: atributos.vida }
+  return { especie: especie.nome, tipos: especie.tipos, atributos, tecnicas: filaDeTecnicas(catalogo, criatura), vida: atributos.vida }
 }
