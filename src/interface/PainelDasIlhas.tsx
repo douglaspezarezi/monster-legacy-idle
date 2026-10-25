@@ -32,7 +32,7 @@ export function PainelDasIlhas({ estado, executar }: Props) {
       <p>
         A Chave da Ilha cai na rota 5. O monstro ativo entra com a vida cheia e enfrenta 10 guardiões seguidos, do nível 155 ao 200, sem
         recuperar Vida entre eles, a não ser pelos Tônicos de Cura. Cada andar vencido dá {FRAGMENTOS_POR_ANDAR} Fragmentos; o andar 10 dá
-        uma matriz lendária, às vezes mítica. Perder só expulsa da ilha.
+        uma matriz lendária, às vezes mítica, e uma Pedra do Destino. Perder só expulsa da ilha.
       </p>
       <div className="botoes">
         {CONFIGURACAO.ilhas.map((ilha, i) => (
@@ -51,7 +51,7 @@ export function PainelDasIlhas({ estado, executar }: Props) {
           {ultima.ilha}: {ultima.andaresVencidos} de 10 andares
           {ultima.guardiao ? `, expulso por ${ultima.guardiao}` : ''}. +{ultima.fragmentos} Fragmentos
           {ultima.tonicosDeCuraUsados > 0 ? `, ${ultima.tonicosDeCuraUsados} Tônicos de Cura usados` : ''}
-          {ultima.matriz ? `. Matriz: ${ultima.matriz.especie} ${NOME_DA_RARIDADE[ultima.matriz.raridade]}!` : '.'}
+          {ultima.matriz ? `. Matriz: ${ultima.matriz.especie} ${NOME_DA_RARIDADE[ultima.matriz.raridade]} e uma Pedra do Destino!` : '.'}
         </p>
       )}
     </section>

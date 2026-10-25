@@ -32,6 +32,7 @@ import type { Tipo } from '../conteudo/tipos.ts'
 import { guardar, lerGuardado } from './arquivo.ts'
 import { Cena } from './Cena.tsx'
 import { PainelDasIlhas } from './PainelDasIlhas.tsx'
+import { PainelDosPergaminhos } from './PainelDosPergaminhos.tsx'
 import { PainelDoMapa } from './PainelDoMapa.tsx'
 import { useEstimativas } from './useEstimativas.ts'
 import { PainelDeCruzamento } from './PainelDeCruzamento.tsx'
@@ -235,6 +236,8 @@ export function Cacada({ sessao, executar }: Props) {
           <dd>{inventario.fragmentos}</dd>
           <dt>Chaves da Ilha</dt>
           <dd>{inventario.chaves}</dd>
+          <dt>Pedras do Destino</dt>
+          <dd>{inventario.pedrasDoDestino}</dd>
           {essencias.map(([tipo, quantidade]) => (
             <Fragment key={tipo}>
               <dt>Essências de {tipo}</dt>
@@ -372,7 +375,10 @@ export function Cacada({ sessao, executar }: Props) {
                     {naForja(membro.id) && ' · na Forja'}
                     {naMina(membro.id) && ' · na Mina'}
                   </span>
-                  <small>{descreverGenes(membro.genes)}</small>
+                  <small>
+                    {descreverGenes(membro.genes)}
+                    {membro.tecnicaAprendida !== undefined && ` · aprendeu ${membro.tecnicaAprendida}`}
+                  </small>
                 </div>
                 <div className="acoes">
                   <button disabled={ocupada(membro.id)} onClick={() => executar((e, t) => trocarAtiva(e, CATALOGO, membro.id, t))}>
@@ -432,6 +438,8 @@ export function Cacada({ sessao, executar }: Props) {
           <p>Marque dois pais da mesma linhagem na reserva ({pais.length}/2).</p>
         )}
       </section>
+
+      <PainelDosPergaminhos estado={estado} executar={executar} />
 
       <PainelDasIlhas estado={estado} executar={executar} />
 
