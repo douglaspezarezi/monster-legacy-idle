@@ -67,6 +67,19 @@ Idle RPG de criaturas para navegador. O jogador forma criaturas, deixa-as caçan
 - **Modo de segundo plano:** com a aba escondida, o motor continua calculando a caçada a cada passo, mas a tela não é redesenhada e o som para. Ao voltar, a tela é redesenhada com o estado atual. É automático, sem opção.
 - **Painel de Preferências:** junta volumes, opacidade e o modo leve que já existe. As preferências ficam guardadas no navegador, fora do save e da nuvem, como o modo leve hoje.
 
+### Interface editável no F24 [proposta]
+
+- **Arrastar muda a ordem dos painéis na grade, não a posição livre.** A grade se ajusta à largura da tela: 3 colunas no computador e 1 no celular. Com posição livre, um painel cobriria o outro, e o layout montado no computador quebraria no celular e ao mudar o tamanho da janela. Assim cada painel continua cabendo na tela e nada fica escondido atrás de outro.
+- **Quais painéis:** os 14 da caçada: Luta, Mapa, Rotas, Inventário, Captura, Reserva, Base, Chocadeira, Pergaminhos, Ilhas, Mercado, Equipamentos, Conquistas e Acontecimentos. A Nuvem, as Preferências, a Cópia de segurança e o resumo da volta ficam fixos, porque são onde o jogador liga e desfaz a edição. A Luta e o Mapa continuam ocupando a linha inteira, e a Reserva duas colunas na tela larga.
+- **Modo de edição:** ligado e desligado nas Preferências. Ligado, cada painel ganha borda tracejada e uma barra no topo com:
+  - uma alça para arrastar o painel, que funciona com mouse e com o dedo; ao soltar sobre outro painel, o arrastado passa para o lugar dele;
+  - botões ◀ e ▶, que trocam com o vizinho, para quem não quer arrastar;
+  - botões − e +, que mudam a escala de 50% a 150% em passos de 10%, com a porcentagem ao lado.
+- Fora do modo de edição, a barra some e os painéis funcionam como hoje, na ordem e na escala escolhidas.
+- **Restaurar layout:** um botão nas Preferências volta à ordem atual e a 100% em todos.
+- **Onde fica salvo:** no navegador, junto das Preferências, fora do save e da nuvem. Um painel novo, que entrar num marco futuro, aparece no fim da ordem.
+- **Escala:** usa a propriedade `zoom` do CSS, que muda o tamanho do painel e o espaço que ele ocupa na grade. Os navegadores atuais aceitam; num navegador antigo sem ela, a escala fica em 100% e o resto funciona.
+
 ## 4. Mundo e rotas
 
 O mundo tem 16 biomas, um por tipo, 4 por Era. Os biomas das Eras 1 e 2 têm 5 rotas; os da Era 3 têm também a rota 6, e os da Era 4, as rotas 6 e 7.
@@ -1092,6 +1105,7 @@ Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste docume
 | F21 · Ovos e Santuário | O cruzamento gera ovo com tempo de chocar pela raridade, Chocadeira com 3 vagas e Santuário prismático por 300 Diamantes | Um ovo choca com o jogo fechado, e um ovo épico no Santuário choca com chance prismática de 6% |
 | F22 · Destilaria | Base especial: posto de 3 vagas construído por 300 Diamantes que produz Essências do tipo escolhido | Uma Essência de um tipo que o jogador não caça sai da Destilaria com o jogo fechado |
 | F23 · Áudio e preferências | Música e efeitos gerados por código, volumes separados, opacidade do vidro e modo de segundo plano | Com o som ligado, abate, captura e conquista tocam efeitos e a música segue o bioma; a opacidade muda os painéis; com a aba escondida, a tela não redesenha e a caçada segue |
+| F24 · Interface editável **[proposta]** | Modo de edição com os 14 painéis da caçada reordenáveis por arrastar ou botões e escala de 50% a 150%, salvos no navegador | No modo de edição, um painel arrastado troca de lugar e um painel em 150% continua assim depois de recarregar a página |
 
 ## 17. Pendências
 
