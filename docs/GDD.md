@@ -743,6 +743,30 @@ As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a 
 - **Afinidade:** +25% com Rocha, Cristal ou Liga; −50% com um tipo que vence um deles (Maré, Brota, Astro, Penumbra, Faísca e Eco), pela mesma regra da Forja.
 - Uma criatura trabalha num posto por vez. Com 3 criaturas raras de afinidade certa, a Mina rende cerca de 49 Fragmentos por hora, e os 300 de um Despertar saem em cerca de 6 horas; com 3 incomuns sem afinidade, em cerca de 9 horas.
 
+### Destilaria no F22 [proposta]
+
+- **É a Base especial** da lista acima. Como os Diamantes são finitos (1.110 pelas conquistas), ela não "opera" gastando Diamantes: é construída uma vez, por 300. Os "fragmentos de fim de jogo" são as Essências do Despertar, porque os Fragmentos já saem da Mina e das Ilhas.
+- **Por que:** a Essência só cai nas rotas 5 a 7 do bioma do tipo dela, a 0,2% por abate. Para despertar um monstro de um tipo que o jogador caça pouco, ele precisa largar o bioma que rende mais. A Destilaria produz devagar a Essência de qualquer tipo, também com o jogo fechado.
+- **Como funciona:** posto com 3 vagas, como a Mina. O jogador escolhe 1 dos 16 tipos para destilar; trocar é livre e perde só a fração da Essência em andamento. Cada criatura produz 0,15 Essência por hora × o multiplicador da raridade × a afinidade, dentro do limite de 24 horas, e o Cinto aumenta como na Forja e na Mina.
+- **Afinidade com o tipo escolhido:** +25% se a criatura tem esse tipo; −50% se tem um tipo que vence o tipo escolhido pela tabela da seção 6; 1× nos demais casos. Se as duas valerem, fica o +25%. É a mesma regra da Forja e da Mina, com o tipo do posto escolhido pelo jogador.
+- Uma criatura trabalha num posto por vez (Forja, Mina ou Destilaria), não cruza e não pode ser a ativa enquanto trabalha.
+- **Diamantes:** com a Destilaria, os 1.110 Diamantes das conquistas cobrem os espaços da reserva (500), o Santuário (300) e a Destilaria (300), e sobram 10.
+- **Save:** a base ganha a Destilaria, por construir, sem tipo e sem trabalhadores. O save passa à versão 15.
+
+Essências por hora com 3 criaturas, e horas para as 10 de um Despertar:
+
+| Trabalhadores | Essências por hora | Horas para 10 |
+| --- | --- | --- |
+| 3 incomuns sem afinidade | 0,53 | 19 |
+| 3 raras sem afinidade | 0,60 | 17 |
+| 3 raras de afinidade certa | 0,75 | 13 |
+| 3 épicas de afinidade certa | 0,82 | 12 |
+| 3 lendárias de afinidade certa | 0,93 | 11 |
+| 3 raras de afinidade oposta | 0,30 | 33 |
+
+- Caçar nas rotas 5 a 7 do bioma do tipo continua mais rápido (1 a 3 Essências por hora, de 4 a 10 horas para 10). A Destilaria serve para os tipos que o jogador não caça, e junta as 10 em cerca de uma noite e um dia.
+- **Alternativa descartada:** com 0,10 por hora, 3 raras de afinidade certa levam 20 horas e 3 incomuns, 29. Assim a Destilaria vira o gargalo do Despertar, já que os 300 Fragmentos da Mina saem em 6 a 9 horas.
+
 ## 10. Cruzamento
 
 1. Os dois pais pagam uma taxa de ouro ou Diamantes e deixam a conta para sempre (sacrifício).
@@ -914,7 +938,7 @@ Vem do documento "Gamer Shield" do usuário, aprovado em 23/10/2026 como requisi
 | Recurso | Fonte | Uso |
 | --- | --- | --- |
 | Ouro | Caçadas, Forja | Tônicos, taxas de cruzamento, base comum, Mercado da Cidade |
-| Diamantes | Conquistas, calendário, compra **[a definir]** | Base especial, Santuário, conveniências |
+| Diamantes | Conquistas e calendário; não são vendidos | Base especial, Santuário, conveniências |
 | Matrizes | Quedas nas rotas, Ilhas | Gerar criaturas |
 | Fragmentos e materiais | Postos, rotas | Despertar, equipamentos |
 
@@ -952,7 +976,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 ### Conquistas e Diamantes no F20
 
 - **Por que agora:** os Diamantes são o único recurso da tabela acima sem fonte nem uso no jogo, e a Base especial e o Santuário dependem deles. O F20 cria a fonte (conquistas) e um primeiro uso pequeno; o Santuário fica para um marco seguinte.
-- **Fonte única no F20:** conquistas. Cada conquista paga uma quantidade fixa de Diamantes, uma vez só, sem sorteio. A compra de Diamantes continua **[a definir]**, e nada pago aumenta força.
+- **Fonte única no F20:** conquistas. Cada conquista paga uma quantidade fixa de Diamantes, uma vez só, sem sorteio. Diamantes não são vendidos (seção 13, Monetização).
 - **Quando conta:** o motor confere as conquistas depois de cada comando e de cada avanço da caçada, também no tempo fora. A conquista concluída paga na hora, sem botão de receber, e deixa um aviso no registro.
 - **Tela:** um painel de Conquistas com as 33, agrupadas como na tabela, cada uma com o progresso (por exemplo, 6.420 / 10.000 abates) e os Diamantes que paga.
 - **As conquistas ficam em arquivo de conteúdo**, com o contador que medem, a meta e o prêmio.
@@ -996,6 +1020,7 @@ Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste docume
 
 - Venda direta apenas de itens visuais: auras de sprite, molduras de perfil e rastros de partículas.
 - Nada pago entrega item sorteado, e nada pago aumenta força.
+- **Diamantes não são vendidos**, decidido em 05/11/2026. Eles compram coisas que deixam o jogo mais forte, como o Santuário e a Destilaria, e por isso só vêm de conquistas e, quando existir, do calendário de presença.
 - **Calendário de presença** (28 dias, com recuperação de dia perdido) e **Jornada do Treinador** (trilha de 30 dias com 50 níveis, travada por semanas): entram depois, com revisão jurídica se tiverem parte paga.
 
 ## 14. Removido do documento original
@@ -1043,6 +1068,7 @@ Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste docume
 | F19 · Cruzamento completo | Técnica aprendida no topo da fila, Pergaminhos dos chefes, técnica herdada no cruzamento e Pedra do Destino das Ilhas | Um monstro aprende uma técnica de outro tipo por Pergaminho ou cruzamento e rende mais num bioma onde antes rendia menos |
 | F20 · Conquistas e Diamantes | 33 conquistas que pagam Diamantes, registro de espécies, contadores da vida toda e espaços na reserva comprados com Diamantes | Uma conquista concluída paga Diamantes, e eles compram 10 espaços a mais na reserva |
 | F21 · Ovos e Santuário | O cruzamento gera ovo com tempo de chocar pela raridade, Chocadeira com 3 vagas e Santuário prismático por 300 Diamantes | Um ovo choca com o jogo fechado, e um ovo épico no Santuário choca com chance prismática de 6% |
+| F22 · Destilaria **[proposta]** | Base especial: posto de 3 vagas construído por 300 Diamantes que produz Essências do tipo escolhido | Uma Essência de um tipo que o jogador não caça sai da Destilaria com o jogo fechado |
 
 ## 17. Pendências
 
