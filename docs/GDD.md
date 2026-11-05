@@ -45,7 +45,7 @@ Idle RPG de criaturas para navegador. O jogador forma criaturas, deixa-as caçan
 - **Fica para depois:** o mapa-múndi da seção 4, a arte final, os sons e animações próprias de cada técnica.
 - **A arte provisória é original**, gerada por regra a partir dos nomes e tipos do jogo, como o retrato atual. Quando a arte final chegar, ela entra no lugar dos sprites e dos fundos sem mudar a cena.
 
-### Áudio e preferências no F23 [proposta]
+### Áudio e preferências no F23
 
 - **O que entra:** som (música e efeitos), volumes independentes, a opacidade do vidro e o modo de segundo plano da lista acima. A interface editável, com janelas que se arrastam e mudam de escala, fica para um marco próprio: ela pede trocar o layout em grade por posições livres e precisa de outra solução no celular. A opção de desligar animações de técnicas espera essas animações existirem.
 - **Tudo é gerado por código**, com a Web Audio API do navegador, sem arquivos de som nem dependência nova. Assim todo som é original por construção, como a arte provisória.
@@ -1091,7 +1091,7 @@ Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste docume
 | F20 · Conquistas e Diamantes | 33 conquistas que pagam Diamantes, registro de espécies, contadores da vida toda e espaços na reserva comprados com Diamantes | Uma conquista concluída paga Diamantes, e eles compram 10 espaços a mais na reserva |
 | F21 · Ovos e Santuário | O cruzamento gera ovo com tempo de chocar pela raridade, Chocadeira com 3 vagas e Santuário prismático por 300 Diamantes | Um ovo choca com o jogo fechado, e um ovo épico no Santuário choca com chance prismática de 6% |
 | F22 · Destilaria | Base especial: posto de 3 vagas construído por 300 Diamantes que produz Essências do tipo escolhido | Uma Essência de um tipo que o jogador não caça sai da Destilaria com o jogo fechado |
-| F23 · Áudio e preferências **[proposta]** | Música e efeitos gerados por código, volumes separados, opacidade do vidro e modo de segundo plano | Com o som ligado, abate, captura e conquista tocam efeitos e a música segue o bioma; a opacidade muda os painéis; com a aba escondida, a tela não redesenha e a caçada segue |
+| F23 · Áudio e preferências | Música e efeitos gerados por código, volumes separados, opacidade do vidro e modo de segundo plano | Com o som ligado, abate, captura e conquista tocam efeitos e a música segue o bioma; a opacidade muda os painéis; com a aba escondida, a tela não redesenha e a caçada segue |
 
 ## 17. Pendências
 
