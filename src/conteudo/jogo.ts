@@ -10,7 +10,7 @@ import { ESPECIES } from './especies.ts'
 import { ILHAS } from './ilhas.ts'
 import { LINHAGENS } from './linhagens.ts'
 import { MERCADO } from './mercado.ts'
-import { FORJA, MINA } from './postos.ts'
+import { DESTILARIA, FORJA, MINA } from './postos.ts'
 import { ROTAS } from './rotas.ts'
 import { TECNICAS, TECNICAS_DO_DESPERTAR } from './tecnicas.ts'
 import type { Tipo } from './tipos.ts'
@@ -29,6 +29,7 @@ export const CONFIGURACAO: ConfiguracaoDoJogo<Tipo> = {
   eras: ERAS,
   forja: FORJA,
   mina: MINA,
+  destilaria: DESTILARIA,
   linhagens: LINHAGENS,
   ilhas: ILHAS,
   mercado: MERCADO,

@@ -40,7 +40,7 @@ export const EFEITO_DO_ESPACO: Readonly<Record<Espaco, string>> = {
   pernas: 'menos espera entre selvagens',
   armaPrincipal: 'na chance de captura',
   armaSecundaria: 'de desconto no cruzamento',
-  cinto: 'na produção da Forja e da Mina',
+  cinto: 'na produção da Forja, da Mina e da Destilaria',
   luvas: 'nas chances de selvagens raros ou melhores',
   joias: 'nas quedas de matriz, Essência e Chave',
   insignia: 'menos abates até o chefe',

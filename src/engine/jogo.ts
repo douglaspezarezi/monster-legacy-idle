@@ -1,7 +1,7 @@
 // Estado do jogo no F2 e comandos do jogador (GDD, seções 4, 5, 7 e 13).
 import type { Gerador } from './aleatorio.ts'
-import type { Forja, Mina } from './base.ts'
-import { FORJA_VAZIA, MINA_VAZIA, trabalhando } from './base.ts'
+import type { Destilaria, Forja, Mina } from './base.ts'
+import { DESTILARIA_VAZIA, FORJA_VAZIA, MINA_VAZIA, trabalhando } from './base.ts'
 import type { Equipamentos } from './equipamentos.ts'
 import { SEM_EQUIPAMENTOS, aumentar } from './equipamentos.ts'
 import type { FiltroDeCaptura } from './captura.ts'
@@ -97,6 +97,7 @@ export type EstadoDoJogo<Tipo extends string> = {
   // Ovos do cruzamento esperando para chocar.
   readonly chocadeira: readonly Ovo[]
   readonly santuario: Santuario
+  readonly destilaria: Destilaria<Tipo>
 }
 
 export const INVENTARIO_INICIAL: Inventario = {
@@ -176,6 +177,7 @@ export function novoJogo<Tipo extends string>(
     contadores: CONTADORES_ZERADOS,
     chocadeira: [],
     santuario: SANTUARIO_VAZIO,
+    destilaria: DESTILARIA_VAZIA,
   }
 }
 

@@ -1,5 +1,5 @@
 // Save versionado do estado do jogo (GDD, seção 5). Onde guardar o texto fica com a tela.
-import { FORJA_VAZIA, MINA_VAZIA } from './base.ts'
+import { DESTILARIA_VAZIA, FORJA_VAZIA, MINA_VAZIA } from './base.ts'
 import { CONTADORES_ZERADOS } from './conquistas.ts'
 import { ESPACOS_NA_RESERVA } from './captura.ts'
 import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
@@ -8,7 +8,7 @@ import { SEM_REPOSICAO } from './jogo.ts'
 import { MERCADO_VAZIO } from './mercado.ts'
 import { SANTUARIO_VAZIO } from './ovos.ts'
 
-export const VERSAO_DO_SAVE = 14
+export const VERSAO_DO_SAVE = 15
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
@@ -58,6 +58,8 @@ const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Re
   }),
   // A versão 14 trouxe os ovos: Chocadeira vazia e Santuário por construir.
   13: (estado) => ({ ...estado, chocadeira: [], santuario: SANTUARIO_VAZIO }),
+  // A versão 15 trouxe a Destilaria, por construir.
+  14: (estado) => ({ ...estado, destilaria: DESTILARIA_VAZIA }),
 }
 
 function especiesDe(estado: Record<string, unknown>): string[] {
