@@ -802,6 +802,40 @@ Essências por hora com 3 criaturas, e horas para as 10 de um Despertar:
 - Caçar nas rotas 5 a 7 do bioma do tipo continua mais rápido (1 a 3 Essências por hora, de 4 a 10 horas para 10). A Destilaria serve para os tipos que o jogador não caça, e junta as 10 em cerca de uma noite e um dia.
 - **Alternativa descartada:** com 0,10 por hora, 3 raras de afinidade certa levam 20 horas e 3 incomuns, 29. Assim a Destilaria vira o gargalo do Despertar, já que os 300 Fragmentos da Mina saem em 6 a 9 horas.
 
+### Pesca no F25 [proposta]
+
+- **O uso dos materiais aquáticos:** encomendar peças de equipamento do espaço escolhido. Hoje a peça só sai do chefe, com espaço sorteado entre 10. Completar os 10 espaços pede cerca de 29 peças, e o último espaço é o que mais demora. A Pesca dá ao jogador o controle do espaço, sem tirar o papel do chefe.
+- **O material:** Pérola. Fica no inventário e só serve para a encomenda.
+- **O posto:** 3 vagas, como a Mina, livre desde o começo. Cada criatura produz 10 Pérolas por hora × o multiplicador da raridade × a afinidade, também com o jogo fechado, dentro do limite de 24 horas. O Cinto aumenta como nos outros postos.
+- **Afinidade:** +25% com Maré; −50% com um tipo que vence Maré (Brota, Geada e Peçonha), pela mesma regra da Forja e da Mina.
+- Uma criatura trabalha num posto por vez (Forja, Mina, Destilaria ou Pesca), não cruza e não pode ser a ativa enquanto trabalha.
+- **Encomenda:** o jogador escolhe o espaço e a raridade, paga as Pérolas e a peça entra nos guardados, como a do chefe. O preço dobra a cada raridade:
+
+| Raridade da peça | Efeito | Pérolas |
+| --- | --- | --- |
+| Comum | 5% | 20 |
+| Incomum | 10% | 40 |
+| Rara | 15% | 80 |
+| Épica | 20% | 160 |
+| Lendária | 25% | 320 |
+
+- **Limite da raridade:** a mesma que o chefe da rota mais alta já liberada em qualquer bioma daria, até lendária. Quem só liberou a rota 3 encomenda até rara. A mítica não é encomendada, porque tem o mesmo efeito da lendária.
+- **Save:** a base ganha a Pesca, sem trabalhadores, e o inventário ganha as Pérolas, em 0. O save passa à versão 16.
+
+Pérolas por hora com 3 criaturas, e horas de Pesca por peça:
+
+| Trabalhadores | Pérolas por hora | Rara | Épica | Lendária |
+| --- | --- | --- | --- | --- |
+| 3 comuns sem afinidade | 31 | 2,5 | 5,1 | 10,2 |
+| 3 incomuns sem afinidade | 35 | 2,3 | 4,6 | 9,1 |
+| 3 raras de Maré | 50 | 1,6 | 3,2 | 6,5 |
+| 3 lendárias de Maré | 61 | 1,3 | 2,6 | 5,3 |
+| 3 raras de afinidade oposta | 20 | 4,0 | 8,1 | 16,2 |
+
+- **Comparação com o chefe:** na rota 7 saem cerca de 10 chefes e 1 peça por hora, de espaço sorteado. Os 10 espaços em lendária pedem cerca de 29 peças, ou 29 horas, porque as últimas repetem espaço. Com a Pesca, o chefe continua sendo a fonte principal, e as Pérolas completam os espaços que faltam: uma lendária a cada 5 a 10 horas.
+- **No começo do jogo** a Pesca rende mais que o chefe, porque os abates por hora são poucos. Isso só adianta a economia: nenhum equipamento muda a força das criaturas.
+- **Alternativa descartada:** usar as Pérolas para subir a raridade de uma peça que o jogador já tem. No fim do jogo o chefe já dá lendária e mítica, e as Pérolas perderiam o uso.
+
 ## 10. Cruzamento
 
 1. Os dois pais pagam uma taxa de ouro ou Diamantes e deixam a conta para sempre (sacrifício).
@@ -1106,6 +1140,7 @@ Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste docume
 | F22 · Destilaria | Base especial: posto de 3 vagas construído por 300 Diamantes que produz Essências do tipo escolhido | Uma Essência de um tipo que o jogador não caça sai da Destilaria com o jogo fechado |
 | F23 · Áudio e preferências | Música e efeitos gerados por código, volumes separados, opacidade do vidro e modo de segundo plano | Com o som ligado, abate, captura e conquista tocam efeitos e a música segue o bioma; a opacidade muda os painéis; com a aba escondida, a tela não redesenha e a caçada segue |
 | F24 · Interface editável | Modo de edição com os 14 painéis da caçada reordenáveis por arrastar ou botões e escala de 50% a 150%, salvos no navegador | No modo de edição, um painel arrastado troca de lugar e um painel em 150% continua assim depois de recarregar a página |
+| F25 · Pesca **[proposta]** | Posto da Pesca com Pérolas e encomenda de peças de equipamento do espaço escolhido | Uma peça encomendada com Pérolas pescadas com o jogo fechado é vestida no espaço escolhido |
 
 ## 17. Pendências
 
