@@ -75,6 +75,8 @@ export function descreverEvento(evento: Evento): string {
       return 'Caiu uma Chave da Ilha'
     case 'pergaminho':
       return `O chefe deixou um Pergaminho de ${evento.tecnica}`
+    case 'conquista':
+      return `Conquista: ${evento.nome}! +${evento.diamantes} Diamantes`
   }
 }
 

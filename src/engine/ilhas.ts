@@ -101,6 +101,8 @@ export function explorarIlha<Tipo extends string>(
   const venceu = andaresVencidos === ilha.guardioes.length
   const matriz: Matriz | null = venceu ? { especie: final, raridade: gerador() < CHANCE_DE_MITICA ? 'mitica' : 'lendaria' } : null
   const fragmentos = andaresVencidos * FRAGMENTOS_POR_ANDAR
+  const { ilhasVencidas } = estado.contadores
+  const contadores = venceu && !ilhasVencidas.includes(indice) ? { ...estado.contadores, ilhasVencidas: [...ilhasVencidas, indice] } : estado.contadores
   const inventario = {
     ...estado.inventario,
     chaves: estado.inventario.chaves - 1,
@@ -110,7 +112,7 @@ export function explorarIlha<Tipo extends string>(
     pedrasDoDestino: estado.inventario.pedrasDoDestino + (venceu ? 1 : 0),
   }
   return {
-    estado: { ...semEncontro(estado, agora), inventario, vidaDaAtiva: vidaMaxima(configuracao.catalogo, estado.ativa) },
+    estado: { ...semEncontro(estado, agora), inventario, contadores, vidaDaAtiva: vidaMaxima(configuracao.catalogo, estado.ativa) },
     andaresVencidos,
     fragmentos,
     tonicosDeCuraUsados,

@@ -4,6 +4,7 @@ import type { Catalogo } from '../engine/especie.ts'
 import { porNome } from '../engine/especie.ts'
 import { criarTabelaDeTipos } from '../engine/multiplicador-de-tipo.ts'
 import { BIOMAS } from './biomas.ts'
+import { CONQUISTAS } from './conquistas.ts'
 import { ERAS } from './eras.ts'
 import { ESPECIES } from './especies.ts'
 import { ILHAS } from './ilhas.ts'
@@ -31,4 +32,5 @@ export const CONFIGURACAO: ConfiguracaoDoJogo<Tipo> = {
   linhagens: LINHAGENS,
   ilhas: ILHAS,
   mercado: MERCADO,
+  conquistas: CONQUISTAS,
 }

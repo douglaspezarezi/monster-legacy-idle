@@ -117,6 +117,7 @@ export function cruzar<Tipo extends string>(
     ...estado,
     reserva: [...estado.reserva.filter((m) => m.id !== paiA && m.id !== paiB), filhote],
     proximoId: estado.proximoId + 1,
+    contadores: { ...estado.contadores, cruzamentos: estado.contadores.cruzamentos + 1 },
     inventario: {
       ...estado.inventario,
       ouro: estado.inventario.ouro - taxa,

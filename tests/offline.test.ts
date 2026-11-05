@@ -13,7 +13,8 @@ const forte = membro('Gelusco', 40, 15)
 describe('tempo fora do jogo', () => {
   it('credita o tempo fora com as regras da caçada', () => {
     const estado = jogoCom(forte)
-    const fora = creditarTempoFora(CONFIGURACAO, estado, 0, 2 * HORA, criarGerador(3))
+    // Sem conquistas, que o avanço confere e a caçada sozinha não.
+    const fora = creditarTempoFora({ ...CONFIGURACAO, conquistas: [] }, estado, 0, 2 * HORA, criarGerador(3))
     const aberto = simularCacada(CONFIGURACAO, estado, 0, 2 * HORA, criarGerador(3))
     expect(fora.creditadoMs).toBe(2 * HORA)
     expect(fora.estado).toEqual(aberto.estado)
@@ -57,7 +58,7 @@ describe('tempo fora do jogo', () => {
 })
 
 describe('resumo da volta', () => {
-  it('soma abates, XP, ouro, níveis, capturas que deram certo, matrizes, derrotas, equipamentos e Pergaminhos', () => {
+  it('soma abates, XP, ouro, níveis, capturas que deram certo, matrizes, derrotas, equipamentos, Pergaminhos e Diamantes', () => {
     const eventos: Evento[] = [
       { tipo: 'abate', instante: 1, especie: 'Brotelho', chefe: false, xp: 10, ouro: 5 },
       { tipo: 'abate', instante: 2, especie: 'Formigaço', chefe: false, xp: 10, ouro: 5 },
@@ -68,7 +69,9 @@ describe('resumo da volta', () => {
       { tipo: 'derrota', instante: 4, especie: 'Brotelho', chefe: true, pausou: false },
       { tipo: 'equipamento', instante: 5, equipamento: { espaco: 'cinto', raridade: 'comum' } },
       { tipo: 'pergaminho', instante: 5, tecnica: 'Mordida' },
+      { tipo: 'conquista', instante: 6, nome: 'Mil abates', diamantes: 10 },
+      { tipo: 'conquista', instante: 6, nome: 'Dez chefes vencidos', diamantes: 10 },
     ]
-    expect(resumir(eventos)).toEqual({ abates: 2, xp: 20, ouro: 10, niveis: 1, capturas: 1, matrizes: 1, derrotas: 1, equipamentos: 1, essencias: 0, chaves: 0, pergaminhos: 1 })
+    expect(resumir(eventos)).toEqual({ abates: 2, xp: 20, ouro: 10, niveis: 1, capturas: 1, matrizes: 1, derrotas: 1, equipamentos: 1, essencias: 0, chaves: 0, pergaminhos: 1, diamantes: 20 })
   })
 })

@@ -79,7 +79,8 @@ export function aprenderTecnica<Tipo extends string>(catalogo: Catalogo<Tipo>, e
   if (impedimento) throw new RangeError(`não pode aprender: ${impedimento}`)
   const depois = comTecnica(estado, id, tecnica, agora)
   const pergaminhos = { ...estado.inventario.pergaminhos, [tecnica]: estado.inventario.pergaminhos[tecnica] - 1 }
-  return { ...depois, inventario: { ...depois.inventario, pergaminhos } }
+  const contadores = { ...depois.contadores, pergaminhosUsados: depois.contadores.pergaminhosUsados + 1 }
+  return { ...depois, inventario: { ...depois.inventario, pergaminhos }, contadores }
 }
 
 export function esquecerTecnica<Tipo extends string>(estado: EstadoDoJogo<Tipo>, id: number, agora: number): EstadoDoJogo<Tipo> {

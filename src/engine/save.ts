@@ -1,11 +1,13 @@
 // Save versionado do estado do jogo (GDD, seção 5). Onde guardar o texto fica com a tela.
 import { FORJA_VAZIA, MINA_VAZIA } from './base.ts'
+import { CONTADORES_ZERADOS } from './conquistas.ts'
+import { ESPACOS_NA_RESERVA } from './captura.ts'
 import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 import { SEM_REPOSICAO } from './jogo.ts'
 import { MERCADO_VAZIO } from './mercado.ts'
 
-export const VERSAO_DO_SAVE = 12
+export const VERSAO_DO_SAVE = 13
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
@@ -43,6 +45,22 @@ const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Re
     ...estado,
     inventario: ehObjeto(estado.inventario) ? { ...estado.inventario, pergaminhos: {}, pedrasDoDestino: 0 } : estado.inventario,
   }),
+  // A versão 13 trouxe as conquistas: nenhum Diamante, contadores zerados e o registro com as espécies que o jogador tem.
+  // As conquistas que o estado já mostra pagam na primeira conferência.
+  12: (estado) => ({
+    ...estado,
+    inventario: ehObjeto(estado.inventario) ? { ...estado.inventario, diamantes: 0 } : estado.inventario,
+    espacosNaReserva: ESPACOS_NA_RESERVA,
+    registro: especiesDe(estado),
+    conquistas: [],
+    contadores: CONTADORES_ZERADOS,
+  }),
+}
+
+function especiesDe(estado: Record<string, unknown>): string[] {
+  const membros: unknown[] = [estado.ativa, ...(Array.isArray(estado.reserva) ? estado.reserva : [])]
+  const especies = membros.map((m) => (ehObjeto(m) ? m.especie : undefined)).filter((e) => typeof e === 'string')
+  return [...new Set(especies)]
 }
 
 // Completa com zeros os contadores de chefe do bioma atual e dos guardados até o número de rotas.

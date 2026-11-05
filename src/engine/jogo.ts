@@ -6,6 +6,8 @@ import type { Equipamentos } from './equipamentos.ts'
 import { SEM_EQUIPAMENTOS, aumentar } from './equipamentos.ts'
 import type { FiltroDeCaptura } from './captura.ts'
 import { ESPACOS_NA_RESERVA, FILTRO_VAZIO } from './captura.ts'
+import type { Contadores } from './conquistas.ts'
+import { CONTADORES_ZERADOS } from './conquistas.ts'
 import type { Luta } from './combate.ts'
 import type { Criatura } from './criatura.ts'
 import { combatenteDe } from './criatura.ts'
@@ -35,6 +37,8 @@ export type Inventario = {
   readonly pergaminhos: Readonly<Record<string, number>>
   // Vencer o andar 10 de uma Ilha dá uma; o cruzamento gasta.
   readonly pedrasDoDestino: number
+  // Pagos pelas conquistas; compram espaços na reserva.
+  readonly diamantes: number
 }
 
 export type Encontro<Tipo extends string> = {
@@ -81,6 +85,13 @@ export type EstadoDoJogo<Tipo extends string> = {
   readonly reposicao: Readonly<Record<ItemDaLoja, number>>
   // Estoque do dia do Mercado da Cidade, que abre na Era 4.
   readonly mercado: Mercado
+  // Espaços da reserva, sem contar a ativa; os Diamantes compram mais.
+  readonly espacosNaReserva: number
+  // Espécies que o jogador já obteve, por qualquer caminho.
+  readonly registro: readonly string[]
+  // Identificadores das conquistas já pagas.
+  readonly conquistas: readonly string[]
+  readonly contadores: Contadores
 }
 
 export const INVENTARIO_INICIAL: Inventario = {
@@ -94,6 +105,7 @@ export const INVENTARIO_INICIAL: Inventario = {
   chaves: 0,
   pergaminhos: {},
   pedrasDoDestino: 0,
+  diamantes: 0,
 }
 
 export const GATILHO_DE_CURA_INICIAL = 0.3
@@ -153,6 +165,10 @@ export function novoJogo<Tipo extends string>(
     equipamentos: SEM_EQUIPAMENTOS,
     reposicao: SEM_REPOSICAO,
     mercado: MERCADO_VAZIO,
+    espacosNaReserva: ESPACOS_NA_RESERVA,
+    registro: [ativa.especie],
+    conquistas: [],
+    contadores: CONTADORES_ZERADOS,
   }
 }
 
@@ -244,7 +260,7 @@ export function abrirMatrizDoInventario<Tipo extends string>(
 ): EstadoDoJogo<Tipo> {
   const matriz = estado.inventario.matrizes[indice]
   if (!matriz) throw new RangeError(`matriz inexistente: ${indice}`)
-  if (estado.reserva.length >= ESPACOS_NA_RESERVA) throw new RangeError('reserva cheia')
+  if (estado.reserva.length >= estado.espacosNaReserva) throw new RangeError('reserva cheia')
   const matrizes = estado.inventario.matrizes.filter((_, i) => i !== indice)
   return {
     ...estado,

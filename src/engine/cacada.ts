@@ -1,6 +1,6 @@
 // Caçada contínua numa rota: selvagem atrás de selvagem (GDD, seções 4, 5 e 7).
 import type { Gerador } from './aleatorio.ts'
-import { CHANCE_DE_CAPTURA, ESPACOS_NA_RESERVA, passaNoFiltro } from './captura.ts'
+import { CHANCE_DE_CAPTURA, passaNoFiltro } from './captura.ts'
 import { avancarLuta, iniciarLuta } from './combate.ts'
 import { combatenteDe } from './criatura.ts'
 import { aplicarDerrota, multiplicadorDeFadiga } from './derrota.ts'
@@ -72,6 +72,7 @@ export type Evento =
   | { readonly tipo: 'chave'; readonly instante: number }
   | { readonly tipo: 'pergaminho'; readonly instante: number; readonly tecnica: string }
   | { readonly tipo: 'evolucao'; readonly instante: number; readonly de: string; readonly para: string }
+  | { readonly tipo: 'conquista'; readonly instante: number; readonly nome: string; readonly diamantes: number }
 
 export type ResultadoDaCacada<Tipo extends string> = {
   readonly estado: EstadoDoJogo<Tipo>
@@ -128,8 +129,9 @@ function vencer<Tipo extends string>(
   // Depois da vitória a vida volta cheia, já com a Vida máxima do nível novo.
   const vidaDaAtiva = vidaMaxima(configuracao.catalogo, ativa)
 
-  let { inventario, reserva, proximoId } = estado
+  let { inventario, reserva, proximoId, contadores } = estado
   inventario = { ...inventario, ouro: inventario.ouro + ouro }
+  contadores = { ...contadores, abates: contadores.abates + 1, chefes: contadores.chefes + (encontro.chefe ? 1 : 0) }
 
   // A matriz é da espécie do selvagem abatido; a Fadiga não muda a queda.
   // As Joias aumentam as quedas de matriz, Essência e Chave.
@@ -155,7 +157,7 @@ function vencer<Tipo extends string>(
   if (
     !encontro.chefe &&
     inventario.capsulas > 0 &&
-    reserva.length < ESPACOS_NA_RESERVA &&
+    reserva.length < estado.espacosNaReserva &&
     passaNoFiltro(estado.filtroDeCaptura, encontro.selvagem)
   ) {
     const raridade = raridadeDosGenes(encontro.selvagem.genes)
@@ -164,6 +166,7 @@ function vencer<Tipo extends string>(
     if (sucesso) {
       reserva = [...reserva, { ...encontro.selvagem, id: proximoId, era: estado.era }]
       proximoId++
+      contadores = { ...contadores, capturas: contadores.capturas + 1 }
     }
     eventos.push({ tipo: 'captura', instante: agora, especie: encontro.selvagem.especie, raridade, sucesso })
   }
@@ -198,7 +201,7 @@ function vencer<Tipo extends string>(
     abatesPorRota = comAbates(estado.abatesPorRota, numeroDaRota, (estado.abatesPorRota[numeroDaRota - 1] ?? 0) + 1)
   }
 
-  return { ...estado, ativa, vidaDaAtiva, inventario, reserva, proximoId, rota: numeroDaRota, rotasLiberadas, abatesPorRota, equipamentos }
+  return { ...estado, ativa, vidaDaAtiva, inventario, reserva, proximoId, contadores, rota: numeroDaRota, rotasLiberadas, abatesPorRota, equipamentos }
 }
 
 function perder<Tipo extends string>(

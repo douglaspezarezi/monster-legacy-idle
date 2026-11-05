@@ -100,5 +100,6 @@ export function comprarNoMercado<Tipo extends string>(dados: DadosDoMercado, est
       matrizes: [...estado.inventario.matrizes, { especie: oferta.especie, raridade: oferta.raridade }],
     },
     mercado: { ...estado.mercado, ofertas: estado.mercado.ofertas.map((o, i) => (i === indice ? { ...o, comprada: true } : o)) },
+    contadores: { ...estado.contadores, comprasNoMercado: estado.contadores.comprasNoMercado + 1 },
   }
 }
