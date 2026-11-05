@@ -786,6 +786,33 @@ Simulação de uma técnica aprendida de outro tipo, com genes 15, média de 5 s
 - Uma técnica do mesmo tipo no fim da fila quase não muda nada (de +1% a +4%), porque o monstro usa a primeira técnica pronta. Por isso a aprendida entra no topo.
 - **Pedra do Destino:** em 300 simulações de 10 cruzamentos seguidos, partindo de 6 criaturas incomuns e cruzando sempre as duas melhores, a melhor soma de genes chega a 80 (de 69 a 92) herdando 3 atributos e a 90 (de 81 a 96) herdando 4. A Pedra leva da faixa rara ou épica para a épica ou lendária.
 
+### Ovos e Santuário no F21 [proposta]
+
+- **O que muda:** o cruzamento passa a gerar um ovo em vez de um filhote na hora. Os pais saem da conta e a taxa é paga no cruzamento, como hoje. O ovo já guarda a espécie, os genes e a técnica herdada; só a variação prismática é sorteada quando ele choca. Assim o Santuário consegue mudar essa chance.
+- **Só o cruzamento gera ovo.** Abrir uma matriz continua gerando a criatura na hora, porque a matriz é o atalho de quem caça ou compra.
+- **Tempo de chocar, pela raridade do filhote**, dobrando a cada faixa:
+
+| Raridade | Fraca ou comum | Incomum | Rara | Épica | Lendária | Mítica |
+| --- | --- | --- | --- | --- | --- | --- |
+| Tempo | 10 min | 20 min | 40 min | 1 h 20 | 2 h 40 | 5 h 20 |
+
+- **Chocadeira:** fica na base comum, de graça, com 3 vagas. O cruzamento precisa de uma vaga livre na Chocadeira ou no Santuário. O ovo mostra a espécie, a raridade e o tempo que falta.
+- **Ao chocar:** o filhote nasce no nível 1, na reserva, e conta como da Era em que chocou. Os ovos chocam também com o jogo fechado, dentro do limite de 24 horas, como a Forja. Com a reserva cheia, o ovo pronto espera e choca assim que abrir espaço. Um ovo não ocupa espaço na reserva nem pode ser cancelado.
+- **Santuário prismático:** construído uma vez por 300 Diamantes. Tem 1 vaga de ovo, separada das 3 da Chocadeira. O ovo que choca nele tem a chance de ser prismático multiplicada por 3: de 2% para 6%, ou mais com o Brasão. A regra de raridade não muda: só ovo épico ou melhor pode ser prismático.
+- **Diamantes:** dos 1.110 que as conquistas pagam, 500 vão para os espaços da reserva e 300 para o Santuário. Sobram 310 para a Base especial.
+- **Save:** a base ganha a Chocadeira e o Santuário, vazios e sem Santuário construído. O save passa à versão 14.
+
+Simulação com as mesmas 300 cadeias de 10 cruzamentos da Pedra do Destino. Cada filhote é pai do seguinte, então os ovos da cadeia chocam um depois do outro (horas da cadeia, de 5% a 95% das cadeias, com a mediana no meio):
+
+| Caso | Raridades dos 10 filhotes, em média | Horas da cadeia |
+| --- | --- | --- |
+| Herdando 3 atributos | 0,6 incomum, 5,2 raros, 3,2 épicos, 0,8 lendário, 0,1 mítico | 7,3 / 10,7 / 16,0 |
+| Herdando 4, com a Pedra | 0,1 incomum, 2,3 raros, 4,8 épicos, 2,3 lendários, 0,6 mítico | 10,7 / 16,7 / 25,3 |
+
+- A cadeia de 10 cruzamentos, que hoje sai na hora, passa a levar de 7 a 16 horas, perto do tempo de uma Era (6 a 20 horas). As 3 vagas deixam tocar 3 linhagens ao mesmo tempo.
+- Cada cadeia dá cerca de 4 ovos épicos ou melhores herdando 3 atributos, e cerca de 8 com a Pedra. Com 2%, sai um prismático a cada 12 cadeias, em média; no Santuário, com 6%, a cada 4.
+- **Alternativa descartada:** tempos pela metade (5 minutos a 2 h 40) deixam a cadeia em 4 a 8 horas. Assim o ovo pesa pouco: o jogador que volta a cada hora quase nunca encontra um ovo ainda chocando.
+
 ## 11. Fim de jogo
 
 O documento original listava seis sistemas de transformação que reproduziam os de uma franquia; todos saíram (seção 14). No lugar entra um sistema próprio, a partir do nível 150:
@@ -1015,6 +1042,7 @@ Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste docume
 | F18 · Mapa-múndi | Mapa dos 16 biomas por Era, com miniaturas, trancas e estimativa de XP por hora com a melhor rota marcada | O mapa aponta a melhor rota do monstro ativo e troca de bioma ao tocar |
 | F19 · Cruzamento completo | Técnica aprendida no topo da fila, Pergaminhos dos chefes, técnica herdada no cruzamento e Pedra do Destino das Ilhas | Um monstro aprende uma técnica de outro tipo por Pergaminho ou cruzamento e rende mais num bioma onde antes rendia menos |
 | F20 · Conquistas e Diamantes | 33 conquistas que pagam Diamantes, registro de espécies, contadores da vida toda e espaços na reserva comprados com Diamantes | Uma conquista concluída paga Diamantes, e eles compram 10 espaços a mais na reserva |
+| F21 · Ovos e Santuário **[proposta]** | O cruzamento gera ovo com tempo de chocar pela raridade, Chocadeira com 3 vagas e Santuário prismático por 300 Diamantes | Um ovo choca com o jogo fechado, e um ovo épico no Santuário choca com chance prismática de 6% |
 
 ## 17. Pendências
 
