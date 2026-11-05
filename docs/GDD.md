@@ -1092,7 +1092,7 @@ Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste docume
 - **Diamantes não são vendidos**, decidido em 05/11/2026. Eles compram coisas que deixam o jogo mais forte, como o Santuário e a Destilaria, e por isso só vêm de conquistas e, quando existir, do calendário de presença.
 - **Calendário de presença** (28 dias, com recuperação de dia perdido) e **Jornada do Treinador** (trilha de 30 dias com 50 níveis, travada por semanas): entram depois, com revisão jurídica se tiverem parte paga.
 
-### Calendário de presença no F26 [proposta]
+### Calendário de presença no F26
 
 - **Casas, não datas:** 28 casas. Cada dia em que o jogador abre o jogo libera a próxima casa, uma por dia do calendário local. Perder um dia não apaga nada: a casa seguinte espera. Essa é a recuperação de dia perdido, sem custo e sem parte paga. Depois da casa 28, o ciclo recomeça.
 - **Resgate:** um botão no painel do calendário entrega o prêmio da casa liberada. A casa não acumula: com o jogo fechado por 5 dias, ao voltar só a próxima casa está liberada.
@@ -1163,7 +1163,7 @@ Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste docume
 | F23 · Áudio e preferências | Música e efeitos gerados por código, volumes separados, opacidade do vidro e modo de segundo plano | Com o som ligado, abate, captura e conquista tocam efeitos e a música segue o bioma; a opacidade muda os painéis; com a aba escondida, a tela não redesenha e a caçada segue |
 | F24 · Interface editável | Modo de edição com os 14 painéis da caçada reordenáveis por arrastar ou botões e escala de 50% a 150%, salvos no navegador | No modo de edição, um painel arrastado troca de lugar e um painel em 150% continua assim depois de recarregar a página |
 | F25 · Pesca | Posto da Pesca com Pérolas e encomenda de peças de equipamento do espaço escolhido | Uma peça encomendada com Pérolas pescadas com o jogo fechado é vestida no espaço escolhido |
-| F26 · Calendário de presença **[proposta]** | 28 casas, uma por dia em que o jogo é aberto, sem perder casa ao faltar, com Diamantes no dia 7 de cada semana | Resgatar uma casa num dia libera a próxima só no dia seguinte, e faltar um dia não pula casa |
+| F26 · Calendário de presença | 28 casas, uma por dia em que o jogo é aberto, sem perder casa ao faltar, com Diamantes no dia 7 de cada semana | Resgatar uma casa num dia libera a próxima só no dia seguinte, e faltar um dia não pula casa |
 
 ## 17. Pendências
 
