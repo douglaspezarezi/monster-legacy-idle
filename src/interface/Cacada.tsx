@@ -2,7 +2,16 @@
 import { Fragment, useState } from 'react'
 import { CATALOGO, CONFIGURACAO } from '../conteudo/jogo.ts'
 import { BIOMAS } from '../conteudo/biomas.ts'
-import { colocarNaForja, colocarNaMina, fragmentosPorHoraDaMina, ouroPorHoraDaForja, tirarDaForja, tirarDaMina } from '../engine/base.ts'
+import {
+  colocarNaDestilaria,
+  colocarNaForja,
+  colocarNaMina,
+  fragmentosPorHoraDaMina,
+  ouroPorHoraDaForja,
+  tirarDaDestilaria,
+  tirarDaForja,
+  tirarDaMina,
+} from '../engine/base.ts'
 import { abatesParaOChefe } from '../engine/cacada.ts'
 import { dadosDaEra, podeReiniciarEra, reiniciarEra } from '../engine/era.ts'
 import type { Combatente } from '../engine/combate.ts'
@@ -31,6 +40,7 @@ import type { Tipo } from '../conteudo/tipos.ts'
 import { guardar, lerGuardado } from './arquivo.ts'
 import { Cena } from './Cena.tsx'
 import { PainelDasIlhas } from './PainelDasIlhas.tsx'
+import { PainelDaDestilaria } from './PainelDaDestilaria.tsx'
 import { PainelDosOvos } from './PainelDosOvos.tsx'
 import { PainelDeConquistas } from './PainelDeConquistas.tsx'
 import { PainelDosPergaminhos } from './PainelDosPergaminhos.tsx'
@@ -114,11 +124,13 @@ export function Cacada({ sessao, executar }: Props) {
   const [selecionados, setSelecionados] = useState<readonly number[]>([])
   const naForja = (id: number) => estado.forja.trabalhadores.includes(id)
   const naMina = (id: number) => estado.mina.trabalhadores.includes(id)
-  const ocupada = (id: number) => naForja(id) || naMina(id)
+  const naDestilaria = (id: number) => estado.destilaria.trabalhadores.includes(id)
+  const ocupada = (id: number) => naForja(id) || naMina(id) || naDestilaria(id)
   // Some da seleção quem saiu da reserva ou foi trabalhar.
   const pais = selecionados.flatMap((id) => estado.reserva.filter((m) => m.id === id && !ocupada(id)))
   const forjaCheia = estado.forja.trabalhadores.length >= CONFIGURACAO.forja.vagas
   const minaCheia = estado.mina.trabalhadores.length >= CONFIGURACAO.mina.vagas
+  const destilariaCheia = estado.destilaria.trabalhadores.length >= CONFIGURACAO.destilaria.vagas
   const essencias = Object.entries(inventario.essencias).filter(([, quantidade]) => quantidade > 0)
 
   function alternarPai(membro: Membro) {
@@ -377,6 +389,7 @@ export function Cacada({ sessao, executar }: Props) {
                     {rotuloDaCriatura(membro)} · nível {membro.nivel}
                     {naForja(membro.id) && ' · na Forja'}
                     {naMina(membro.id) && ' · na Mina'}
+                    {naDestilaria(membro.id) && ' · na Destilaria'}
                   </span>
                   <small>
                     {descreverGenes(membro.genes)}
@@ -391,6 +404,8 @@ export function Cacada({ sessao, executar }: Props) {
                     <button onClick={() => executar((e) => tirarDaForja(e, membro.id))}>Sair da Forja</button>
                   ) : naMina(membro.id) ? (
                     <button onClick={() => executar((e) => tirarDaMina(e, membro.id))}>Sair da Mina</button>
+                  ) : naDestilaria(membro.id) ? (
+                    <button onClick={() => executar((e) => tirarDaDestilaria(e, membro.id))}>Sair da Destilaria</button>
                   ) : (
                     <>
                       <button disabled={forjaCheia} onClick={() => executar((e) => colocarNaForja(CONFIGURACAO, e, membro.id))}>
@@ -399,6 +414,11 @@ export function Cacada({ sessao, executar }: Props) {
                       <button disabled={minaCheia} onClick={() => executar((e) => colocarNaMina(CONFIGURACAO, e, membro.id))}>
                         Mina
                       </button>
+                      {estado.destilaria.construida && (
+                        <button disabled={destilariaCheia} onClick={() => executar((e) => colocarNaDestilaria(CONFIGURACAO, e, membro.id))}>
+                          Destilaria
+                        </button>
+                      )}
                     </>
                   )}
                   <BotaoDeDespertar estado={estado} membro={membro} executar={executar} />
@@ -428,6 +448,7 @@ export function Cacada({ sessao, executar }: Props) {
           Cristal e Liga rendem +25%; Maré, Brota, Astro, Penumbra, Faísca e Eco, −50%. O Despertar, a partir do nível {NIVEL_DO_DESPERTAR}, gasta{' '}
           {FRAGMENTOS_DO_DESPERTAR} Fragmentos e {ESSENCIAS_DO_DESPERTAR} Essências do primeiro tipo do monstro, que caem nas rotas 5 a 7.
         </p>
+        <PainelDaDestilaria estado={estado} executar={executar} />
         <h3>Cruzamento</h3>
         {pais.length === 2 ? (
           <PainelDeCruzamento
