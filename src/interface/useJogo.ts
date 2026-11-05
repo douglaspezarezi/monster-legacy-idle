@@ -60,7 +60,11 @@ function carregar(texto: string, agora: number, gerador: Gerador): { readonly se
     fora.creditadoMs >= MINIMO_PARA_RESUMO_MS
       ? { foraMs: agora - save.salvoEm, creditadoMs: fora.creditadoMs, resumo: resumir(fora.eventos), ouroDaForja: fora.ouroDaForja, fragmentosDaMina: fora.fragmentosDaMina }
       : null
-  return { sessao: { estado: fora.estado, agora, registros: [], eventos: [] }, volta }
+  // As conquistas pagas ao abrir, como as de um save antigo, também aparecem nos acontecimentos.
+  const registros = fora.eventos
+    .filter((evento) => evento.tipo === 'conquista')
+    .map((evento, i) => ({ id: -1 - i, instante: evento.instante, texto: descreverEvento(evento) }))
+  return { sessao: { estado: fora.estado, agora, registros, eventos: [] }, volta }
 }
 
 export type ResumoDoSave = {

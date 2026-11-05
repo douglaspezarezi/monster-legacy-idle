@@ -325,6 +325,32 @@ dd {
   }
 }
 
+.conquistas .grupo {
+  display: block;
+}
+
+.conquistas .grupo ul {
+  list-style: none;
+  padding: 0 0 0.4rem;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.conquistas .grupo li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.1rem 0;
+}
+
+.conquistas .premio {
+  white-space: nowrap;
+}
+
+.conquistas li.paga {
+  color: var(--destaque);
+}
+
 .lista li.selecionado {
   background: rgb(127 209 163 / 0.1);
 }

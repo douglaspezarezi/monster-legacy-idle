@@ -5,7 +5,6 @@ import { BIOMAS } from '../conteudo/biomas.ts'
 import { colocarNaForja, colocarNaMina, fragmentosPorHoraDaMina, ouroPorHoraDaForja, tirarDaForja, tirarDaMina } from '../engine/base.ts'
 import { abatesParaOChefe } from '../engine/cacada.ts'
 import { dadosDaEra, podeReiniciarEra, reiniciarEra } from '../engine/era.ts'
-import { ESPACOS_NA_RESERVA } from '../engine/captura.ts'
 import type { Combatente } from '../engine/combate.ts'
 import type { Criatura } from '../engine/criatura.ts'
 import { ESSENCIAS_DO_DESPERTAR, FRAGMENTOS_DO_DESPERTAR, NIVEL_DO_DESPERTAR, despertar, impedimentoDoDespertar, tipoDaEssencia } from '../engine/despertar.ts'
@@ -32,6 +31,7 @@ import type { Tipo } from '../conteudo/tipos.ts'
 import { guardar, lerGuardado } from './arquivo.ts'
 import { Cena } from './Cena.tsx'
 import { PainelDasIlhas } from './PainelDasIlhas.tsx'
+import { PainelDeConquistas } from './PainelDeConquistas.tsx'
 import { PainelDosPergaminhos } from './PainelDosPergaminhos.tsx'
 import { PainelDoMapa } from './PainelDoMapa.tsx'
 import { useEstimativas } from './useEstimativas.ts'
@@ -238,6 +238,8 @@ export function Cacada({ sessao, executar }: Props) {
           <dd>{inventario.chaves}</dd>
           <dt>Pedras do Destino</dt>
           <dd>{inventario.pedrasDoDestino}</dd>
+          <dt>Diamantes</dt>
+          <dd>{inventario.diamantes}</dd>
           {essencias.map(([tipo, quantidade]) => (
             <Fragment key={tipo}>
               <dt>Essências de {tipo}</dt>
@@ -337,7 +339,7 @@ export function Cacada({ sessao, executar }: Props) {
 
       <section className="painel reserva">
         <h3>
-          Reserva ({estado.reserva.length}/{ESPACOS_NA_RESERVA})
+          Reserva ({estado.reserva.length}/{estado.espacosNaReserva})
         </h3>
         {inventario.matrizes.length > 0 && (
           <ul className="lista">
@@ -347,7 +349,7 @@ export function Cacada({ sessao, executar }: Props) {
                   Matriz: {matriz.especie} {NOME_DA_RARIDADE[matriz.raridade]}
                 </span>
                 <button
-                  disabled={estado.reserva.length >= ESPACOS_NA_RESERVA}
+                  disabled={estado.reserva.length >= estado.espacosNaReserva}
                   onClick={() => executar((e, _t, g) => abrirMatrizDoInventario(e, i, g))}
                 >
                   Abrir
@@ -446,6 +448,8 @@ export function Cacada({ sessao, executar }: Props) {
       <PainelDoMercado estado={estado} agora={agora} executar={executar} />
 
       <PainelDeEquipamentos estado={estado} executar={executar} />
+
+      <PainelDeConquistas estado={estado} executar={executar} />
 
       <section className="painel registro">
         <h3>Acontecimentos</h3>
