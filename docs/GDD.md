@@ -922,7 +922,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 - **Conta para o jogador:** com 2 milhões por hora na rota 7, a épica sai em meia hora de caçada, a lendária em 2,5 horas e a mítica em 10. Comprar o estoque inteiro (33 milhões) leva cerca de 16 horas, então o Mercado nunca fica sem uso. Para comparar, pelas chances de queda e pelos cerca de 1.000 abates por hora da simulação, a rota 7 deixa cair uma matriz mítica de espécie sorteada a cada 20 horas, e a rota 5 uma lendária a cada 5 a 8 horas. O Mercado custa um pouco mais, mas deixa escolher a espécie.
 - **Alternativas descartadas:** com preços de 2, 10 e 50 milhões, a mítica custaria 25 horas de caçada, mais do que esperar a queda da rota 7. Abrir na Era 2 deixaria comprar uma épica com cerca de 3 horas de ouro da rota 5, o que tira o peso da captura nessa Era.
 
-### Conquistas e Diamantes no F20 [proposta]
+### Conquistas e Diamantes no F20
 
 - **Por que agora:** os Diamantes são o único recurso da tabela acima sem fonte nem uso no jogo, e a Base especial e o Santuário dependem deles. O F20 cria a fonte (conquistas) e um primeiro uso pequeno; o Santuário fica para um marco seguinte.
 - **Fonte única no F20:** conquistas. Cada conquista paga uma quantidade fixa de Diamantes, uma vez só, sem sorteio. A compra de Diamantes continua **[a definir]**, e nada pago aumenta força.
@@ -1013,7 +1013,7 @@ Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste docume
 | F17 · Cena da caçada | Cena em Canvas com o bioma, o monstro andando e a luta com o selvagem, em pixel art provisória, e modo leve | Na caçada, o monstro anda pelo bioma, o selvagem aparece e os golpes aparecem na cena |
 | F18 · Mapa-múndi | Mapa dos 16 biomas por Era, com miniaturas, trancas e estimativa de XP por hora com a melhor rota marcada | O mapa aponta a melhor rota do monstro ativo e troca de bioma ao tocar |
 | F19 · Cruzamento completo | Técnica aprendida no topo da fila, Pergaminhos dos chefes, técnica herdada no cruzamento e Pedra do Destino das Ilhas | Um monstro aprende uma técnica de outro tipo por Pergaminho ou cruzamento e rende mais num bioma onde antes rendia menos |
-| F20 · Conquistas e Diamantes **[proposta]** | 33 conquistas que pagam Diamantes, registro de espécies, contadores da vida toda e espaços na reserva comprados com Diamantes | Uma conquista concluída paga Diamantes, e eles compram 10 espaços a mais na reserva |
+| F20 · Conquistas e Diamantes | 33 conquistas que pagam Diamantes, registro de espécies, contadores da vida toda e espaços na reserva comprados com Diamantes | Uma conquista concluída paga Diamantes, e eles compram 10 espaços a mais na reserva |
 
 ## 17. Pendências
 
