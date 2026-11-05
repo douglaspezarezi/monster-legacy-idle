@@ -82,7 +82,23 @@ button:disabled {
   gap: 1rem;
 }
 
-.luta {
+.janela {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.janela > .painel {
+  flex: 1;
+}
+
+/* Painel que não aparece agora, como as Ilhas antes da Era 4. */
+.janela:not(:has(> .painel)) {
+  display: none;
+}
+
+.janela-luta,
+.janela-mapa {
   grid-column: 1 / -1;
 }
 
@@ -94,9 +110,6 @@ button:disabled {
   flex-wrap: wrap;
 }
 
-.mapa {
-  grid-column: 1 / -1;
-}
 
 .mapa header {
   display: flex;
@@ -336,9 +349,46 @@ dd {
 }
 
 @media (min-width: 760px) {
-  .reserva {
+  .janela-reserva {
     grid-column: span 2;
   }
+}
+
+.barra-da-janela {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.3rem 0.5rem;
+  border: 2px dashed var(--destaque);
+  border-bottom: none;
+  border-radius: 12px 12px 0 0;
+  font-size: 0.85rem;
+}
+
+.barra-da-janela + .painel {
+  border: 2px dashed var(--destaque);
+  border-top: none;
+  border-radius: 0 0 12px 12px;
+}
+
+.barra-da-janela .alca {
+  flex: 1;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.barra-da-janela output {
+  min-width: 2.8rem;
+  text-align: center;
+}
+
+.janela.arrastando {
+  opacity: 0.5;
+}
+
+.janela.alvo > .painel {
+  background: rgb(127 209 163 / 0.15);
 }
 
 .conquistas .grupo {

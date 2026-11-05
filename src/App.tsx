@@ -1,4 +1,6 @@
+import { useState } from 'react'
 import { Cacada } from './interface/Cacada.tsx'
+import { EdicaoDoLayout } from './interface/edicao.ts'
 import { EscolhaDoInicial } from './interface/EscolhaDoInicial.tsx'
 import { PainelDaNuvem } from './interface/PainelDaNuvem.tsx'
 import { PainelDeCopia } from './interface/PainelDeCopia.tsx'
@@ -33,13 +35,17 @@ function Jogo() {
   const nuvem = useNuvem(exportar, importar)
   const { preferencias, mudar } = usePreferencias()
   useSom(sessao, preferencias)
+  const [editando, setEditando] = useState(false)
+  const edicao = { layout: preferencias.layout, editando, mudarLayout: (layout: typeof preferencias.layout) => mudar({ layout }) }
   return (
     <main className="app">
       <h1>Monster Legacy Idle</h1>
       <PainelDaNuvem {...nuvem} />
       {volta && <ResumoDaVolta volta={volta} aoFechar={fecharVolta} />}
-      {sessao ? <Cacada sessao={sessao} executar={executar} modoLeve={preferencias.modoLeve} /> : <EscolhaDoInicial aoEscolher={comecar} />}
-      <PainelDePreferencias preferencias={preferencias} mudar={mudar} />
+      <EdicaoDoLayout.Provider value={edicao}>
+        {sessao ? <Cacada sessao={sessao} executar={executar} modoLeve={preferencias.modoLeve} /> : <EscolhaDoInicial aoEscolher={comecar} />}
+      </EdicaoDoLayout.Provider>
+      <PainelDePreferencias preferencias={preferencias} mudar={mudar} editando={editando} aoEditar={setEditando} />
       <PainelDeCopia temJogo={sessao !== null} exportar={exportar} importar={importar} />
     </main>
   )

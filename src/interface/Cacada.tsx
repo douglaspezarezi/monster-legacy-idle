@@ -38,6 +38,7 @@ import {
 import { xpParaSubir } from '../engine/nivel.ts'
 import type { Tipo } from '../conteudo/tipos.ts'
 import { Cena } from './Cena.tsx'
+import { Janela } from './Janela.tsx'
 import { PainelDasIlhas } from './PainelDasIlhas.tsx'
 import { PainelDaDestilaria } from './PainelDaDestilaria.tsx'
 import { PainelDosOvos } from './PainelDosOvos.tsx'
@@ -134,338 +135,366 @@ export function Cacada({ sessao, executar, modoLeve }: Props) {
 
   return (
     <div className="cacada">
-      <section className="painel luta">
-        <header>
-          <h2>
-            Era {estado.era} · {bioma.nome} · Rota {estado.rota}
-          </h2>
-          <span>
-            {encontro?.chefe ? 'Chefe da rota!' : `Chefe em ${Math.max(0, abatesParaOChefe(estado) - abates)} abates`}
-          </span>
-        </header>
-        {!modoLeve && <Cena estado={estado} eventos={eventos} />}
-        {podeReiniciarEra(CONFIGURACAO.eras, estado) && (
-          <p className="aviso">
-            {ativa.especie} chegou ao nível {era.teto}, o teto da Era {estado.era}. Reiniciar a Era leva o monstro ativo ao nível 1, com os
-            mesmos genes, e libera a Era {estado.era + 1}. Ouro, itens, reserva, equipamentos, Forja, Mina e Despertar ficam.{' '}
-            <button onClick={() => executar((e, t) => reiniciarEra(CONFIGURACAO, e, t))}>Reiniciar a Era</button>
-          </p>
-        )}
-        {fadigaRestante > 0 && <p className="aviso">Fadiga: metade de XP e ouro por mais {formatarTempo(fadigaRestante)}</p>}
-        {estado.pausada && (
-          <p className="aviso">
-            Caçada pausada sem Tônico de Retorno.{' '}
-            <button onClick={() => executar((e, t) => retomarCacada(e, CATALOGO, t))}>Retomar</button>
-          </p>
-        )}
-        <div className="lutadores">
-          <div className="lutador">
-            <Retrato especie={ativa.especie} tipos={especieDo(CATALOGO, ativa.especie).tipos} prismatica={ativa.prismatica} desperta={ativa.despertada} />
-            <small>Seu monstro</small>
-            <strong>
-              {rotuloDaCriatura(ativa)} · nível {ativa.nivel} de {era.teto}
-            </strong>
-            <span className="tipos">{especieDo(CATALOGO, ativa.especie).tipos.join(' / ')}</span>
-            <Barra valor={vidaAtual(estado)} maximo={maximaDaAtiva} classe="vida" />
-            <Barra valor={ativa.xpNoNivel} maximo={xpParaSubir(ativa.nivel)} classe="xp" />
-            <BotaoDeDespertar estado={estado} membro={ativa} executar={executar} />
-          </div>
-          {encontro ? (
-            <Lutador titulo={encontro.chefe ? 'Chefe' : 'Selvagem'} criatura={encontro.selvagem} combatente={encontro.luta.selvagem} />
-          ) : (
-            <div className="lutador vazio">{estado.pausada ? '' : 'Procurando…'}</div>
-          )}
-        </div>
-      </section>
-
-      <PainelDoMapa estado={estado} estimativas={estimativas} executar={executar} />
-
-      <section className="painel rotas">
-        <h3>Rotas de {bioma.nome}</h3>
-        <div className="botoes">
-          {/* Os biomas das Eras 1 e 2 não têm a rota 6. */}
-          {CONFIGURACAO.rotas.slice(0, bioma.especiesPorRota.length).map((rota, i) => {
-            const numero = i + 1
-            const estimativa = estimativas.calculando ? undefined : estimativas.lista.find((e) => e.bioma === estado.bioma && e.rota === numero)
-            return (
-              <button
-                key={numero}
-                className={numero === estado.rota ? 'escolhida' : ''}
-                disabled={numero > estado.rotasLiberadas}
-                onClick={() => executar((e, t) => escolherRota(e, numero, t))}
-                title={numero > era.rotas ? `Liberada numa Era seguinte` : `Níveis ${rota.faixaDeNivel[0]} a ${rota.faixaDeNivel[1]}: ${bioma.especiesPorRota[i].join(', ')}`}
-              >
-                {numero}
-                <small>
-                  {rota.faixaDeNivel[0]}–{rota.faixaDeNivel[1]}
-                </small>
-                {estimativa && <small>{formatarXp(estimativa.xpPorHora)} XP/h</small>}
-              </button>
-            )
-          })}
-        </div>
-        <label className="opcao">
-          <input
-            type="checkbox"
-            checked={estado.avancoAutomatico}
-            onChange={(ev) => {
-              const ligado = ev.target.checked
-              executar((e) => definirAvancoAutomatico(e, ligado))
-            }}
-          />
-          Avanço automático depois do chefe
-        </label>
-      </section>
-
-      <section className="painel inventario">
-        <h3>Inventário</h3>
-        <dl>
-          <dt>Ouro</dt>
-          <dd>{inventario.ouro}</dd>
-          <dt>Cápsulas</dt>
-          <dd>{inventario.capsulas}</dd>
-          <dt>Tônicos de Cura</dt>
-          <dd>{inventario.tonicosDeCura}</dd>
-          <dt>Tônicos de Retorno</dt>
-          <dd>{inventario.tonicosDeRetorno}</dd>
-          <dt>Fragmentos</dt>
-          <dd>{inventario.fragmentos}</dd>
-          <dt>Chaves da Ilha</dt>
-          <dd>{inventario.chaves}</dd>
-          <dt>Pedras do Destino</dt>
-          <dd>{inventario.pedrasDoDestino}</dd>
-          <dt>Diamantes</dt>
-          <dd>{inventario.diamantes}</dd>
-          {essencias.map(([tipo, quantidade]) => (
-            <Fragment key={tipo}>
-              <dt>Essências de {tipo}</dt>
-              <dd>{quantidade}</dd>
-            </Fragment>
-          ))}
-        </dl>
-        <h4>Loja da Cidade</h4>
-        <p className="dica">Em “mín.”, a Loja repõe sozinha até esse estoque, também com o jogo fechado.</p>
-        {ITENS.map((item) => (
-          <div key={item} className="item-da-loja">
+      <Janela id="luta">
+        <section className="painel luta">
+          <header>
+            <h2>
+              Era {estado.era} · {bioma.nome} · Rota {estado.rota}
+            </h2>
             <span>
-              {NOME_DO_ITEM[item]} · {PRECOS[item]}
+              {encontro?.chefe ? 'Chefe da rota!' : `Chefe em ${Math.max(0, abatesParaOChefe(estado) - abates)} abates`}
             </span>
-            {[1, 10].map((quantidade) => (
-              <button
-                key={quantidade}
-                disabled={PRECOS[item] * quantidade > inventario.ouro}
-                onClick={() => executar((e) => comprar(e, item, quantidade))}
-              >
-                +{quantidade}
-              </button>
-            ))}
-            <label className="minimo" title="A Loja repõe sozinha até este estoque, também com o jogo fechado. 0 desliga.">
-              mín.
-              <input
-                type="number"
-                min={0}
-                max={999}
-                value={estado.reposicao[item]}
-                onChange={(ev) => {
-                  const minimo = Math.max(0, Math.min(999, Math.floor(Number(ev.target.value) || 0)))
-                  executar((e) => definirReposicao(e, item, minimo))
-                }}
-              />
-            </label>
+          </header>
+          {!modoLeve && <Cena estado={estado} eventos={eventos} />}
+          {podeReiniciarEra(CONFIGURACAO.eras, estado) && (
+            <p className="aviso">
+              {ativa.especie} chegou ao nível {era.teto}, o teto da Era {estado.era}. Reiniciar a Era leva o monstro ativo ao nível 1, com os
+              mesmos genes, e libera a Era {estado.era + 1}. Ouro, itens, reserva, equipamentos, Forja, Mina e Despertar ficam.{' '}
+              <button onClick={() => executar((e, t) => reiniciarEra(CONFIGURACAO, e, t))}>Reiniciar a Era</button>
+            </p>
+          )}
+          {fadigaRestante > 0 && <p className="aviso">Fadiga: metade de XP e ouro por mais {formatarTempo(fadigaRestante)}</p>}
+          {estado.pausada && (
+            <p className="aviso">
+              Caçada pausada sem Tônico de Retorno.{' '}
+              <button onClick={() => executar((e, t) => retomarCacada(e, CATALOGO, t))}>Retomar</button>
+            </p>
+          )}
+          <div className="lutadores">
+            <div className="lutador">
+              <Retrato especie={ativa.especie} tipos={especieDo(CATALOGO, ativa.especie).tipos} prismatica={ativa.prismatica} desperta={ativa.despertada} />
+              <small>Seu monstro</small>
+              <strong>
+                {rotuloDaCriatura(ativa)} · nível {ativa.nivel} de {era.teto}
+              </strong>
+              <span className="tipos">{especieDo(CATALOGO, ativa.especie).tipos.join(' / ')}</span>
+              <Barra valor={vidaAtual(estado)} maximo={maximaDaAtiva} classe="vida" />
+              <Barra valor={ativa.xpNoNivel} maximo={xpParaSubir(ativa.nivel)} classe="xp" />
+              <BotaoDeDespertar estado={estado} membro={ativa} executar={executar} />
+            </div>
+            {encontro ? (
+              <Lutador titulo={encontro.chefe ? 'Chefe' : 'Selvagem'} criatura={encontro.selvagem} combatente={encontro.luta.selvagem} />
+            ) : (
+              <div className="lutador vazio">{estado.pausada ? '' : 'Procurando…'}</div>
+            )}
           </div>
-        ))}
-        <label className="opcao">
-          Usar Tônico de Cura abaixo de {Math.round(estado.gatilhoDeCura * 100)}% da vida
-          <input
-            type="range"
-            min={0}
-            max={100}
-            step={5}
-            value={Math.round(estado.gatilhoDeCura * 100)}
-            onChange={(ev) => {
-              const gatilho = Number(ev.target.value) / 100
-              executar((e) => definirGatilhoDeCura(e, gatilho))
-            }}
-          />
-        </label>
-      </section>
+        </section>
+      </Janela>
 
-      <section className="painel captura">
-        <h3>Captura</h3>
-        <p>Uma Cápsula é usada em cada selvagem vencido que passa no filtro.</p>
-        <div className="especies">
-          {especiesDoFiltro.map((nome) => {
-            const marcada = estado.filtroDeCaptura.especies.includes(nome)
-            return (
-              <label key={nome} className="opcao">
-                <input
-                  type="checkbox"
-                  checked={marcada}
-                  onChange={() =>
-                    executar((e) => {
-                      const especies = marcada
-                        ? e.filtroDeCaptura.especies.filter((n) => n !== nome)
-                        : [...e.filtroDeCaptura.especies, nome]
-                      return definirFiltroDeCaptura(e, { ...e.filtroDeCaptura, especies })
-                    })
-                  }
-                />
-                {nome}
-              </label>
-            )
-          })}
-        </div>
-        <label className="opcao">
-          Raridade mínima
-          <select
-            value={estado.filtroDeCaptura.raridadeMinima}
-            onChange={(ev) => {
-              const raridadeMinima = ev.target.value as Raridade
-              executar((e) => definirFiltroDeCaptura(e, { ...e.filtroDeCaptura, raridadeMinima }))
-            }}
-          >
-            {FAIXAS_DE_RARIDADE.map(({ raridade }) => (
-              <option key={raridade} value={raridade}>
-                {NOME_DA_RARIDADE[raridade]}
-              </option>
-            ))}
-          </select>
-        </label>
-      </section>
+      <Janela id="mapa">
+        <PainelDoMapa estado={estado} estimativas={estimativas} executar={executar} />
+      </Janela>
 
-      <section className="painel reserva">
-        <h3>
-          Reserva ({estado.reserva.length}/{estado.espacosNaReserva})
-        </h3>
-        {inventario.matrizes.length > 0 && (
-          <ul className="lista">
-            {inventario.matrizes.map((matriz, i) => (
-              <li key={i}>
-                <span>
-                  Matriz: {matriz.especie} {NOME_DA_RARIDADE[matriz.raridade]}
-                </span>
+      <Janela id="rotas">
+        <section className="painel rotas">
+          <h3>Rotas de {bioma.nome}</h3>
+          <div className="botoes">
+            {/* Os biomas das Eras 1 e 2 não têm a rota 6. */}
+            {CONFIGURACAO.rotas.slice(0, bioma.especiesPorRota.length).map((rota, i) => {
+              const numero = i + 1
+              const estimativa = estimativas.calculando ? undefined : estimativas.lista.find((e) => e.bioma === estado.bioma && e.rota === numero)
+              return (
                 <button
-                  disabled={estado.reserva.length >= estado.espacosNaReserva}
-                  onClick={() => executar((e, _t, g) => abrirMatrizDoInventario(e, i, g))}
+                  key={numero}
+                  className={numero === estado.rota ? 'escolhida' : ''}
+                  disabled={numero > estado.rotasLiberadas}
+                  onClick={() => executar((e, t) => escolherRota(e, numero, t))}
+                  title={numero > era.rotas ? `Liberada numa Era seguinte` : `Níveis ${rota.faixaDeNivel[0]} a ${rota.faixaDeNivel[1]}: ${bioma.especiesPorRota[i].join(', ')}`}
                 >
-                  Abrir
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
-        {estado.reserva.length === 0 ? (
-          <p>Nenhum monstro na reserva.</p>
-        ) : (
-          <ul className="lista">
-            {estado.reserva.map((membro) => (
-              <li key={membro.id} className={pais.some((p) => p.id === membro.id) ? 'selecionado' : ''}>
-                <Retrato
-                  especie={membro.especie}
-                  tipos={especieDo(CATALOGO, membro.especie).tipos}
-                  prismatica={membro.prismatica}
-                  desperta={membro.despertada}
-                  tamanho={32}
-                />
-                <div className="membro">
-                  <span>
-                    {rotuloDaCriatura(membro)} · nível {membro.nivel}
-                    {naForja(membro.id) && ' · na Forja'}
-                    {naMina(membro.id) && ' · na Mina'}
-                    {naDestilaria(membro.id) && ' · na Destilaria'}
-                  </span>
+                  {numero}
                   <small>
-                    {descreverGenes(membro.genes)}
-                    {membro.tecnicaAprendida !== undefined && ` · aprendeu ${membro.tecnicaAprendida}`}
+                    {rota.faixaDeNivel[0]}–{rota.faixaDeNivel[1]}
                   </small>
-                </div>
-                <div className="acoes">
-                  <button disabled={ocupada(membro.id)} onClick={() => executar((e, t) => trocarAtiva(e, CATALOGO, membro.id, t))}>
-                    Ativar
+                  {estimativa && <small>{formatarXp(estimativa.xpPorHora)} XP/h</small>}
+                </button>
+              )
+            })}
+          </div>
+          <label className="opcao">
+            <input
+              type="checkbox"
+              checked={estado.avancoAutomatico}
+              onChange={(ev) => {
+                const ligado = ev.target.checked
+                executar((e) => definirAvancoAutomatico(e, ligado))
+              }}
+            />
+            Avanço automático depois do chefe
+          </label>
+        </section>
+      </Janela>
+
+      <Janela id="inventario">
+        <section className="painel inventario">
+          <h3>Inventário</h3>
+          <dl>
+            <dt>Ouro</dt>
+            <dd>{inventario.ouro}</dd>
+            <dt>Cápsulas</dt>
+            <dd>{inventario.capsulas}</dd>
+            <dt>Tônicos de Cura</dt>
+            <dd>{inventario.tonicosDeCura}</dd>
+            <dt>Tônicos de Retorno</dt>
+            <dd>{inventario.tonicosDeRetorno}</dd>
+            <dt>Fragmentos</dt>
+            <dd>{inventario.fragmentos}</dd>
+            <dt>Chaves da Ilha</dt>
+            <dd>{inventario.chaves}</dd>
+            <dt>Pedras do Destino</dt>
+            <dd>{inventario.pedrasDoDestino}</dd>
+            <dt>Diamantes</dt>
+            <dd>{inventario.diamantes}</dd>
+            {essencias.map(([tipo, quantidade]) => (
+              <Fragment key={tipo}>
+                <dt>Essências de {tipo}</dt>
+                <dd>{quantidade}</dd>
+              </Fragment>
+            ))}
+          </dl>
+          <h4>Loja da Cidade</h4>
+          <p className="dica">Em “mín.”, a Loja repõe sozinha até esse estoque, também com o jogo fechado.</p>
+          {ITENS.map((item) => (
+            <div key={item} className="item-da-loja">
+              <span>
+                {NOME_DO_ITEM[item]} · {PRECOS[item]}
+              </span>
+              {[1, 10].map((quantidade) => (
+                <button
+                  key={quantidade}
+                  disabled={PRECOS[item] * quantidade > inventario.ouro}
+                  onClick={() => executar((e) => comprar(e, item, quantidade))}
+                >
+                  +{quantidade}
+                </button>
+              ))}
+              <label className="minimo" title="A Loja repõe sozinha até este estoque, também com o jogo fechado. 0 desliga.">
+                mín.
+                <input
+                  type="number"
+                  min={0}
+                  max={999}
+                  value={estado.reposicao[item]}
+                  onChange={(ev) => {
+                    const minimo = Math.max(0, Math.min(999, Math.floor(Number(ev.target.value) || 0)))
+                    executar((e) => definirReposicao(e, item, minimo))
+                  }}
+                />
+              </label>
+            </div>
+          ))}
+          <label className="opcao">
+            Usar Tônico de Cura abaixo de {Math.round(estado.gatilhoDeCura * 100)}% da vida
+            <input
+              type="range"
+              min={0}
+              max={100}
+              step={5}
+              value={Math.round(estado.gatilhoDeCura * 100)}
+              onChange={(ev) => {
+                const gatilho = Number(ev.target.value) / 100
+                executar((e) => definirGatilhoDeCura(e, gatilho))
+              }}
+            />
+          </label>
+        </section>
+      </Janela>
+
+      <Janela id="captura">
+        <section className="painel captura">
+          <h3>Captura</h3>
+          <p>Uma Cápsula é usada em cada selvagem vencido que passa no filtro.</p>
+          <div className="especies">
+            {especiesDoFiltro.map((nome) => {
+              const marcada = estado.filtroDeCaptura.especies.includes(nome)
+              return (
+                <label key={nome} className="opcao">
+                  <input
+                    type="checkbox"
+                    checked={marcada}
+                    onChange={() =>
+                      executar((e) => {
+                        const especies = marcada
+                          ? e.filtroDeCaptura.especies.filter((n) => n !== nome)
+                          : [...e.filtroDeCaptura.especies, nome]
+                        return definirFiltroDeCaptura(e, { ...e.filtroDeCaptura, especies })
+                      })
+                    }
+                  />
+                  {nome}
+                </label>
+              )
+            })}
+          </div>
+          <label className="opcao">
+            Raridade mínima
+            <select
+              value={estado.filtroDeCaptura.raridadeMinima}
+              onChange={(ev) => {
+                const raridadeMinima = ev.target.value as Raridade
+                executar((e) => definirFiltroDeCaptura(e, { ...e.filtroDeCaptura, raridadeMinima }))
+              }}
+            >
+              {FAIXAS_DE_RARIDADE.map(({ raridade }) => (
+                <option key={raridade} value={raridade}>
+                  {NOME_DA_RARIDADE[raridade]}
+                </option>
+              ))}
+            </select>
+          </label>
+        </section>
+      </Janela>
+
+      <Janela id="reserva">
+        <section className="painel reserva">
+          <h3>
+            Reserva ({estado.reserva.length}/{estado.espacosNaReserva})
+          </h3>
+          {inventario.matrizes.length > 0 && (
+            <ul className="lista">
+              {inventario.matrizes.map((matriz, i) => (
+                <li key={i}>
+                  <span>
+                    Matriz: {matriz.especie} {NOME_DA_RARIDADE[matriz.raridade]}
+                  </span>
+                  <button
+                    disabled={estado.reserva.length >= estado.espacosNaReserva}
+                    onClick={() => executar((e, _t, g) => abrirMatrizDoInventario(e, i, g))}
+                  >
+                    Abrir
                   </button>
-                  {naForja(membro.id) ? (
-                    <button onClick={() => executar((e) => tirarDaForja(e, membro.id))}>Sair da Forja</button>
-                  ) : naMina(membro.id) ? (
-                    <button onClick={() => executar((e) => tirarDaMina(e, membro.id))}>Sair da Mina</button>
-                  ) : naDestilaria(membro.id) ? (
-                    <button onClick={() => executar((e) => tirarDaDestilaria(e, membro.id))}>Sair da Destilaria</button>
-                  ) : (
-                    <>
-                      <button disabled={forjaCheia} onClick={() => executar((e) => colocarNaForja(CONFIGURACAO, e, membro.id))}>
-                        Forja
-                      </button>
-                      <button disabled={minaCheia} onClick={() => executar((e) => colocarNaMina(CONFIGURACAO, e, membro.id))}>
-                        Mina
-                      </button>
-                      {estado.destilaria.construida && (
-                        <button disabled={destilariaCheia} onClick={() => executar((e) => colocarNaDestilaria(CONFIGURACAO, e, membro.id))}>
-                          Destilaria
+                </li>
+              ))}
+            </ul>
+          )}
+          {estado.reserva.length === 0 ? (
+            <p>Nenhum monstro na reserva.</p>
+          ) : (
+            <ul className="lista">
+              {estado.reserva.map((membro) => (
+                <li key={membro.id} className={pais.some((p) => p.id === membro.id) ? 'selecionado' : ''}>
+                  <Retrato
+                    especie={membro.especie}
+                    tipos={especieDo(CATALOGO, membro.especie).tipos}
+                    prismatica={membro.prismatica}
+                    desperta={membro.despertada}
+                    tamanho={32}
+                  />
+                  <div className="membro">
+                    <span>
+                      {rotuloDaCriatura(membro)} · nível {membro.nivel}
+                      {naForja(membro.id) && ' · na Forja'}
+                      {naMina(membro.id) && ' · na Mina'}
+                      {naDestilaria(membro.id) && ' · na Destilaria'}
+                    </span>
+                    <small>
+                      {descreverGenes(membro.genes)}
+                      {membro.tecnicaAprendida !== undefined && ` · aprendeu ${membro.tecnicaAprendida}`}
+                    </small>
+                  </div>
+                  <div className="acoes">
+                    <button disabled={ocupada(membro.id)} onClick={() => executar((e, t) => trocarAtiva(e, CATALOGO, membro.id, t))}>
+                      Ativar
+                    </button>
+                    {naForja(membro.id) ? (
+                      <button onClick={() => executar((e) => tirarDaForja(e, membro.id))}>Sair da Forja</button>
+                    ) : naMina(membro.id) ? (
+                      <button onClick={() => executar((e) => tirarDaMina(e, membro.id))}>Sair da Mina</button>
+                    ) : naDestilaria(membro.id) ? (
+                      <button onClick={() => executar((e) => tirarDaDestilaria(e, membro.id))}>Sair da Destilaria</button>
+                    ) : (
+                      <>
+                        <button disabled={forjaCheia} onClick={() => executar((e) => colocarNaForja(CONFIGURACAO, e, membro.id))}>
+                          Forja
                         </button>
-                      )}
-                    </>
-                  )}
-                  <BotaoDeDespertar estado={estado} membro={membro} executar={executar} />
-                  <button disabled={ocupada(membro.id)} onClick={() => alternarPai(membro)}>
-                    {pais.some((p) => p.id === membro.id) ? 'Desmarcar' : 'Cruzar'}
-                  </button>
-                </div>
-              </li>
+                        <button disabled={minaCheia} onClick={() => executar((e) => colocarNaMina(CONFIGURACAO, e, membro.id))}>
+                          Mina
+                        </button>
+                        {estado.destilaria.construida && (
+                          <button disabled={destilariaCheia} onClick={() => executar((e) => colocarNaDestilaria(CONFIGURACAO, e, membro.id))}>
+                            Destilaria
+                          </button>
+                        )}
+                      </>
+                    )}
+                    <BotaoDeDespertar estado={estado} membro={membro} executar={executar} />
+                    <button disabled={ocupada(membro.id)} onClick={() => alternarPai(membro)}>
+                      {pais.some((p) => p.id === membro.id) ? 'Desmarcar' : 'Cruzar'}
+                    </button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </Janela>
+
+      <Janela id="base">
+        <section className="painel base">
+          <h3>
+            Forja ({estado.forja.trabalhadores.length}/{CONFIGURACAO.forja.vagas})
+          </h3>
+          <p>
+            Produz {Math.floor(ouroPorHoraDaForja(CONFIGURACAO, estado))} de ouro por hora, também com o jogo fechado. Tipos Chama e Faísca
+            rendem +25%; Maré, Rocha e Bruma, −50%.
+          </p>
+          <h3>
+            Mina ({estado.mina.trabalhadores.length}/{CONFIGURACAO.mina.vagas})
+          </h3>
+          <p>
+            Produz {Math.floor(fragmentosPorHoraDaMina(CONFIGURACAO, estado))} Fragmentos por hora, também com o jogo fechado. Tipos Rocha,
+            Cristal e Liga rendem +25%; Maré, Brota, Astro, Penumbra, Faísca e Eco, −50%. O Despertar, a partir do nível {NIVEL_DO_DESPERTAR}, gasta{' '}
+            {FRAGMENTOS_DO_DESPERTAR} Fragmentos e {ESSENCIAS_DO_DESPERTAR} Essências do primeiro tipo do monstro, que caem nas rotas 5 a 7.
+          </p>
+          <PainelDaDestilaria estado={estado} executar={executar} />
+          <h3>Cruzamento</h3>
+          {pais.length === 2 ? (
+            <PainelDeCruzamento
+              key={pais.map((p) => p.id).join('-')}
+              estado={estado}
+              pais={[pais[0], pais[1]]}
+              executar={executar}
+              aoCruzar={() => setSelecionados([])}
+            />
+          ) : (
+            <p>Marque dois pais da mesma linhagem na reserva ({pais.length}/2).</p>
+          )}
+        </section>
+      </Janela>
+
+      <Janela id="ovos">
+        <PainelDosOvos estado={estado} agora={agora} executar={executar} />
+      </Janela>
+
+      <Janela id="pergaminhos">
+        <PainelDosPergaminhos estado={estado} executar={executar} />
+      </Janela>
+
+      <Janela id="ilhas">
+        <PainelDasIlhas estado={estado} executar={executar} />
+      </Janela>
+
+      <Janela id="mercado">
+        <PainelDoMercado estado={estado} agora={agora} executar={executar} />
+      </Janela>
+
+      <Janela id="equipamentos">
+        <PainelDeEquipamentos estado={estado} executar={executar} />
+      </Janela>
+
+      <Janela id="conquistas">
+        <PainelDeConquistas estado={estado} executar={executar} />
+      </Janela>
+
+      <Janela id="registro">
+        <section className="painel registro">
+          <h3>Acontecimentos</h3>
+          <ul>
+            {registros.map((r) => (
+              <li key={r.id}>{r.texto}</li>
             ))}
           </ul>
-        )}
-      </section>
-
-      <section className="painel base">
-        <h3>
-          Forja ({estado.forja.trabalhadores.length}/{CONFIGURACAO.forja.vagas})
-        </h3>
-        <p>
-          Produz {Math.floor(ouroPorHoraDaForja(CONFIGURACAO, estado))} de ouro por hora, também com o jogo fechado. Tipos Chama e Faísca
-          rendem +25%; Maré, Rocha e Bruma, −50%.
-        </p>
-        <h3>
-          Mina ({estado.mina.trabalhadores.length}/{CONFIGURACAO.mina.vagas})
-        </h3>
-        <p>
-          Produz {Math.floor(fragmentosPorHoraDaMina(CONFIGURACAO, estado))} Fragmentos por hora, também com o jogo fechado. Tipos Rocha,
-          Cristal e Liga rendem +25%; Maré, Brota, Astro, Penumbra, Faísca e Eco, −50%. O Despertar, a partir do nível {NIVEL_DO_DESPERTAR}, gasta{' '}
-          {FRAGMENTOS_DO_DESPERTAR} Fragmentos e {ESSENCIAS_DO_DESPERTAR} Essências do primeiro tipo do monstro, que caem nas rotas 5 a 7.
-        </p>
-        <PainelDaDestilaria estado={estado} executar={executar} />
-        <h3>Cruzamento</h3>
-        {pais.length === 2 ? (
-          <PainelDeCruzamento
-            key={pais.map((p) => p.id).join('-')}
-            estado={estado}
-            pais={[pais[0], pais[1]]}
-            executar={executar}
-            aoCruzar={() => setSelecionados([])}
-          />
-        ) : (
-          <p>Marque dois pais da mesma linhagem na reserva ({pais.length}/2).</p>
-        )}
-      </section>
-
-      <PainelDosOvos estado={estado} agora={agora} executar={executar} />
-
-      <PainelDosPergaminhos estado={estado} executar={executar} />
-
-      <PainelDasIlhas estado={estado} executar={executar} />
-
-      <PainelDoMercado estado={estado} agora={agora} executar={executar} />
-
-      <PainelDeEquipamentos estado={estado} executar={executar} />
-
-      <PainelDeConquistas estado={estado} executar={executar} />
-
-      <section className="painel registro">
-        <h3>Acontecimentos</h3>
-        <ul>
-          {registros.map((r) => (
-            <li key={r.id}>{r.texto}</li>
-          ))}
-        </ul>
-      </section>
+        </section>
+      </Janela>
     </div>
   )
 }

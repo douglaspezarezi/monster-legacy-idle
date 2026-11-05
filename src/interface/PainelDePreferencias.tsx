@@ -1,8 +1,14 @@
 // Volumes, opacidade do vidro e modo leve, guardados neste navegador.
+import { LAYOUT_PADRAO } from './layout.ts'
 import type { Preferencias } from './preferencias.ts'
 import { OPACIDADE_MINIMA } from './preferencias.ts'
 
-type Props = { readonly preferencias: Preferencias; readonly mudar: (campos: Partial<Preferencias>) => void }
+type Props = {
+  readonly preferencias: Preferencias
+  readonly mudar: (campos: Partial<Preferencias>) => void
+  readonly editando: boolean
+  readonly aoEditar: (ligado: boolean) => void
+}
 
 function Controle({ rotulo, valor, minimo, aoMudar }: { readonly rotulo: string; readonly valor: number; readonly minimo: number; readonly aoMudar: (valor: number) => void }) {
   return (
@@ -14,7 +20,7 @@ function Controle({ rotulo, valor, minimo, aoMudar }: { readonly rotulo: string;
   )
 }
 
-export function PainelDePreferencias({ preferencias, mudar }: Props) {
+export function PainelDePreferencias({ preferencias, mudar, editando, aoEditar }: Props) {
   return (
     <section className="painel preferencias">
       <h3>Preferências</h3>
@@ -25,6 +31,12 @@ export function PainelDePreferencias({ preferencias, mudar }: Props) {
         <input type="checkbox" checked={preferencias.modoLeve} onChange={(ev) => mudar({ modoLeve: ev.target.checked })} />
         Modo leve: sem a cena da caçada
       </label>
+      <div className="opcao">
+        <label>
+          <input type="checkbox" checked={editando} onChange={(ev) => aoEditar(ev.target.checked)} /> Editar layout: arrastar e escalar os painéis
+        </label>
+        <button onClick={() => mudar({ layout: LAYOUT_PADRAO })}>Restaurar layout</button>
+      </div>
       <p className="dica">O som começa no primeiro clique na página. Com a aba escondida, a caçada continua e o som para.</p>
     </section>
   )
