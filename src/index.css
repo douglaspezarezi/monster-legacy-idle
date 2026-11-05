@@ -257,6 +257,50 @@ button:disabled {
   background: rgb(127 209 163 / 0.18);
 }
 
+.casas {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.25rem;
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.6rem;
+}
+
+.casa {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.2rem 0;
+  border: 1px solid rgb(255 255 255 / 0.12);
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+.casa small {
+  opacity: 0.6;
+  font-size: 0.7rem;
+}
+
+.casa.diamantes {
+  border-color: rgb(140 200 255 / 0.5);
+}
+
+.casa.resgatada {
+  opacity: 0.45;
+}
+
+.casa.liberada {
+  border-color: var(--destaque);
+  background: rgb(127 209 163 / 0.15);
+}
+
+.resgate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .encomenda {
   display: flex;
   flex-wrap: wrap;

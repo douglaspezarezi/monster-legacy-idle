@@ -46,6 +46,7 @@ import { PainelDasIlhas } from './PainelDasIlhas.tsx'
 import { PainelDaDestilaria } from './PainelDaDestilaria.tsx'
 import { PainelDosOvos } from './PainelDosOvos.tsx'
 import { PainelDeConquistas } from './PainelDeConquistas.tsx'
+import { PainelDoCalendario } from './PainelDoCalendario.tsx'
 import { PainelDosPergaminhos } from './PainelDosPergaminhos.tsx'
 import { PainelDoMapa } from './PainelDoMapa.tsx'
 import { useEstimativas } from './useEstimativas.ts'
@@ -503,6 +504,10 @@ export function Cacada({ sessao, executar, modoLeve }: Props) {
 
       <Janela id="conquistas">
         <PainelDeConquistas estado={estado} executar={executar} />
+      </Janela>
+
+      <Janela id="calendario">
+        <PainelDoCalendario estado={estado} agora={agora} executar={executar} />
       </Janela>
 
       <Janela id="registro">

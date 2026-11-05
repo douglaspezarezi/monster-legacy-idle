@@ -20,6 +20,7 @@ const NOMES: Readonly<Record<IdDoPainel, string>> = {
   equipamentos: 'Equipamentos',
   conquistas: 'Conquistas',
   registro: 'Acontecimentos',
+  calendario: 'Calendário',
 }
 
 function painelEm(x: number, y: number): IdDoPainel | null {

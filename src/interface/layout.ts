@@ -16,6 +16,7 @@ export const PAINEIS = [
   'equipamentos',
   'conquistas',
   'registro',
+  'calendario',
 ] as const
 
 export type IdDoPainel = (typeof PAINEIS)[number]
