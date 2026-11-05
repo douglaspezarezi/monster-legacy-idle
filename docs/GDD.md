@@ -836,7 +836,7 @@ Pérolas por hora com 3 criaturas, e horas de Pesca por peça:
 - **No começo do jogo** a Pesca rende mais que o chefe, porque os abates por hora são poucos. Isso só adianta a economia: nenhum equipamento muda a força das criaturas.
 - **Alternativa descartada:** usar as Pérolas para subir a raridade de uma peça que o jogador já tem. No fim do jogo o chefe já dá lendária e mítica, e as Pérolas perderiam o uso.
 
-### Mapa da Base no F27 [proposta]
+### Mapa da Base no F27
 
 - **O que é:** um painel com a Base vista de cima, em pixel art desenhada por código, como a cena da caçada. Mostra o que o motor já calcula e não muda nenhuma regra: é só tela.
 - **Construções:** cada posto vira uma construção no mapa: Forja, Mina, Pesca (na beira de um lago), Destilaria, Santuário e Chocadeira. A Destilaria e o Santuário aparecem como terreno cercado com uma placa enquanto não foram construídos.
@@ -1175,7 +1175,7 @@ Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste docume
 | F24 · Interface editável | Modo de edição com os 14 painéis da caçada reordenáveis por arrastar ou botões e escala de 50% a 150%, salvos no navegador | No modo de edição, um painel arrastado troca de lugar e um painel em 150% continua assim depois de recarregar a página |
 | F25 · Pesca | Posto da Pesca com Pérolas e encomenda de peças de equipamento do espaço escolhido | Uma peça encomendada com Pérolas pescadas com o jogo fechado é vestida no espaço escolhido |
 | F26 · Calendário de presença | 28 casas, uma por dia em que o jogo é aberto, sem perder casa ao faltar, com Diamantes no dia 7 de cada semana | Resgatar uma casa num dia libera a próxima só no dia seguinte, e faltar um dia não pula casa |
-| F27 · Mapa da Base **[proposta]** | Base vista de cima com os postos como construções, os trabalhadores andando perto delas e clique que leva ao painel | Um monstro colocado na Pesca aparece andando ao lado da Pesca no mapa, e clicar na Pesca leva ao painel da Base |
+| F27 · Mapa da Base | Base vista de cima com os postos como construções, os trabalhadores andando perto delas e clique que leva ao painel | Um monstro colocado na Pesca aparece andando ao lado da Pesca no mapa, e clicar na Pesca leva ao painel da Base |
 
 ## 17. Pendências
 
