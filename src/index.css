@@ -244,6 +244,22 @@ button:disabled {
   background: rgb(127 209 163 / 0.18);
 }
 
+.controle {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr 3rem;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.controle output {
+  text-align: right;
+}
+
+.preferencias {
+  margin-top: 1rem;
+}
+
 .opcao {
   display: flex;
   align-items: center;

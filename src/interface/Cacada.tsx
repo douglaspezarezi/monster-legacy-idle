@@ -37,7 +37,6 @@ import {
 } from '../engine/jogo.ts'
 import { xpParaSubir } from '../engine/nivel.ts'
 import type { Tipo } from '../conteudo/tipos.ts'
-import { guardar, lerGuardado } from './arquivo.ts'
 import { Cena } from './Cena.tsx'
 import { PainelDasIlhas } from './PainelDasIlhas.tsx'
 import { PainelDaDestilaria } from './PainelDaDestilaria.tsx'
@@ -53,12 +52,9 @@ import { Retrato } from './Retrato.tsx'
 import { NOME_DA_RARIDADE, NOME_DO_ITEM, descreverGenes, formatarTempo, formatarXp } from './textos.ts'
 import type { Comando, Sessao } from './useJogo.ts'
 
-type Props = { readonly sessao: Sessao; readonly executar: (comando: Comando) => void }
+type Props = { readonly sessao: Sessao; readonly executar: (comando: Comando) => void; readonly modoLeve: boolean }
 
 const ITENS: readonly ItemDaLoja[] = ['capsula', 'tonicoDeCura', 'tonicoDeRetorno']
-
-// Preferência deste navegador, fora do save.
-const CHAVE_DO_MODO_LEVE = 'monsterlegacy:modo-leve'
 
 function rotuloDaCriatura(criatura: Criatura): string {
   const raridade = NOME_DA_RARIDADE[raridadeDosGenes(criatura.genes)]
@@ -109,10 +105,9 @@ function Lutador({ titulo, criatura, combatente }: { readonly titulo: string; re
   )
 }
 
-export function Cacada({ sessao, executar }: Props) {
+export function Cacada({ sessao, executar, modoLeve }: Props) {
   const { estado, agora, registros, eventos } = sessao
   const estimativas = useEstimativas(estado)
-  const [modoLeve, setModoLeve] = useState(() => lerGuardado(CHAVE_DO_MODO_LEVE) === 'sim')
   const { ativa, inventario, encontro } = estado
   const maximaDaAtiva = vidaMaxima(CATALOGO, ativa)
   const abates = estado.abatesPorRota[estado.rota - 1] ?? 0
@@ -149,18 +144,6 @@ export function Cacada({ sessao, executar }: Props) {
           </span>
         </header>
         {!modoLeve && <Cena estado={estado} eventos={eventos} />}
-        <label className="opcao">
-          <input
-            type="checkbox"
-            checked={modoLeve}
-            onChange={(ev) => {
-              const ligado = ev.target.checked
-              setModoLeve(ligado)
-              guardar(CHAVE_DO_MODO_LEVE, ligado ? 'sim' : 'nao')
-            }}
-          />
-          Modo leve: sem a cena da caçada
-        </label>
         {podeReiniciarEra(CONFIGURACAO.eras, estado) && (
           <p className="aviso">
             {ativa.especie} chegou ao nível {era.teto}, o teto da Era {estado.era}. Reiniciar a Era leva o monstro ativo ao nível 1, com os

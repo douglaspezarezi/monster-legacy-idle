@@ -2,9 +2,12 @@ import { Cacada } from './interface/Cacada.tsx'
 import { EscolhaDoInicial } from './interface/EscolhaDoInicial.tsx'
 import { PainelDaNuvem } from './interface/PainelDaNuvem.tsx'
 import { PainelDeCopia } from './interface/PainelDeCopia.tsx'
+import { PainelDePreferencias } from './interface/PainelDePreferencias.tsx'
+import { usePreferencias } from './interface/preferencias.ts'
 import { ResumoDaVolta } from './interface/ResumoDaVolta.tsx'
 import { useJogo } from './interface/useJogo.ts'
 import { useNuvem } from './interface/useNuvem.ts'
+import { useSom } from './interface/useSom.ts'
 import { useTravaDaAba } from './interface/useTravaDaAba.ts'
 
 export function App() {
@@ -28,12 +31,15 @@ export function App() {
 function Jogo() {
   const { sessao, volta, comecar, executar, fecharVolta, exportar, importar } = useJogo()
   const nuvem = useNuvem(exportar, importar)
+  const { preferencias, mudar } = usePreferencias()
+  useSom(sessao, preferencias)
   return (
     <main className="app">
       <h1>Monster Legacy Idle</h1>
       <PainelDaNuvem {...nuvem} />
       {volta && <ResumoDaVolta volta={volta} aoFechar={fecharVolta} />}
-      {sessao ? <Cacada sessao={sessao} executar={executar} /> : <EscolhaDoInicial aoEscolher={comecar} />}
+      {sessao ? <Cacada sessao={sessao} executar={executar} modoLeve={preferencias.modoLeve} /> : <EscolhaDoInicial aoEscolher={comecar} />}
+      <PainelDePreferencias preferencias={preferencias} mudar={mudar} />
       <PainelDeCopia temJogo={sessao !== null} exportar={exportar} importar={importar} />
     </main>
   )

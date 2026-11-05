@@ -163,14 +163,19 @@ export function useJogo() {
       const { estado, eventos } = avancarJogo(CONFIGURACAO, s.estado, s.agora, agora, gerador.current)
       const novos = eventos.map((evento) => ({ id: proximoRegistro.current++, instante: evento.instante, texto: descreverEvento(evento) }))
       const registros = novos.length ? [...novos.reverse(), ...s.registros].slice(0, REGISTROS_GUARDADOS) : s.registros
-      aplicar({ estado, agora, registros, eventos })
+      const nova = { estado, agora, registros, eventos }
+      // Modo de segundo plano: com a aba escondida, o motor calcula e a tela não redesenha.
+      if (document.visibilityState === 'hidden') atual.current = nova
+      else aplicar(nova)
     }, PASSO_MS)
 
     const guardar = () => {
       if (atual.current) gravarSessao(atual.current)
     }
+    // Ao voltar, a tela é redesenhada sem os eventos do último passo escondido, que já passaram.
     const aoMudarVisibilidade = () => {
       if (document.visibilityState === 'hidden') guardar()
+      else if (atual.current) aplicar({ ...atual.current, eventos: [] })
     }
     const salvamento = setInterval(guardar, INTERVALO_DO_SAVE_MS)
     document.addEventListener('visibilitychange', aoMudarVisibilidade)
