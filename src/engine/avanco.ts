@@ -28,9 +28,10 @@ export type Avanco<Tipo extends string> = {
   readonly ouroDaForja: number
   readonly fragmentosDaMina: number
   readonly essenciasDaDestilaria: number
+  readonly perolasDaPesca: number
 }
 
-// A Forja e a Mina produzem mesmo com a caçada pausada. O estoque do Mercado é sorteado no fim, para não mudar os sorteios da caçada.
+// Os postos produzem mesmo com a caçada pausada. O estoque do Mercado é sorteado no fim, para não mudar os sorteios da caçada.
 // Os ovos chocam depois da caçada, e o que esperava por espaço na reserva choca no início do período.
 // As conquistas são conferidas no fim de cada avanço, o que também cobre os comandos dados desde o anterior.
 export function avancarJogo<Tipo extends string>(
@@ -53,5 +54,5 @@ export function avancarJogo<Tipo extends string>(
     prismatica: filhote.prismatica,
   }))
   const eventos = [...cacada.eventos, ...chocados, ...concluidas.map((c) => ({ tipo: 'conquista' as const, instante: fim, nome: c.nome, diamantes: c.diamantes }))]
-  return { estado: estadoFinal, eventos, ouroDaForja: base.ouro, fragmentosDaMina: base.fragmentos, essenciasDaDestilaria: base.essencias }
+  return { estado: estadoFinal, eventos, ouroDaForja: base.ouro, fragmentosDaMina: base.fragmentos, essenciasDaDestilaria: base.essencias, perolasDaPesca: base.perolas }
 }

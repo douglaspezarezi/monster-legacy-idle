@@ -34,7 +34,7 @@ describe('tempo fora do jogo', () => {
 
   it('sem tempo fora não muda nada', () => {
     const estado = jogoCom(forte)
-    expect(creditarTempoFora(CONFIGURACAO, estado, 1000, 1000, criarGerador(1))).toEqual({ estado, eventos: [], ouroDaForja: 0, fragmentosDaMina: 0, essenciasDaDestilaria: 0, creditadoMs: 0 })
+    expect(creditarTempoFora(CONFIGURACAO, estado, 1000, 1000, criarGerador(1))).toEqual({ estado, eventos: [], ouroDaForja: 0, fragmentosDaMina: 0, essenciasDaDestilaria: 0, perolasDaPesca: 0, creditadoMs: 0 })
     expect(creditarTempoFora(CONFIGURACAO, estado, 1000, 500, criarGerador(1)).creditadoMs).toBe(0)
   })
 

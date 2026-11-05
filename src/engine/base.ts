@@ -1,4 +1,4 @@
-// Postos de trabalho da base (GDD, seção 9): a Forja produz ouro, a Mina, Fragmentos, e a Destilaria, Essências do tipo escolhido.
+// Postos de trabalho da base (GDD, seção 9): a Forja produz ouro, a Mina, Fragmentos, a Destilaria, Essências do tipo escolhido, e a Pesca, Pérolas.
 import type { Catalogo } from './especie.ts'
 import { especieDo } from './especie.ts'
 import { aumentar } from './equipamentos.ts'
@@ -10,7 +10,7 @@ export type DadosDePosto<Tipo extends string> = {
   readonly nome: string
   readonly tipos: readonly Tipo[]
   readonly vagas: number
-  // Ouro na Forja, Fragmentos na Mina, por criatura antes de raridade e afinidade.
+  // Ouro na Forja, Fragmentos na Mina, Pérolas na Pesca, por criatura antes de raridade e afinidade.
   readonly porHora: number
 }
 
@@ -26,6 +26,11 @@ export type Mina = {
   readonly fragmentosFracionarios: number
 }
 
+export type Pesca = {
+  readonly trabalhadores: readonly number[]
+  readonly perolasFracionarias: number
+}
+
 // A Base especial: construída uma vez com Diamantes; o jogador escolhe o tipo destilado.
 export type Destilaria<Tipo extends string> = {
   readonly construida: boolean
@@ -36,6 +41,7 @@ export type Destilaria<Tipo extends string> = {
 
 export const FORJA_VAZIA: Forja = { trabalhadores: [], ouroFracionario: 0 }
 export const MINA_VAZIA: Mina = { trabalhadores: [], fragmentosFracionarios: 0 }
+export const PESCA_VAZIA: Pesca = { trabalhadores: [], perolasFracionarias: 0 }
 export const DESTILARIA_VAZIA: Destilaria<never> = { construida: false, tipo: null, trabalhadores: [], essenciasFracionarias: 0 }
 
 export const PRECO_DA_DESTILARIA = 300
@@ -57,6 +63,7 @@ export type ConfiguracaoDaBase<Tipo extends string> = {
   readonly catalogo: Catalogo<Tipo>
   readonly forja: DadosDePosto<Tipo>
   readonly mina: DadosDePosto<Tipo>
+  readonly pesca: DadosDePosto<Tipo>
   // Os tipos vêm da escolha do jogador, não do conteúdo.
   readonly destilaria: Omit<DadosDePosto<Tipo>, 'tipos'>
 }
@@ -77,13 +84,17 @@ function producaoPorHora<Tipo extends string>(
   return total
 }
 
-// O Cinto aumenta a Forja e a Mina.
+// O Cinto aumenta todos os postos.
 export function ouroPorHoraDaForja<Tipo extends string>(configuracao: ConfiguracaoDaBase<Tipo>, estado: EstadoDoJogo<Tipo>): number {
   return aumentar(producaoPorHora(configuracao, estado, configuracao.forja, estado.forja.trabalhadores), estado, 'cinto')
 }
 
 export function fragmentosPorHoraDaMina<Tipo extends string>(configuracao: ConfiguracaoDaBase<Tipo>, estado: EstadoDoJogo<Tipo>): number {
   return aumentar(producaoPorHora(configuracao, estado, configuracao.mina, estado.mina.trabalhadores), estado, 'cinto')
+}
+
+export function perolasPorHoraDaPesca<Tipo extends string>(configuracao: ConfiguracaoDaBase<Tipo>, estado: EstadoDoJogo<Tipo>): number {
+  return aumentar(producaoPorHora(configuracao, estado, configuracao.pesca, estado.pesca.trabalhadores), estado, 'cinto')
 }
 
 export function essenciasPorHoraDaDestilaria<Tipo extends string>(configuracao: ConfiguracaoDaBase<Tipo>, estado: EstadoDoJogo<Tipo>): number {
@@ -98,17 +109,19 @@ export function produzir<Tipo extends string>(
   estado: EstadoDoJogo<Tipo>,
   inicio: number,
   fim: number,
-): { readonly estado: EstadoDoJogo<Tipo>; readonly ouro: number; readonly fragmentos: number; readonly essencias: number } {
-  const { forja, mina, destilaria } = estado
-  const semTrabalhadores = forja.trabalhadores.length === 0 && mina.trabalhadores.length === 0 && destilaria.trabalhadores.length === 0
-  if (fim <= inicio || semTrabalhadores) return { estado, ouro: 0, fragmentos: 0, essencias: 0 }
+): { readonly estado: EstadoDoJogo<Tipo>; readonly ouro: number; readonly fragmentos: number; readonly essencias: number; readonly perolas: number } {
+  const { forja, mina, destilaria, pesca } = estado
+  const semTrabalhadores = [forja, mina, destilaria, pesca].every((posto) => posto.trabalhadores.length === 0)
+  if (fim <= inicio || semTrabalhadores) return { estado, ouro: 0, fragmentos: 0, essencias: 0, perolas: 0 }
   const horas = (fim - inicio) / HORA_MS
   const producaoDeOuro = forja.ouroFracionario + ouroPorHoraDaForja(configuracao, estado) * horas
   const producaoDeFragmentos = mina.fragmentosFracionarios + fragmentosPorHoraDaMina(configuracao, estado) * horas
   const producaoDeEssencias = destilaria.essenciasFracionarias + essenciasPorHoraDaDestilaria(configuracao, estado) * horas
+  const producaoDePerolas = pesca.perolasFracionarias + perolasPorHoraDaPesca(configuracao, estado) * horas
   const ouro = Math.floor(producaoDeOuro)
   const fragmentos = Math.floor(producaoDeFragmentos)
   const essencias = Math.floor(producaoDeEssencias)
+  const perolas = Math.floor(producaoDePerolas)
   const { inventario } = estado
   const tipo = destilaria.tipo
   return {
@@ -118,21 +131,24 @@ export function produzir<Tipo extends string>(
         ...inventario,
         ouro: inventario.ouro + ouro,
         fragmentos: inventario.fragmentos + fragmentos,
+        perolas: inventario.perolas + perolas,
         essencias: essencias > 0 && tipo !== null ? { ...inventario.essencias, [tipo]: (inventario.essencias[tipo] ?? 0) + essencias } : inventario.essencias,
       },
       forja: { ...forja, ouroFracionario: producaoDeOuro - ouro },
       mina: { ...mina, fragmentosFracionarios: producaoDeFragmentos - fragmentos },
       destilaria: { ...destilaria, essenciasFracionarias: producaoDeEssencias - essencias },
+      pesca: { ...pesca, perolasFracionarias: producaoDePerolas - perolas },
     },
     ouro,
     fragmentos,
     essencias,
+    perolas,
   }
 }
 
 // Uma criatura trabalha num posto por vez.
 export function trabalhando<Tipo extends string>(estado: EstadoDoJogo<Tipo>, id: number): boolean {
-  return [estado.forja, estado.mina, estado.destilaria].some((posto) => posto.trabalhadores.includes(id))
+  return [estado.forja, estado.mina, estado.destilaria, estado.pesca].some((posto) => posto.trabalhadores.includes(id))
 }
 
 // Falso se a criatura já está neste posto; lança se está em outro, fora da reserva ou sem vaga.
@@ -168,6 +184,19 @@ export function colocarNaMina<Tipo extends string>(
 
 export function tirarDaMina<Tipo extends string>(estado: EstadoDoJogo<Tipo>, id: number): EstadoDoJogo<Tipo> {
   return { ...estado, mina: { ...estado.mina, trabalhadores: estado.mina.trabalhadores.filter((t) => t !== id) } }
+}
+
+export function colocarNaPesca<Tipo extends string>(
+  configuracao: ConfiguracaoDaBase<Tipo>,
+  estado: EstadoDoJogo<Tipo>,
+  id: number,
+): EstadoDoJogo<Tipo> {
+  if (!podeTrabalhar(estado.pesca.trabalhadores, estado, id, configuracao.pesca.vagas, 'Pesca')) return estado
+  return { ...estado, pesca: { ...estado.pesca, trabalhadores: [...estado.pesca.trabalhadores, id] } }
+}
+
+export function tirarDaPesca<Tipo extends string>(estado: EstadoDoJogo<Tipo>, id: number): EstadoDoJogo<Tipo> {
+  return { ...estado, pesca: { ...estado.pesca, trabalhadores: estado.pesca.trabalhadores.filter((t) => t !== id) } }
 }
 
 // Por que a Destilaria não pode ser construída; null quando pode.

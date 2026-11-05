@@ -6,5 +6,7 @@ export const FORJA: DadosDePosto<Tipo> = { nome: 'Forja', tipos: ['Chama', 'Faí
 
 export const MINA: DadosDePosto<Tipo> = { nome: 'Mina', tipos: ['Rocha', 'Cristal', 'Liga'], vagas: 3, porHora: 10 }
 
+export const PESCA: DadosDePosto<Tipo> = { nome: 'Pesca', tipos: ['Maré'], vagas: 3, porHora: 10 }
+
 // O tipo da Destilaria é escolhido pelo jogador.
 export const DESTILARIA: Omit<DadosDePosto<Tipo>, 'tipos'> = { nome: 'Destilaria', vagas: 3, porHora: 0.15 }

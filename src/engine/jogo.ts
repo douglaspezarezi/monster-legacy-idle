@@ -1,7 +1,7 @@
 // Estado do jogo no F2 e comandos do jogador (GDD, seções 4, 5, 7 e 13).
 import type { Gerador } from './aleatorio.ts'
-import type { Destilaria, Forja, Mina } from './base.ts'
-import { DESTILARIA_VAZIA, FORJA_VAZIA, MINA_VAZIA, trabalhando } from './base.ts'
+import type { Destilaria, Forja, Mina, Pesca } from './base.ts'
+import { DESTILARIA_VAZIA, FORJA_VAZIA, MINA_VAZIA, PESCA_VAZIA, trabalhando } from './base.ts'
 import type { Equipamentos } from './equipamentos.ts'
 import { SEM_EQUIPAMENTOS, aumentar } from './equipamentos.ts'
 import type { FiltroDeCaptura } from './captura.ts'
@@ -31,6 +31,8 @@ export type Inventario = {
   readonly matrizes: readonly Matriz[]
   // Produzidos pela Mina; pagam o Despertar.
   readonly fragmentos: number
+  // Produzidas pela Pesca; pagam a encomenda de equipamentos.
+  readonly perolas: number
   // Essências por tipo, que caem nas rotas 5 a 7 do bioma do tipo.
   readonly essencias: Readonly<Record<string, number>>
   // Chaves da Ilha, que caem na rota 5 e abrem as Ilhas Lendárias.
@@ -98,6 +100,7 @@ export type EstadoDoJogo<Tipo extends string> = {
   readonly chocadeira: readonly Ovo[]
   readonly santuario: Santuario
   readonly destilaria: Destilaria<Tipo>
+  readonly pesca: Pesca
 }
 
 export const INVENTARIO_INICIAL: Inventario = {
@@ -107,6 +110,7 @@ export const INVENTARIO_INICIAL: Inventario = {
   tonicosDeRetorno: 5,
   matrizes: [],
   fragmentos: 0,
+  perolas: 0,
   essencias: {},
   chaves: 0,
   pergaminhos: {},
@@ -178,6 +182,7 @@ export function novoJogo<Tipo extends string>(
     chocadeira: [],
     santuario: SANTUARIO_VAZIO,
     destilaria: DESTILARIA_VAZIA,
+    pesca: PESCA_VAZIA,
   }
 }
 

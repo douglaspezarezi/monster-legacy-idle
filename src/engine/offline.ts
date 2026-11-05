@@ -39,6 +39,7 @@ export type TempoFora<Tipo extends string> = {
   readonly ouroDaForja: number
   readonly fragmentosDaMina: number
   readonly essenciasDaDestilaria: number
+  readonly perolasDaPesca: number
   readonly creditadoMs: number
 }
 
@@ -51,7 +52,7 @@ export function creditarTempoFora<Tipo extends string>(
   gerador: Gerador,
 ): TempoFora<Tipo> {
   const fora = agora - salvoEm
-  if (fora <= 0) return { estado, eventos: [], ouroDaForja: 0, fragmentosDaMina: 0, essenciasDaDestilaria: 0, creditadoMs: 0 }
+  if (fora <= 0) return { estado, eventos: [], ouroDaForja: 0, fragmentosDaMina: 0, essenciasDaDestilaria: 0, perolasDaPesca: 0, creditadoMs: 0 }
   const creditadoMs = Math.min(fora, LIMITE_DO_TEMPO_FORA_MS)
   const deslocado = deslocarTempo(estado, fora - creditadoMs)
   const resultado = avancarJogo(configuracao, deslocado, agora - creditadoMs, agora, gerador)
