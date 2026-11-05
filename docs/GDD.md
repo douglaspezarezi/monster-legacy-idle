@@ -836,7 +836,18 @@ Pérolas por hora com 3 criaturas, e horas de Pesca por peça:
 - **No começo do jogo** a Pesca rende mais que o chefe, porque os abates por hora são poucos. Isso só adianta a economia: nenhum equipamento muda a força das criaturas.
 - **Alternativa descartada:** usar as Pérolas para subir a raridade de uma peça que o jogador já tem. No fim do jogo o chefe já dá lendária e mítica, e as Pérolas perderiam o uso.
 
-## 10. Cruzamento
+### Mapa da Base no F27 [proposta]
+
+- **O que é:** um painel com a Base vista de cima, em pixel art desenhada por código, como a cena da caçada. Mostra o que o motor já calcula e não muda nenhuma regra: é só tela.
+- **Construções:** cada posto vira uma construção no mapa: Forja, Mina, Pesca (na beira de um lago), Destilaria, Santuário e Chocadeira. A Destilaria e o Santuário aparecem como terreno cercado com uma placa enquanto não foram construídos.
+- **Monstros:** cada monstro que trabalha num posto aparece andando devagar perto da construção dele, com o mesmo desenho do retrato. Os ovos aparecem na Chocadeira. O monstro ativo continua na cena da caçada, fora do mapa.
+- **Produção:** quando um posto completa uma unidade (uma moeda de ouro, um Fragmento, uma Pérola, uma Essência), sobe um pequeno sinal acima da construção. Se o posto estiver sem trabalhadores, a construção fica parada, sem fumaça nem movimento.
+- **Clique:** clicar numa construção leva ao painel dela (Base, Destilaria ou Chocadeira) e o destaca por um instante. Passar o mouse mostra o nome, as vagas ocupadas e a produção por hora.
+- **Cenário:** grama, árvores, arbustos, pedras e caminhos de terra ligando as construções. A disposição é fixa: é sempre a mesma Base, para o jogador se acostumar com ela.
+- **Tamanho:** grade de 30 por 12 quadros de 16 pixels, ampliada sem borrar. Ocupa a largura inteira, como a Luta e o Mapa, e encolhe junto no celular.
+- **Desempenho:** no modo leve o mapa não é desenhado, como a cena. Com a aba escondida, para de desenhar.
+- **Arte:** provisória, original e desenhada por código, até a arte final do F7. Nenhum sprite vem de fora do projeto.
+- **Fica de fora:** personagem controlado pelo jogador e mapa do mundo com os biomas.
 
 1. Os dois pais pagam uma taxa de ouro ou Diamantes e deixam a conta para sempre (sacrifício).
 2. Os pais precisam pertencer à mesma **linhagem compatível**, cadastrada no conteúdo.
@@ -1164,6 +1175,7 @@ Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste docume
 | F24 · Interface editável | Modo de edição com os 14 painéis da caçada reordenáveis por arrastar ou botões e escala de 50% a 150%, salvos no navegador | No modo de edição, um painel arrastado troca de lugar e um painel em 150% continua assim depois de recarregar a página |
 | F25 · Pesca | Posto da Pesca com Pérolas e encomenda de peças de equipamento do espaço escolhido | Uma peça encomendada com Pérolas pescadas com o jogo fechado é vestida no espaço escolhido |
 | F26 · Calendário de presença | 28 casas, uma por dia em que o jogo é aberto, sem perder casa ao faltar, com Diamantes no dia 7 de cada semana | Resgatar uma casa num dia libera a próxima só no dia seguinte, e faltar um dia não pula casa |
+| F27 · Mapa da Base **[proposta]** | Base vista de cima com os postos como construções, os trabalhadores andando perto delas e clique que leva ao painel | Um monstro colocado na Pesca aparece andando ao lado da Pesca no mapa, e clicar na Pesca leva ao painel da Base |
 
 ## 17. Pendências
 
