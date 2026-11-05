@@ -28,6 +28,8 @@ export function ResumoDaVolta({ volta, aoFechar }: Props) {
         <dd>{volta.fragmentosDaMina}</dd>
         <dt>Essências da Destilaria</dt>
         <dd>{volta.essenciasDaDestilaria}</dd>
+        <dt>Pérolas da Pesca</dt>
+        <dd>{volta.perolasDaPesca}</dd>
         <dt>Capturas</dt>
         <dd>{resumo.capturas}</dd>
         <dt>Matrizes</dt>

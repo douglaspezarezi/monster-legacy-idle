@@ -6,11 +6,14 @@ import {
   colocarNaDestilaria,
   colocarNaForja,
   colocarNaMina,
+  colocarNaPesca,
   fragmentosPorHoraDaMina,
   ouroPorHoraDaForja,
+  perolasPorHoraDaPesca,
   tirarDaDestilaria,
   tirarDaForja,
   tirarDaMina,
+  tirarDaPesca,
 } from '../engine/base.ts'
 import { abatesParaOChefe } from '../engine/cacada.ts'
 import { dadosDaEra, podeReiniciarEra, reiniciarEra } from '../engine/era.ts'
@@ -121,12 +124,14 @@ export function Cacada({ sessao, executar, modoLeve }: Props) {
   const naForja = (id: number) => estado.forja.trabalhadores.includes(id)
   const naMina = (id: number) => estado.mina.trabalhadores.includes(id)
   const naDestilaria = (id: number) => estado.destilaria.trabalhadores.includes(id)
-  const ocupada = (id: number) => naForja(id) || naMina(id) || naDestilaria(id)
+  const naPesca = (id: number) => estado.pesca.trabalhadores.includes(id)
+  const ocupada = (id: number) => naForja(id) || naMina(id) || naDestilaria(id) || naPesca(id)
   // Some da seleção quem saiu da reserva ou foi trabalhar.
   const pais = selecionados.flatMap((id) => estado.reserva.filter((m) => m.id === id && !ocupada(id)))
   const forjaCheia = estado.forja.trabalhadores.length >= CONFIGURACAO.forja.vagas
   const minaCheia = estado.mina.trabalhadores.length >= CONFIGURACAO.mina.vagas
   const destilariaCheia = estado.destilaria.trabalhadores.length >= CONFIGURACAO.destilaria.vagas
+  const pescaCheia = estado.pesca.trabalhadores.length >= CONFIGURACAO.pesca.vagas
   const essencias = Object.entries(inventario.essencias).filter(([, quantidade]) => quantidade > 0)
 
   function alternarPai(membro: Membro) {
@@ -238,6 +243,8 @@ export function Cacada({ sessao, executar, modoLeve }: Props) {
             <dd>{inventario.tonicosDeRetorno}</dd>
             <dt>Fragmentos</dt>
             <dd>{inventario.fragmentos}</dd>
+            <dt>Pérolas</dt>
+            <dd>{inventario.perolas}</dd>
             <dt>Chaves da Ilha</dt>
             <dd>{inventario.chaves}</dd>
             <dt>Pedras do Destino</dt>
@@ -385,6 +392,7 @@ export function Cacada({ sessao, executar, modoLeve }: Props) {
                       {naForja(membro.id) && ' · na Forja'}
                       {naMina(membro.id) && ' · na Mina'}
                       {naDestilaria(membro.id) && ' · na Destilaria'}
+                      {naPesca(membro.id) && ' · na Pesca'}
                     </span>
                     <small>
                       {descreverGenes(membro.genes)}
@@ -401,6 +409,8 @@ export function Cacada({ sessao, executar, modoLeve }: Props) {
                       <button onClick={() => executar((e) => tirarDaMina(e, membro.id))}>Sair da Mina</button>
                     ) : naDestilaria(membro.id) ? (
                       <button onClick={() => executar((e) => tirarDaDestilaria(e, membro.id))}>Sair da Destilaria</button>
+                    ) : naPesca(membro.id) ? (
+                      <button onClick={() => executar((e) => tirarDaPesca(e, membro.id))}>Sair da Pesca</button>
                     ) : (
                       <>
                         <button disabled={forjaCheia} onClick={() => executar((e) => colocarNaForja(CONFIGURACAO, e, membro.id))}>
@@ -408,6 +418,9 @@ export function Cacada({ sessao, executar, modoLeve }: Props) {
                         </button>
                         <button disabled={minaCheia} onClick={() => executar((e) => colocarNaMina(CONFIGURACAO, e, membro.id))}>
                           Mina
+                        </button>
+                        <button disabled={pescaCheia} onClick={() => executar((e) => colocarNaPesca(CONFIGURACAO, e, membro.id))}>
+                          Pesca
                         </button>
                         {estado.destilaria.construida && (
                           <button disabled={destilariaCheia} onClick={() => executar((e) => colocarNaDestilaria(CONFIGURACAO, e, membro.id))}>
@@ -444,6 +457,13 @@ export function Cacada({ sessao, executar, modoLeve }: Props) {
             Produz {Math.floor(fragmentosPorHoraDaMina(CONFIGURACAO, estado))} Fragmentos por hora, também com o jogo fechado. Tipos Rocha,
             Cristal e Liga rendem +25%; Maré, Brota, Astro, Penumbra, Faísca e Eco, −50%. O Despertar, a partir do nível {NIVEL_DO_DESPERTAR}, gasta{' '}
             {FRAGMENTOS_DO_DESPERTAR} Fragmentos e {ESSENCIAS_DO_DESPERTAR} Essências do primeiro tipo do monstro, que caem nas rotas 5 a 7.
+          </p>
+          <h3>
+            Pesca ({estado.pesca.trabalhadores.length}/{CONFIGURACAO.pesca.vagas})
+          </h3>
+          <p>
+            Produz {Math.floor(perolasPorHoraDaPesca(CONFIGURACAO, estado))} Pérolas por hora, também com o jogo fechado. Tipo Maré rende +25%;
+            Brota, Geada e Peçonha, −50%. As Pérolas encomendam peças de equipamento do espaço escolhido.
           </p>
           <PainelDaDestilaria estado={estado} executar={executar} />
           <h3>Cruzamento</h3>

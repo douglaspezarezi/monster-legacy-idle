@@ -257,6 +257,12 @@ button:disabled {
   background: rgb(127 209 163 / 0.18);
 }
 
+.encomenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
 .controle {
   display: grid;
   grid-template-columns: 4.5rem 1fr 3rem;

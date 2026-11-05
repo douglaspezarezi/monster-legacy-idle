@@ -41,6 +41,7 @@ export type Volta = {
   readonly ouroDaForja: number
   readonly fragmentosDaMina: number
   readonly essenciasDaDestilaria: number
+  readonly perolasDaPesca: number
 }
 
 // O comando recebe o estado, o instante simulado e o gerador da sessão.
@@ -59,7 +60,7 @@ function carregar(texto: string, agora: number, gerador: Gerador): { readonly se
   const fora = creditarTempoFora(CONFIGURACAO, save.estado, save.salvoEm, agora, gerador)
   const volta =
     fora.creditadoMs >= MINIMO_PARA_RESUMO_MS
-      ? { foraMs: agora - save.salvoEm, creditadoMs: fora.creditadoMs, resumo: resumir(fora.eventos), ouroDaForja: fora.ouroDaForja, fragmentosDaMina: fora.fragmentosDaMina, essenciasDaDestilaria: fora.essenciasDaDestilaria }
+      ? { foraMs: agora - save.salvoEm, creditadoMs: fora.creditadoMs, resumo: resumir(fora.eventos), ouroDaForja: fora.ouroDaForja, fragmentosDaMina: fora.fragmentosDaMina, essenciasDaDestilaria: fora.essenciasDaDestilaria, perolasDaPesca: fora.perolasDaPesca }
       : null
   // As conquistas pagas e os ovos chocados ao abrir também aparecem nos acontecimentos.
   const registros = fora.eventos
