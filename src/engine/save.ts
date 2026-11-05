@@ -1,5 +1,6 @@
 // Save versionado do estado do jogo (GDD, seção 5). Onde guardar o texto fica com a tela.
 import { DESTILARIA_VAZIA, FORJA_VAZIA, MINA_VAZIA, PESCA_VAZIA } from './base.ts'
+import { CALENDARIO_INICIAL } from './calendario.ts'
 import { CONTADORES_ZERADOS } from './conquistas.ts'
 import { ESPACOS_NA_RESERVA } from './captura.ts'
 import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
@@ -8,7 +9,7 @@ import { SEM_REPOSICAO } from './jogo.ts'
 import { MERCADO_VAZIO } from './mercado.ts'
 import { SANTUARIO_VAZIO } from './ovos.ts'
 
-export const VERSAO_DO_SAVE = 16
+export const VERSAO_DO_SAVE = 17
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
@@ -66,6 +67,8 @@ const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Re
     pesca: PESCA_VAZIA,
     inventario: ehObjeto(estado.inventario) ? { ...estado.inventario, perolas: 0 } : estado.inventario,
   }),
+  // A versão 17 trouxe o calendário de presença, na primeira casa.
+  16: (estado) => ({ ...estado, calendario: CALENDARIO_INICIAL }),
 }
 
 function especiesDe(estado: Record<string, unknown>): string[] {

@@ -2,6 +2,8 @@
 import type { Gerador } from './aleatorio.ts'
 import type { Destilaria, Forja, Mina, Pesca } from './base.ts'
 import { DESTILARIA_VAZIA, FORJA_VAZIA, MINA_VAZIA, PESCA_VAZIA, trabalhando } from './base.ts'
+import type { Calendario } from './calendario.ts'
+import { CALENDARIO_INICIAL } from './calendario.ts'
 import type { Equipamentos } from './equipamentos.ts'
 import { SEM_EQUIPAMENTOS, aumentar } from './equipamentos.ts'
 import type { FiltroDeCaptura } from './captura.ts'
@@ -101,6 +103,7 @@ export type EstadoDoJogo<Tipo extends string> = {
   readonly santuario: Santuario
   readonly destilaria: Destilaria<Tipo>
   readonly pesca: Pesca
+  readonly calendario: Calendario
 }
 
 export const INVENTARIO_INICIAL: Inventario = {
@@ -183,6 +186,7 @@ export function novoJogo<Tipo extends string>(
     santuario: SANTUARIO_VAZIO,
     destilaria: DESTILARIA_VAZIA,
     pesca: PESCA_VAZIA,
+    calendario: CALENDARIO_INICIAL,
   }
 }
 
