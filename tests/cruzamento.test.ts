@@ -5,12 +5,12 @@ import { ESPECIES } from '../src/conteudo/especies.ts'
 import { criarGerador } from '../src/engine/aleatorio.ts'
 import { colocarNaForja } from '../src/engine/base.ts'
 import type { PedidoDeCruzamento } from '../src/engine/cruzamento.ts'
-import { TAXA_DE_CRUZAMENTO, cruzar, genesDoFilhote, mesmaLinhagem, tecnicasDoCruzamento } from '../src/engine/cruzamento.ts'
+import { TAXA_DE_CRUZAMENTO, genesDoFilhote, mesmaLinhagem, tecnicasDoCruzamento } from '../src/engine/cruzamento.ts'
 import type { Genes } from '../src/engine/genes.ts'
 import { raridadeDosGenes } from '../src/engine/genes.ts'
 import type { Membro } from '../src/engine/jogo.ts'
 import { combatenteDe } from '../src/engine/criatura.ts'
-import { jogoCom, membro } from './apoio.ts'
+import { jogoCom, membro, cruzarEChocar } from './apoio.ts'
 
 function comGenes(base: Membro, genes: Genes): Membro {
   return { ...base, genes }
@@ -57,7 +57,7 @@ describe('herança de genes', () => {
 describe('cruzamento', () => {
   it('os pais saem da reserva, o filhote entra no nível 1 e a taxa é paga', () => {
     const estado = comPais()
-    const depois = cruzar(estado, CATALOGO, LINHAGENS, pedido, criarGerador(1))
+    const depois = cruzarEChocar(estado, CATALOGO, LINHAGENS, pedido, criarGerador(1))
     expect(depois.reserva).toHaveLength(1)
     const filhote = depois.reserva[0]
     expect(filhote).toMatchObject({ id: 4, especie: 'Sapolho', nivel: 1, xpNoNivel: 0 })
@@ -67,37 +67,37 @@ describe('cruzamento', () => {
   })
 
   it('a espécie vem do pai escolhido', () => {
-    const depois = cruzar(comPais(), CATALOGO, LINHAGENS, { ...pedido, especieDe: 2 }, criarGerador(1))
+    const depois = cruzarEChocar(comPais(), CATALOGO, LINHAGENS, { ...pedido, especieDe: 2 }, criarGerador(1))
     expect(depois.reserva[0].especie).toBe('Brotelho')
   })
 
   it('a raridade do filhote sai da soma dos genes', () => {
     const gerador = criarGerador(9)
     for (let i = 0; i < 50; i++) {
-      const filhote = cruzar(comPais(), CATALOGO, LINHAGENS, pedido, gerador).reserva[0]
+      const filhote = cruzarEChocar(comPais(), CATALOGO, LINHAGENS, pedido, gerador).reserva[0]
       expect(filhote.prismatica && ['fraca', 'comum', 'incomum', 'rara'].includes(raridadeDosGenes(filhote.genes))).toBe(false)
     }
   })
 
   it('recusa pedidos inválidos', () => {
     const g = criarGerador(1)
-    expect(() => cruzar(comPais(), CATALOGO, LINHAGENS, { ...pedido, paiB: 2 }, g)).toThrow(RangeError)
-    expect(() => cruzar(comPais(), CATALOGO, LINHAGENS, { ...pedido, paiA: 1 }, g)).toThrow(RangeError)
-    expect(() => cruzar(comPais(), CATALOGO, LINHAGENS, { ...pedido, especieDe: 1 }, g)).toThrow(RangeError)
-    expect(() => cruzar(comPais(), CATALOGO, LINHAGENS, { ...pedido, herdados: ['vida', 'vida', 'ataque'] }, g)).toThrow(RangeError)
-    expect(() => cruzar(comPais(), CATALOGO, LINHAGENS, { ...pedido, herdados: ['vida', 'ataque'] }, g)).toThrow(RangeError)
+    expect(() => cruzarEChocar(comPais(), CATALOGO, LINHAGENS, { ...pedido, paiB: 2 }, g)).toThrow(RangeError)
+    expect(() => cruzarEChocar(comPais(), CATALOGO, LINHAGENS, { ...pedido, paiA: 1 }, g)).toThrow(RangeError)
+    expect(() => cruzarEChocar(comPais(), CATALOGO, LINHAGENS, { ...pedido, especieDe: 1 }, g)).toThrow(RangeError)
+    expect(() => cruzarEChocar(comPais(), CATALOGO, LINHAGENS, { ...pedido, herdados: ['vida', 'vida', 'ataque'] }, g)).toThrow(RangeError)
+    expect(() => cruzarEChocar(comPais(), CATALOGO, LINHAGENS, { ...pedido, herdados: ['vida', 'ataque'] }, g)).toThrow(RangeError)
     const semOuro = comPais()
-    expect(() => cruzar({ ...semOuro, inventario: { ...semOuro.inventario, ouro: TAXA_DE_CRUZAMENTO - 1 } }, CATALOGO, LINHAGENS, pedido, g)).toThrow(RangeError)
+    expect(() => cruzarEChocar({ ...semOuro, inventario: { ...semOuro.inventario, ouro: TAXA_DE_CRUZAMENTO - 1 } }, CATALOGO, LINHAGENS, pedido, g)).toThrow(RangeError)
   })
 
   it('recusa linhagens diferentes', () => {
     const ferroa = membro('Ferroa', 5, 10, 3)
-    expect(() => cruzar(comPais({ reserva: [paiA, ferroa] }), CATALOGO, LINHAGENS, pedido, criarGerador(1))).toThrow(RangeError)
+    expect(() => cruzarEChocar(comPais({ reserva: [paiA, ferroa] }), CATALOGO, LINHAGENS, pedido, criarGerador(1))).toThrow(RangeError)
   })
 
   it('criatura trabalhando não cruza', () => {
     const naForja = colocarNaForja(CONFIGURACAO, comPais(), 2)
-    expect(() => cruzar(naForja, CATALOGO, LINHAGENS, pedido, criarGerador(1))).toThrow(RangeError)
+    expect(() => cruzarEChocar(naForja, CATALOGO, LINHAGENS, pedido, criarGerador(1))).toThrow(RangeError)
   })
 
   it('cruzar os melhores filhotes melhora a linhagem', () => {
@@ -110,7 +110,7 @@ describe('cruzamento', () => {
       estado = { ...estado, reserva: [...estado.reserva, novo], proximoId: estado.proximoId + 1 }
       const [melhor] = [...estado.reserva].sort((a, b) => soma(b) - soma(a))
       const ordem = (Object.keys(melhor.genes) as (keyof Genes)[]).sort((a, b) => Math.max(melhor.genes[b], novo.genes[b]) - Math.max(melhor.genes[a], novo.genes[a]))
-      estado = cruzar(estado, CATALOGO, LINHAGENS, { paiA: melhor.id, paiB: novo.id, especieDe: melhor.id, herdados: ordem.slice(0, 3) }, gerador)
+      estado = cruzarEChocar(estado, CATALOGO, LINHAGENS, { paiA: melhor.id, paiB: novo.id, especieDe: melhor.id, herdados: ordem.slice(0, 3) }, gerador)
     }
     expect(Math.max(...estado.reserva.map(soma))).toBeGreaterThan(somaInicial)
   })
@@ -120,7 +120,7 @@ describe('cruzamento completo', () => {
   const filhoteDe = (estado: ReturnType<typeof comPais>) => estado.reserva[estado.reserva.length - 1]
 
   it('o filhote nasce sabendo a técnica herdada da fila de um dos pais', () => {
-    const depois = cruzar(comPais(), CATALOGO, LINHAGENS, { ...pedido, tecnicaHerdada: 'Mordida' }, criarGerador(1))
+    const depois = cruzarEChocar(comPais(), CATALOGO, LINHAGENS, { ...pedido, tecnicaHerdada: 'Mordida' }, criarGerador(1))
     expect(filhoteDe(depois)).toMatchObject({ especie: 'Sapolho', tecnicaAprendida: 'Mordida' })
     expect(combatenteDe(CATALOGO, filhoteDe(depois)).tecnicas.map((t) => t.nome)).toEqual(['Mordida', 'Esporos', 'Jato de Lodo', 'Golpe de Galho'])
   })
@@ -131,26 +131,26 @@ describe('cruzamento completo', () => {
     // A fila do pai desperto é Floresta Viva, Fornalha, Esporos e Golpe de Galho; o Sapolho já sabe as duas últimas.
     expect(tecnicasDoCruzamento(CATALOGO, comAprendida, paiB, 'Sapolho')).toEqual(['Fornalha'])
     expect(tecnicasDoCruzamento(CATALOGO, paiA, paiB, 'Brotelho')).toEqual(['Jato de Lodo'])
-    expect(filhoteDe(cruzar(estado, CATALOGO, LINHAGENS, { ...pedido, tecnicaHerdada: 'Fornalha' }, criarGerador(1))).tecnicaAprendida).toBe('Fornalha')
-    expect(() => cruzar(estado, CATALOGO, LINHAGENS, { ...pedido, tecnicaHerdada: 'Floresta Viva' }, criarGerador(1))).toThrow(RangeError)
-    expect(() => cruzar(estado, CATALOGO, LINHAGENS, { ...pedido, tecnicaHerdada: 'Jato de Lodo' }, criarGerador(1))).toThrow(RangeError)
-    expect(() => cruzar(estado, CATALOGO, LINHAGENS, { ...pedido, tecnicaHerdada: 'Mortalha' }, criarGerador(1))).toThrow(RangeError)
+    expect(filhoteDe(cruzarEChocar(estado, CATALOGO, LINHAGENS, { ...pedido, tecnicaHerdada: 'Fornalha' }, criarGerador(1))).tecnicaAprendida).toBe('Fornalha')
+    expect(() => cruzarEChocar(estado, CATALOGO, LINHAGENS, { ...pedido, tecnicaHerdada: 'Floresta Viva' }, criarGerador(1))).toThrow(RangeError)
+    expect(() => cruzarEChocar(estado, CATALOGO, LINHAGENS, { ...pedido, tecnicaHerdada: 'Jato de Lodo' }, criarGerador(1))).toThrow(RangeError)
+    expect(() => cruzarEChocar(estado, CATALOGO, LINHAGENS, { ...pedido, tecnicaHerdada: 'Mortalha' }, criarGerador(1))).toThrow(RangeError)
   })
 
   it('sem técnica herdada, o filhote nasce só com as da espécie', () => {
-    expect(filhoteDe(cruzar(comPais(), CATALOGO, LINHAGENS, pedido, criarGerador(1))).tecnicaAprendida).toBeUndefined()
+    expect(filhoteDe(cruzarEChocar(comPais(), CATALOGO, LINHAGENS, pedido, criarGerador(1))).tecnicaAprendida).toBeUndefined()
   })
 
   it('a Pedra do Destino faz herdar 4 atributos e é gasta', () => {
     const estado = comPais()
     const comPedra = { ...estado, inventario: { ...estado.inventario, pedrasDoDestino: 1 } }
     const herdados = ['vida', 'ataque', 'defesa', 'foco'] as const
-    const depois = cruzar(comPedra, CATALOGO, LINHAGENS, { ...pedido, herdados, pedraDoDestino: true }, criarGerador(1))
+    const depois = cruzarEChocar(comPedra, CATALOGO, LINHAGENS, { ...pedido, herdados, pedraDoDestino: true }, criarGerador(1))
     expect(filhoteDe(depois).genes).toMatchObject({ vida: 18, ataque: 17, defesa: 15, foco: 12 })
     expect(depois.inventario.pedrasDoDestino).toBe(0)
-    expect(() => cruzar(comPedra, CATALOGO, LINHAGENS, { ...pedido, pedraDoDestino: true }, criarGerador(1))).toThrow(/4 atributos/)
-    expect(() => cruzar(comPedra, CATALOGO, LINHAGENS, { ...pedido, herdados }, criarGerador(1))).toThrow(/3 atributos/)
-    expect(() => cruzar(estado, CATALOGO, LINHAGENS, { ...pedido, herdados, pedraDoDestino: true }, criarGerador(1))).toThrow(/Pedra do Destino/)
+    expect(() => cruzarEChocar(comPedra, CATALOGO, LINHAGENS, { ...pedido, pedraDoDestino: true }, criarGerador(1))).toThrow(/4 atributos/)
+    expect(() => cruzarEChocar(comPedra, CATALOGO, LINHAGENS, { ...pedido, herdados }, criarGerador(1))).toThrow(/3 atributos/)
+    expect(() => cruzarEChocar(estado, CATALOGO, LINHAGENS, { ...pedido, herdados, pedraDoDestino: true }, criarGerador(1))).toThrow(/Pedra do Destino/)
   })
 
   it('a Pedra leva a melhor soma de genes mais longe em 10 cruzamentos', () => {
@@ -163,7 +163,7 @@ describe('cruzamento completo', () => {
         const [melhor] = [...estado.reserva].sort((a, b) => soma(b) - soma(a))
         const ordem = (Object.keys(melhor.genes) as (keyof Genes)[]).sort((a, b) => Math.max(melhor.genes[b], novo.genes[b]) - Math.max(melhor.genes[a], novo.genes[a]))
         const herdados = ordem.slice(0, comPedra ? 4 : 3)
-        estado = cruzar(estado, CATALOGO, LINHAGENS, { paiA: melhor.id, paiB: novo.id, especieDe: melhor.id, herdados, pedraDoDestino: comPedra }, gerador)
+        estado = cruzarEChocar(estado, CATALOGO, LINHAGENS, { paiA: melhor.id, paiB: novo.id, especieDe: melhor.id, herdados, pedraDoDestino: comPedra }, gerador)
       }
       return Math.max(...estado.reserva.map(soma))
     }

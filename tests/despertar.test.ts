@@ -8,7 +8,6 @@ import { avancarJogo } from '../src/engine/avanco.ts'
 import { colocarNaMina } from '../src/engine/base.ts'
 import { simularCacada } from '../src/engine/cacada.ts'
 import { combatenteDe } from '../src/engine/criatura.ts'
-import { cruzar } from '../src/engine/cruzamento.ts'
 import {
   ESSENCIAS_DO_DESPERTAR,
   FRAGMENTOS_DO_DESPERTAR,
@@ -20,7 +19,7 @@ import { evoluir, voltarAoNivel1 } from '../src/engine/evolucao.ts'
 import type { EstadoDoJogo } from '../src/engine/jogo.ts'
 import { vidaMaxima } from '../src/engine/jogo.ts'
 import type { Tipo } from '../src/conteudo/tipos.ts'
-import { jogoCom, membro } from './apoio.ts'
+import { jogoCom, membro, cruzarEChocar } from './apoio.ts'
 
 const MINUTO = 60 * 1000
 
@@ -110,7 +109,7 @@ describe('Despertar', () => {
     const paiB = { ...membro('Gelundo', 150, 14, 3), despertada: true }
     const estado = jogoCom(membro('Rebitim', 10, 10), { reserva: [paiA, paiB], proximoId: 4 })
     const comOuro = { ...estado, inventario: { ...estado.inventario, ouro: 1000 } }
-    const depois = cruzar(comOuro, CATALOGO, LINHAGENS, { paiA: 2, paiB: 3, especieDe: 2, herdados: ['vida', 'ataque', 'defesa'] }, criarGerador(1))
+    const depois = cruzarEChocar(comOuro, CATALOGO, LINHAGENS, { paiA: 2, paiB: 3, especieDe: 2, herdados: ['vida', 'ataque', 'defesa'] }, criarGerador(1))
     expect(depois.reserva[0].despertada).toBeUndefined()
   })
 })

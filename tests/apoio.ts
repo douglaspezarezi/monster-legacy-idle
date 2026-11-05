@@ -7,6 +7,11 @@ import { ROTAS } from '../src/conteudo/rotas.ts'
 import { criarGerador } from '../src/engine/aleatorio.ts'
 import type { EstadoDoJogo, Membro } from '../src/engine/jogo.ts'
 import { novoJogo, vidaMaxima } from '../src/engine/jogo.ts'
+import type { Gerador } from '../src/engine/aleatorio.ts'
+import type { Catalogo } from '../src/engine/especie.ts'
+import type { Linhagem, PedidoDeCruzamento } from '../src/engine/cruzamento.ts'
+import { cruzar } from '../src/engine/cruzamento.ts'
+import { chocarOvos } from '../src/engine/ovos.ts'
 
 export const LABAREDA: Tecnica<Tipo> = { nome: 'labareda', tipo: 'Chama', categoria: 'especial', poder: 90, recargaMs: 6000 }
 export const BRASA: Tecnica<Tipo> = { nome: 'brasa', tipo: 'Chama', categoria: 'fisica', poder: 60, recargaMs: 3000 }
@@ -32,4 +37,15 @@ export function membro(especie: string, nivel: number, gene: number, id = 1, era
 export function jogoCom(ativa: Membro, campos: Partial<EstadoDoJogo<Tipo>> = {}): EstadoDoJogo<Tipo> {
   const base = novoJogo(CATALOGO, ROTAS.length, ativa.especie, 0, criarGerador(0))
   return { ...base, ativa, vidaDaAtiva: vidaMaxima(CATALOGO, ativa), ...campos }
+}
+
+// Cruza no instante 0 e choca o ovo na hora, para os testes que olham o filhote.
+export function cruzarEChocar(
+  estado: EstadoDoJogo<Tipo>,
+  catalogo: Catalogo<Tipo>,
+  linhagens: readonly Linhagem[],
+  pedido: PedidoDeCruzamento,
+  gerador: Gerador,
+): EstadoDoJogo<Tipo> {
+  return chocarOvos(cruzar(estado, catalogo, linhagens, pedido, 0, gerador), Infinity, gerador).estado
 }

@@ -5,13 +5,12 @@ import { NIVEL_MAXIMO } from '../src/engine/atributos.ts'
 import { criarGerador } from '../src/engine/aleatorio.ts'
 import { simularCacada } from '../src/engine/cacada.ts'
 import { calcularAtributos, combatenteDe } from '../src/engine/criatura.ts'
-import { cruzar } from '../src/engine/cruzamento.ts'
 import { especieDo } from '../src/engine/especie.ts'
 import { reiniciarEra } from '../src/engine/era.ts'
 import { evoluir, formaDa, multiplicadorDaForma, primeiraForma } from '../src/engine/evolucao.ts'
 import { trocarAtiva } from '../src/engine/jogo.ts'
 import { xpParaSubir } from '../src/engine/nivel.ts'
-import { jogoCom, membro } from './apoio.ts'
+import { jogoCom, membro, cruzarEChocar } from './apoio.ts'
 
 const SEM_TETO = { ...CONFIGURACAO, eras: [{ teto: NIVEL_MAXIMO, rotas: 5 }] }
 
@@ -64,7 +63,7 @@ describe('volta à primeira forma', () => {
   it('no cruzamento, o filhote nasce na primeira forma do pai escolhido', () => {
     const base = jogoCom(membro('Gelusco', 10, 10), { reserva: [membro('Raizudo', 60, 10, 2), membro('Sapolho', 40, 10, 3)], proximoId: 4 })
     const estado = { ...base, inventario: { ...base.inventario, ouro: 1000 } }
-    const depois = cruzar(estado, CATALOGO, LINHAGENS, { paiA: 2, paiB: 3, especieDe: 2, herdados: ['vida', 'ataque', 'defesa'] }, criarGerador(1))
+    const depois = cruzarEChocar(estado, CATALOGO, LINHAGENS, { paiA: 2, paiB: 3, especieDe: 2, herdados: ['vida', 'ataque', 'defesa'] }, criarGerador(1))
     expect(depois.reserva[0]).toMatchObject({ especie: 'Brotelho', nivel: 1 })
   })
 })

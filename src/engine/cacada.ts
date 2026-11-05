@@ -73,6 +73,7 @@ export type Evento =
   | { readonly tipo: 'pergaminho'; readonly instante: number; readonly tecnica: string }
   | { readonly tipo: 'evolucao'; readonly instante: number; readonly de: string; readonly para: string }
   | { readonly tipo: 'conquista'; readonly instante: number; readonly nome: string; readonly diamantes: number }
+  | { readonly tipo: 'ovo'; readonly instante: number; readonly especie: string; readonly raridade: Raridade; readonly prismatica: boolean }
 
 export type ResultadoDaCacada<Tipo extends string> = {
   readonly estado: EstadoDoJogo<Tipo>

@@ -3,12 +3,12 @@ import type { Gerador } from './aleatorio.ts'
 import { inteiroEntre } from './aleatorio.ts'
 import type { Criatura } from './criatura.ts'
 import type { Atributo, Genes } from './genes.ts'
-import { ATRIBUTOS, GENE_MAXIMO, GENE_MINIMO, podeSerPrismatica, raridadeDosGenes } from './genes.ts'
+import { ATRIBUTOS, GENE_MAXIMO, GENE_MINIMO } from './genes.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 import type { Catalogo } from './especie.ts'
 import { primeiraForma } from './evolucao.ts'
-import { CHANCE_PRISMATICA } from './nascimento.ts'
-import { aumentar, reduzir } from './equipamentos.ts'
+import { reduzir } from './equipamentos.ts'
+import { botarOvo, impedimentoDoOvo } from './ovos.ts'
 import { trabalhando } from './base.ts'
 import { impedimentoDaTecnica, tecnicasHerdaveis } from './aprendizado.ts'
 
@@ -47,17 +47,10 @@ export function genesDoFilhote(paiA: Genes, paiB: Genes, herdados: readonly Atri
   return genes
 }
 
-export function nascerDoCruzamento(
-  paiA: Criatura,
-  paiB: Criatura,
-  especie: string,
-  herdados: readonly Atributo[],
-  gerador: Gerador,
-  chancePrismatica = CHANCE_PRISMATICA,
-): Criatura {
+// A variação prismática só é sorteada quando o ovo choca.
+export function nascerDoCruzamento(paiA: Criatura, paiB: Criatura, especie: string, herdados: readonly Atributo[], gerador: Gerador): Criatura {
   const genes = genesDoFilhote(paiA.genes, paiB.genes, herdados, gerador)
-  const prismatica = podeSerPrismatica(raridadeDosGenes(genes)) && gerador() < chancePrismatica
-  return { especie, genes, prismatica, nivel: 1, xpNoNivel: 0 }
+  return { especie, genes, prismatica: false, nivel: 1, xpNoNivel: 0 }
 }
 
 export type PedidoDeCruzamento = {
@@ -70,6 +63,8 @@ export type PedidoDeCruzamento = {
   readonly tecnicaHerdada?: string
   // Gasta uma Pedra do Destino para herdar 4 atributos.
   readonly pedraDoDestino?: boolean
+  // Põe o ovo no Santuário em vez da Chocadeira.
+  readonly noSantuario?: boolean
 }
 
 // Técnicas que o filhote da espécie pode herdar dos dois pais, sem repetir.
@@ -80,15 +75,16 @@ export function tecnicasDoCruzamento<Tipo extends string>(catalogo: Catalogo<Tip
   )
 }
 
-// Os pais saem da reserva para sempre; o filhote entra no lugar.
+// Os pais saem da reserva para sempre; o filhote vai num ovo para a Chocadeira ou o Santuário.
 export function cruzar<Tipo extends string>(
   estado: EstadoDoJogo<Tipo>,
   catalogo: Catalogo<Tipo>,
   linhagens: readonly Linhagem[],
   pedido: PedidoDeCruzamento,
+  agora: number,
   gerador: Gerador,
 ): EstadoDoJogo<Tipo> {
-  const { paiA, paiB, especieDe, herdados, tecnicaHerdada, pedraDoDestino = false } = pedido
+  const { paiA, paiB, especieDe, herdados, tecnicaHerdada, pedraDoDestino = false, noSantuario = false } = pedido
   if (paiA === paiB) throw new RangeError('os pais precisam ser duas criaturas')
   const a = estado.reserva.find((m) => m.id === paiA)
   const b = estado.reserva.find((m) => m.id === paiB)
@@ -103,6 +99,8 @@ export function cruzar<Tipo extends string>(
     throw new RangeError(`escolha ${quantos} atributos diferentes`)
   }
   if (pedraDoDestino && estado.inventario.pedrasDoDestino < 1) throw new RangeError('sem Pedra do Destino')
+  const semLugar = impedimentoDoOvo(estado, noSantuario)
+  if (semLugar) throw new RangeError(semLugar)
   const taxa = taxaDeCruzamento(estado)
   if (estado.inventario.ouro < taxa) throw new RangeError(`ouro insuficiente: ${estado.inventario.ouro}`)
 
@@ -111,12 +109,11 @@ export function cruzar<Tipo extends string>(
   if (tecnicaHerdada !== undefined && !tecnicasDoCruzamento(catalogo, a, b, especie).includes(tecnicaHerdada)) {
     throw new RangeError(`técnica que o filhote não herda: ${tecnicaHerdada}`)
   }
-  const nascido = nascerDoCruzamento(a, b, especie, herdados, gerador, aumentar(CHANCE_PRISMATICA, estado, 'brasao'))
-  const filhote = { ...nascido, tecnicaAprendida: tecnicaHerdada, id: estado.proximoId, era: estado.era }
+  const filhote = { ...nascerDoCruzamento(a, b, especie, herdados, gerador), tecnicaAprendida: tecnicaHerdada }
+  const comOvo = botarOvo(estado, filhote, agora, noSantuario)
   return {
-    ...estado,
-    reserva: [...estado.reserva.filter((m) => m.id !== paiA && m.id !== paiB), filhote],
-    proximoId: estado.proximoId + 1,
+    ...comOvo,
+    reserva: estado.reserva.filter((m) => m.id !== paiA && m.id !== paiB),
     contadores: { ...estado.contadores, cruzamentos: estado.contadores.cruzamentos + 1 },
     inventario: {
       ...estado.inventario,

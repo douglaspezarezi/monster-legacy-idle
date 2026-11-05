@@ -5,6 +5,7 @@ import { avancarJogo } from './avanco.ts'
 import type { Evento } from './cacada.ts'
 import type { Ritmo } from './combate.ts'
 import type { EstadoDoJogo } from './jogo.ts'
+import type { Ovo } from './ovos.ts'
 
 export const LIMITE_DO_TEMPO_FORA_MS = 24 * 60 * 60 * 1000
 
@@ -12,11 +13,14 @@ function deslocarRitmo(ritmo: Ritmo, delta: number): Ritmo {
   return { proximaAcao: ritmo.proximaAcao + delta, prontaEm: ritmo.prontaEm.map((t) => t + delta) }
 }
 
-// Adia os instantes agendados da caçada. A Fadiga fica: ela corre em tempo real.
+// Adia os instantes agendados da caçada e dos ovos. A Fadiga fica: ela corre em tempo real.
 export function deslocarTempo<Tipo extends string>(estado: EstadoDoJogo<Tipo>, delta: number): EstadoDoJogo<Tipo> {
-  const { encontro } = estado
+  const { encontro, santuario } = estado
+  const adiar = (ovo: Ovo): Ovo => ({ ...ovo, prontoEm: ovo.prontoEm + delta })
   return {
     ...estado,
+    chocadeira: estado.chocadeira.map(adiar),
+    santuario: santuario.ovo ? { ...santuario, ovo: adiar(santuario.ovo) } : santuario,
     proximoSelvagemEm: estado.proximoSelvagemEm + delta,
     encontro: encontro && {
       ...encontro,
@@ -66,10 +70,11 @@ export type Resumo = {
   readonly chaves: number
   readonly pergaminhos: number
   readonly diamantes: number
+  readonly ovos: number
 }
 
 export function resumir(eventos: readonly Evento[]): Resumo {
-  const resumo = { abates: 0, xp: 0, ouro: 0, niveis: 0, capturas: 0, matrizes: 0, derrotas: 0, equipamentos: 0, essencias: 0, chaves: 0, pergaminhos: 0, diamantes: 0 }
+  const resumo = { abates: 0, xp: 0, ouro: 0, niveis: 0, capturas: 0, matrizes: 0, derrotas: 0, equipamentos: 0, essencias: 0, chaves: 0, pergaminhos: 0, diamantes: 0, ovos: 0 }
   for (const evento of eventos) {
     if (evento.tipo === 'abate') {
       resumo.abates++
@@ -84,6 +89,7 @@ export function resumir(eventos: readonly Evento[]): Resumo {
     else if (evento.tipo === 'chave') resumo.chaves++
     else if (evento.tipo === 'pergaminho') resumo.pergaminhos++
     else if (evento.tipo === 'conquista') resumo.diamantes += evento.diamantes
+    else if (evento.tipo === 'ovo') resumo.ovos++
   }
   return resumo
 }

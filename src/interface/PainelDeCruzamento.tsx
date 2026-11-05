@@ -109,7 +109,7 @@ export function PainelDeCruzamento({ estado, pais, executar, aoCruzar }: Props) 
       <button
         disabled={!pronto}
         onClick={() => {
-          executar((e, _t, g) => cruzar(e, CATALOGO, LINHAGENS, { paiA: a.id, paiB: b.id, especieDe, herdados, tecnicaHerdada, pedraDoDestino: pedra }, g))
+          executar((e, t, g) => cruzar(e, CATALOGO, LINHAGENS, { paiA: a.id, paiB: b.id, especieDe, herdados, tecnicaHerdada, pedraDoDestino: pedra }, t, g))
           aoCruzar()
         }}
       >

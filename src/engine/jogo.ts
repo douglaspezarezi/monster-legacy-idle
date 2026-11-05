@@ -14,6 +14,8 @@ import { combatenteDe } from './criatura.ts'
 import type { Catalogo } from './especie.ts'
 import type { Mercado } from './mercado.ts'
 import { MERCADO_VAZIO } from './mercado.ts'
+import type { Ovo, Santuario } from './ovos.ts'
+import { SANTUARIO_VAZIO } from './ovos.ts'
 import type { Matriz } from './nascimento.ts'
 import { CHANCE_PRISMATICA, abrirMatriz, criarInicial } from './nascimento.ts'
 import { voltarAoNivel1 } from './evolucao.ts'
@@ -92,6 +94,9 @@ export type EstadoDoJogo<Tipo extends string> = {
   // Identificadores das conquistas já pagas.
   readonly conquistas: readonly string[]
   readonly contadores: Contadores
+  // Ovos do cruzamento esperando para chocar.
+  readonly chocadeira: readonly Ovo[]
+  readonly santuario: Santuario
 }
 
 export const INVENTARIO_INICIAL: Inventario = {
@@ -169,6 +174,8 @@ export function novoJogo<Tipo extends string>(
     registro: [ativa.especie],
     conquistas: [],
     contadores: CONTADORES_ZERADOS,
+    chocadeira: [],
+    santuario: SANTUARIO_VAZIO,
   }
 }
 

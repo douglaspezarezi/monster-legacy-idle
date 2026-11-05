@@ -12,10 +12,9 @@ import type { EstadoDoJogo } from '../src/engine/jogo.ts'
 import { raridadeDosGenes } from '../src/engine/genes.ts'
 import { abrirMatrizDoInventario } from '../src/engine/jogo.ts'
 import { CHANCES_DE_RARIDADE_DO_SELVAGEM, chancesDeRaridadeDoSelvagem } from '../src/engine/nascimento.ts'
-import { cruzar } from '../src/engine/cruzamento.ts'
 import { LINHAGENS } from '../src/conteudo/linhagens.ts'
 import { reiniciarEra } from '../src/engine/era.ts'
-import { jogoCom, membro } from './apoio.ts'
+import { jogoCom, membro, cruzarEChocar } from './apoio.ts'
 
 const MINUTO = 60 * 1000
 const SEM_TETO = { ...CONFIGURACAO, eras: [{ teto: NIVEL_MAXIMO, rotas: 5 }] }
@@ -183,7 +182,7 @@ describe('espaços do F16', () => {
     const filhotes = (estado: EstadoDoJogo<Tipo>) => {
       let total = 0
       for (let semente = 1; semente <= 3000; semente++) {
-        if (cruzar(estado, CATALOGO, LINHAGENS, { ...pedido, herdados: [...pedido.herdados] }, criarGerador(semente)).reserva[0].prismatica) total++
+        if (cruzarEChocar(estado, CATALOGO, LINHAGENS, { ...pedido, herdados: [...pedido.herdados] }, criarGerador(semente)).reserva[0].prismatica) total++
       }
       return total
     }

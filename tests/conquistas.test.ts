@@ -19,13 +19,12 @@ import {
   impedimentoDosEspacos,
   progresso,
 } from '../src/engine/conquistas.ts'
-import { cruzar } from '../src/engine/cruzamento.ts'
 import { explorarIlha } from '../src/engine/ilhas.ts'
 import type { EstadoDoJogo, Membro } from '../src/engine/jogo.ts'
 import { abrirMatrizDoInventario } from '../src/engine/jogo.ts'
 import { atualizarMercado, comprarNoMercado } from '../src/engine/mercado.ts'
 import { VERSAO_DO_SAVE, desserializar } from '../src/engine/save.ts'
-import { jogoCom, membro } from './apoio.ts'
+import { jogoCom, membro, cruzarEChocar } from './apoio.ts'
 
 const HORA = 60 * 60 * 1000
 
@@ -117,7 +116,7 @@ describe('contadores', () => {
 
   it('o cruzamento, o Mercado e o Pergaminho contam', () => {
     const pais = jogoCom(membro('Gelusco', 10, 10), { reserva: [membro('Brotelho', 12, 8, 2), membro('Sapolho', 7, 8, 3)], proximoId: 4 })
-    const cruzado = cruzar(
+    const cruzado = cruzarEChocar(
       { ...pais, inventario: { ...pais.inventario, ouro: 1000 } },
       CATALOGO,
       LINHAGENS,

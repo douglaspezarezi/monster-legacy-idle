@@ -6,8 +6,9 @@ import { SEM_EQUIPAMENTOS } from './equipamentos.ts'
 import type { EstadoDoJogo } from './jogo.ts'
 import { SEM_REPOSICAO } from './jogo.ts'
 import { MERCADO_VAZIO } from './mercado.ts'
+import { SANTUARIO_VAZIO } from './ovos.ts'
 
-export const VERSAO_DO_SAVE = 13
+export const VERSAO_DO_SAVE = 14
 
 // Cada migração leva o estado salvo da versão do índice para a seguinte.
 const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Record<string, unknown>>> = {
@@ -55,6 +56,8 @@ const MIGRACOES: Readonly<Record<number, (estado: Record<string, unknown>) => Re
     conquistas: [],
     contadores: CONTADORES_ZERADOS,
   }),
+  // A versão 14 trouxe os ovos: Chocadeira vazia e Santuário por construir.
+  13: (estado) => ({ ...estado, chocadeira: [], santuario: SANTUARIO_VAZIO }),
 }
 
 function especiesDe(estado: Record<string, unknown>): string[] {
