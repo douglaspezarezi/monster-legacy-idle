@@ -12,6 +12,7 @@ const NOMES: Readonly<Record<IdDoPainel, string>> = {
   inventario: 'Inventário',
   captura: 'Captura',
   reserva: 'Reserva',
+  mapaDaBase: 'Mapa da Base',
   base: 'Base',
   ovos: 'Chocadeira',
   pergaminhos: 'Pergaminhos',

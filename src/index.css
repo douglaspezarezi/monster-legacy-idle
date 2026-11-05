@@ -98,7 +98,8 @@ button:disabled {
 }
 
 .janela-luta,
-.janela-mapa {
+.janela-mapa,
+.janela-mapaDaBase {
   grid-column: 1 / -1;
 }
 
@@ -431,6 +432,14 @@ dd {
 .barra-da-janela output {
   min-width: 2.8rem;
   text-align: center;
+}
+
+.janela > .painel {
+  transition: box-shadow 0.3s;
+}
+
+.janela.destacada > .painel {
+  box-shadow: 0 0 0 2px var(--destaque);
 }
 
 .janela.arrastando {

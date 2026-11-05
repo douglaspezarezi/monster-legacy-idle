@@ -8,6 +8,7 @@ export const PAINEIS = [
   'inventario',
   'captura',
   'reserva',
+  'mapaDaBase',
   'base',
   'ovos',
   'pergaminhos',

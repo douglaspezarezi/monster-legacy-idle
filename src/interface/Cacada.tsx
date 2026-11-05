@@ -47,6 +47,7 @@ import { PainelDaDestilaria } from './PainelDaDestilaria.tsx'
 import { PainelDosOvos } from './PainelDosOvos.tsx'
 import { PainelDeConquistas } from './PainelDeConquistas.tsx'
 import { PainelDoCalendario } from './PainelDoCalendario.tsx'
+import { MapaDaBase } from './MapaDaBase.tsx'
 import { PainelDosPergaminhos } from './PainelDosPergaminhos.tsx'
 import { PainelDoMapa } from './PainelDoMapa.tsx'
 import { useEstimativas } from './useEstimativas.ts'
@@ -441,6 +442,8 @@ export function Cacada({ sessao, executar, modoLeve }: Props) {
           )}
         </section>
       </Janela>
+
+      <Janela id="mapaDaBase">{!modoLeve && <MapaDaBase estado={estado} />}</Janela>
 
       <Janela id="base">
         <section className="painel base">

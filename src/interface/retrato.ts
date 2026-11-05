@@ -3,7 +3,7 @@
 import type { Tipo } from '../conteudo/tipos.ts'
 import { criarGerador } from '../engine/aleatorio.ts'
 
-const COR_DO_TIPO: Readonly<Record<Tipo, string>> = {
+export const COR_DO_TIPO: Readonly<Record<Tipo, string>> = {
   Chama: '#e8603c',
   Maré: '#3b82c4',
   Brota: '#5aa548',
