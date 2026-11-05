@@ -8,6 +8,7 @@ import { GENES_HERDADOS, GENES_HERDADOS_COM_PEDRA, cruzar, linhagemDe, mesmaLinh
 import type { Atributo } from '../engine/genes.ts'
 import { ATRIBUTOS } from '../engine/genes.ts'
 import type { EstadoDoJogo, Membro } from '../engine/jogo.ts'
+import { impedimentoDoOvo } from '../engine/ovos.ts'
 import { NOME_DO_ATRIBUTO } from './textos.ts'
 import type { Comando } from './useJogo.ts'
 
@@ -30,6 +31,7 @@ export function PainelDeCruzamento({ estado, pais, executar, aoCruzar }: Props) 
   const [herdados, setHerdados] = useState<readonly Atributo[]>(() => melhoresAtributos(a, b, GENES_HERDADOS))
   const [escolhida, setEscolhida] = useState('')
   const [comPedra, setComPedra] = useState(false)
+  const [noSantuario, setNoSantuario] = useState(false)
 
   const compativeis = mesmaLinhagem(LINHAGENS, a.especie, b.especie)
   const taxa = taxaDeCruzamento(estado)
@@ -41,7 +43,8 @@ export function PainelDeCruzamento({ estado, pais, executar, aoCruzar }: Props) 
   const herdaveis = compativeis ? tecnicasDoCruzamento(CATALOGO, a, b, especie) : []
   // Trocar a espécie pode tirar a técnica escolhida da lista.
   const tecnicaHerdada = herdaveis.includes(escolhida) ? escolhida : undefined
-  const pronto = compativeis && !semOuro && herdados.length === quantos
+  const semLugar = impedimentoDoOvo(estado, noSantuario)
+  const pronto = compativeis && !semOuro && herdados.length === quantos && semLugar === null
 
   function alternar(atributo: Atributo) {
     setHerdados((atuais) =>
@@ -106,10 +109,22 @@ export function PainelDeCruzamento({ estado, pais, executar, aoCruzar }: Props) 
         </select>
       </label>
       <p className="dica">O filhote nasce sabendo uma técnica da fila de um dos pais, que ele usa primeiro. A do Despertar não passa.</p>
+      {estado.santuario.construido && (
+        <div className="opcao">
+          Ovo vai para:
+          <label>
+            <input type="radio" checked={!noSantuario} onChange={() => setNoSantuario(false)} /> Chocadeira
+          </label>
+          <label>
+            <input type="radio" checked={noSantuario} onChange={() => setNoSantuario(true)} /> Santuário
+          </label>
+        </div>
+      )}
+      {semLugar && <p className="aviso">Sem lugar para o ovo: {semLugar}.</p>}
       <button
         disabled={!pronto}
         onClick={() => {
-          executar((e, t, g) => cruzar(e, CATALOGO, LINHAGENS, { paiA: a.id, paiB: b.id, especieDe, herdados, tecnicaHerdada, pedraDoDestino: pedra }, t, g))
+          executar((e, t, g) => cruzar(e, CATALOGO, LINHAGENS, { paiA: a.id, paiB: b.id, especieDe, herdados, tecnicaHerdada, pedraDoDestino: pedra, noSantuario }, t, g))
           aoCruzar()
         }}
       >

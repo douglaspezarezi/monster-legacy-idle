@@ -60,9 +60,9 @@ function carregar(texto: string, agora: number, gerador: Gerador): { readonly se
     fora.creditadoMs >= MINIMO_PARA_RESUMO_MS
       ? { foraMs: agora - save.salvoEm, creditadoMs: fora.creditadoMs, resumo: resumir(fora.eventos), ouroDaForja: fora.ouroDaForja, fragmentosDaMina: fora.fragmentosDaMina }
       : null
-  // As conquistas pagas ao abrir, como as de um save antigo, também aparecem nos acontecimentos.
+  // As conquistas pagas e os ovos chocados ao abrir também aparecem nos acontecimentos.
   const registros = fora.eventos
-    .filter((evento) => evento.tipo === 'conquista')
+    .filter((evento) => evento.tipo === 'conquista' || evento.tipo === 'ovo')
     .map((evento, i) => ({ id: -1 - i, instante: evento.instante, texto: descreverEvento(evento) }))
   return { sessao: { estado: fora.estado, agora, registros, eventos: [] }, volta }
 }

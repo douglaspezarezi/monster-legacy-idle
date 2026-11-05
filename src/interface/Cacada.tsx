@@ -31,6 +31,7 @@ import type { Tipo } from '../conteudo/tipos.ts'
 import { guardar, lerGuardado } from './arquivo.ts'
 import { Cena } from './Cena.tsx'
 import { PainelDasIlhas } from './PainelDasIlhas.tsx'
+import { PainelDosOvos } from './PainelDosOvos.tsx'
 import { PainelDeConquistas } from './PainelDeConquistas.tsx'
 import { PainelDosPergaminhos } from './PainelDosPergaminhos.tsx'
 import { PainelDoMapa } from './PainelDoMapa.tsx'
@@ -440,6 +441,8 @@ export function Cacada({ sessao, executar }: Props) {
           <p>Marque dois pais da mesma linhagem na reserva ({pais.length}/2).</p>
         )}
       </section>
+
+      <PainelDosOvos estado={estado} agora={agora} executar={executar} />
 
       <PainelDosPergaminhos estado={estado} executar={executar} />
 
