@@ -948,6 +948,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 
 - **Registro:** uma espécie entra no registro quando o jogador a obtém por qualquer caminho: inicial, captura, matriz, cruzamento, evolução ou Mercado. Ver um selvagem não conta. O registro fica no save e não perde espécies quando a criatura sai da conta no cruzamento. Das 117 espécies, a meta mais alta pede 100, porque os guardiões finais das ilhas e as míticas exigem sorte ou muito ouro.
 - **Contadores novos:** abates, chefes vencidos, capturas, cruzamentos e ilhas vencidas contam a vida toda e não zeram no reset de Era.
+- **Raridade e matrizes:** um monstro de raridade melhor também conta para as metas de raridade; um lendário paga a épica e a lendária. A espécie de uma matriz, do Mercado ou das Ilhas, entra no registro quando a matriz é aberta.
 
 **Primeiro uso: espaços na reserva.** A reserva tem 50 espaços (seção 7). Cada compra soma 10 espaços por 100 Diamantes, até 5 compras: a reserva vai a 100 e consome 500 dos 1.110 Diamantes. Os outros 610 ficam para o Santuário e a Base especial. É uma conveniência: mais espaço guarda mais matrizes abertas e capturas, mas não deixa nenhum monstro mais forte.
 
