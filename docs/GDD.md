@@ -743,7 +743,7 @@ As criaturas da reserva trabalham em postos da base. A afinidade de tipo muda a 
 - **Afinidade:** +25% com Rocha, Cristal ou Liga; −50% com um tipo que vence um deles (Maré, Brota, Astro, Penumbra, Faísca e Eco), pela mesma regra da Forja.
 - Uma criatura trabalha num posto por vez. Com 3 criaturas raras de afinidade certa, a Mina rende cerca de 49 Fragmentos por hora, e os 300 de um Despertar saem em cerca de 6 horas; com 3 incomuns sem afinidade, em cerca de 9 horas.
 
-### Destilaria no F22 [proposta]
+### Destilaria no F22
 
 - **É a Base especial** da lista acima. Como os Diamantes são finitos (1.110 pelas conquistas), ela não "opera" gastando Diamantes: é construída uma vez, por 300. Os "fragmentos de fim de jogo" são as Essências do Despertar, porque os Fragmentos já saem da Mina e das Ilhas.
 - **Por que:** a Essência só cai nas rotas 5 a 7 do bioma do tipo dela, a 0,2% por abate. Para despertar um monstro de um tipo que o jogador caça pouco, ele precisa largar o bioma que rende mais. A Destilaria produz devagar a Essência de qualquer tipo, também com o jogo fechado.
@@ -1068,7 +1068,7 @@ Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste docume
 | F19 · Cruzamento completo | Técnica aprendida no topo da fila, Pergaminhos dos chefes, técnica herdada no cruzamento e Pedra do Destino das Ilhas | Um monstro aprende uma técnica de outro tipo por Pergaminho ou cruzamento e rende mais num bioma onde antes rendia menos |
 | F20 · Conquistas e Diamantes | 33 conquistas que pagam Diamantes, registro de espécies, contadores da vida toda e espaços na reserva comprados com Diamantes | Uma conquista concluída paga Diamantes, e eles compram 10 espaços a mais na reserva |
 | F21 · Ovos e Santuário | O cruzamento gera ovo com tempo de chocar pela raridade, Chocadeira com 3 vagas e Santuário prismático por 300 Diamantes | Um ovo choca com o jogo fechado, e um ovo épico no Santuário choca com chance prismática de 6% |
-| F22 · Destilaria **[proposta]** | Base especial: posto de 3 vagas construído por 300 Diamantes que produz Essências do tipo escolhido | Uma Essência de um tipo que o jogador não caça sai da Destilaria com o jogo fechado |
+| F22 · Destilaria | Base especial: posto de 3 vagas construído por 300 Diamantes que produz Essências do tipo escolhido | Uma Essência de um tipo que o jogador não caça sai da Destilaria com o jogo fechado |
 
 ## 17. Pendências
 
