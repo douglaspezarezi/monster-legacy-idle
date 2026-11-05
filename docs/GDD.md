@@ -922,6 +922,48 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 - **Conta para o jogador:** com 2 milhões por hora na rota 7, a épica sai em meia hora de caçada, a lendária em 2,5 horas e a mítica em 10. Comprar o estoque inteiro (33 milhões) leva cerca de 16 horas, então o Mercado nunca fica sem uso. Para comparar, pelas chances de queda e pelos cerca de 1.000 abates por hora da simulação, a rota 7 deixa cair uma matriz mítica de espécie sorteada a cada 20 horas, e a rota 5 uma lendária a cada 5 a 8 horas. O Mercado custa um pouco mais, mas deixa escolher a espécie.
 - **Alternativas descartadas:** com preços de 2, 10 e 50 milhões, a mítica custaria 25 horas de caçada, mais do que esperar a queda da rota 7. Abrir na Era 2 deixaria comprar uma épica com cerca de 3 horas de ouro da rota 5, o que tira o peso da captura nessa Era.
 
+### Conquistas e Diamantes no F20 [proposta]
+
+- **Por que agora:** os Diamantes são o único recurso da tabela acima sem fonte nem uso no jogo, e a Base especial e o Santuário dependem deles. O F20 cria a fonte (conquistas) e um primeiro uso pequeno; o Santuário fica para um marco seguinte.
+- **Fonte única no F20:** conquistas. Cada conquista paga uma quantidade fixa de Diamantes, uma vez só, sem sorteio. A compra de Diamantes continua **[a definir]**, e nada pago aumenta força.
+- **Quando conta:** o motor confere as conquistas depois de cada comando e de cada avanço da caçada, também no tempo fora. A conquista concluída paga na hora, sem botão de receber, e deixa um aviso no registro.
+- **Tela:** um painel de Conquistas com as 33, agrupadas como na tabela, cada uma com o progresso (por exemplo, 6.420 / 10.000 abates) e os Diamantes que paga.
+- **As conquistas ficam em arquivo de conteúdo**, com o contador que medem, a meta e o prêmio.
+
+| Grupo | Metas | Diamantes | Total |
+| --- | --- | --- | --- |
+| Caçador: abates | 1.000 / 10.000 / 100.000 / 500.000 | 10 / 20 / 40 / 80 | 150 |
+| Chefes de rota vencidos | 10 / 100 / 1.000 | 10 / 20 / 40 | 70 |
+| Capturas | 1 / 25 / 100 | 5 / 15 / 30 | 50 |
+| Cruzamentos | 1 / 10 / 50 | 10 / 20 / 40 | 70 |
+| Registro: espécies diferentes obtidas | 10 / 30 / 60 / 100 | 10 / 20 / 40 / 80 | 150 |
+| Eras: chegar à Era 2 / 3 / 4 e a um monstro no nível 200 | 4 metas | 30 / 40 / 50 / 100 | 220 |
+| Evolução: ter um monstro na segunda / na terceira forma | 2 metas | 15 / 30 | 45 |
+| Raridade: ter um monstro épico / lendário / mítico / prismático | 4 metas | 10 / 20 / 40 / 40 | 110 |
+| Despertar: 1 / 4 monstros despertos | 2 metas | 30 / 60 | 90 |
+| Ilhas: vencer o andar 10 de 1 / das 4 ilhas | 2 metas | 40 / 80 | 120 |
+| Mercado: primeira compra | 1 meta | 20 | 20 |
+| Pergaminho: primeira técnica aprendida | 1 meta | 15 | 15 |
+| **Soma** | 33 conquistas | | **1.110** |
+
+- **Registro:** uma espécie entra no registro quando o jogador a obtém por qualquer caminho: inicial, captura, matriz, cruzamento, evolução ou Mercado. Ver um selvagem não conta. O registro fica no save e não perde espécies quando a criatura sai da conta no cruzamento. Das 117 espécies, a meta mais alta pede 100, porque os guardiões finais das ilhas e as míticas exigem sorte ou muito ouro.
+- **Contadores novos:** abates, chefes vencidos, capturas, cruzamentos e ilhas vencidas contam a vida toda e não zeram no reset de Era.
+
+**Primeiro uso: espaços na reserva.** A reserva tem 50 espaços (seção 7). Cada compra soma 10 espaços por 100 Diamantes, até 5 compras: a reserva vai a 100 e consome 500 dos 1.110 Diamantes. Os outros 610 ficam para o Santuário e a Base especial. É uma conveniência: mais espaço guarda mais matrizes abertas e capturas, mas não deixa nenhum monstro mais forte.
+
+Ritmo estimado, pelos tempos de Era e abates por hora já simulados neste documento (cerca de 900 abates por hora nas rotas baixas e de 600 a 1.000 nas altas; Era 1 de 11 a 34 horas, Eras 2 a 4 de 6 a 20 horas cada):
+
+| Fase | Abates acumulados | Conquistas típicas | Diamantes acumulados |
+| --- | --- | --- | --- |
+| Fim da Era 1 | 10 mil a 30 mil | 10.000 abates, 100 chefes, 25 capturas, 1 a 10 cruzamentos, 10 a 30 espécies, Era 2 | 130 a 190 |
+| Fim da Era 2 | 20 mil a 45 mil | segunda forma, Era 3, 100 capturas, lendário | 230 a 320 |
+| Fim da Era 3 | 25 mil a 60 mil | terceira forma, Era 4, 30 a 60 espécies | 330 a 430 |
+| Nível 200 e fim de jogo | 100 mil ou mais | nível 200, Despertar, Ilhas, Mercado, mítico, 1.000 chefes | 700 a 1.030 |
+| Longo prazo | 500 mil (cerca de 500 horas) | 500.000 abates, 100 espécies, 4 ilhas | 1.110 |
+
+- Com cerca de 150 Diamantes no fim da Era 1, a primeira compra de espaços sai na virada para a Era 2, quando as matrizes das rotas 4 e 5 começam a encher a reserva.
+- **Save antigo:** o save passa à versão 13 com os Diamantes em 0, os contadores em 0 e o registro com as espécies da ativa e da reserva. Na primeira conferência, pagam na hora as conquistas que o próprio estado já mostra: Era, nível, forma, raridade e Despertar. As de contador (abates, chefes, capturas, cruzamentos, ilhas, Mercado e Pergaminho) começam a contar a partir do F20, porque o save não guardava esse histórico.
+
 ### Monetização
 
 - Venda direta apenas de itens visuais: auras de sprite, molduras de perfil e rastros de partículas.
@@ -971,6 +1013,7 @@ Substitui a roleta e a máquina de invocação (seção 14). O **Mercado da Cida
 | F17 · Cena da caçada | Cena em Canvas com o bioma, o monstro andando e a luta com o selvagem, em pixel art provisória, e modo leve | Na caçada, o monstro anda pelo bioma, o selvagem aparece e os golpes aparecem na cena |
 | F18 · Mapa-múndi | Mapa dos 16 biomas por Era, com miniaturas, trancas e estimativa de XP por hora com a melhor rota marcada | O mapa aponta a melhor rota do monstro ativo e troca de bioma ao tocar |
 | F19 · Cruzamento completo | Técnica aprendida no topo da fila, Pergaminhos dos chefes, técnica herdada no cruzamento e Pedra do Destino das Ilhas | Um monstro aprende uma técnica de outro tipo por Pergaminho ou cruzamento e rende mais num bioma onde antes rendia menos |
+| F20 · Conquistas e Diamantes **[proposta]** | 33 conquistas que pagam Diamantes, registro de espécies, contadores da vida toda e espaços na reserva comprados com Diamantes | Uma conquista concluída paga Diamantes, e eles compram 10 espaços a mais na reserva |
 
 ## 17. Pendências
 
